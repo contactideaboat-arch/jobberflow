@@ -53,7 +53,10 @@ export function useRows<T = any>(
 export function useInvalidate() {
   const qc = useQueryClient();
   return (keys?: unknown[][]) => {
-    if (!keys) return qc.invalidateQueries();
-    keys.forEach((k) => qc.invalidateQueries({ queryKey: k }));
+    if (!keys) {
+      void qc.invalidateQueries();
+      return;
+    }
+    keys.forEach((k) => void qc.invalidateQueries({ queryKey: k }));
   };
 }
