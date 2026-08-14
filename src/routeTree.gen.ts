@@ -18,6 +18,7 @@ import { Route as AuthenticatedMastersJobbersRouteImport } from './routes/_authe
 import { Route as AuthenticatedMastersMaterialsRouteImport } from './routes/_authenticated/masters/materials'
 import { Route as AuthenticatedMastersProductsRouteImport } from './routes/_authenticated/masters/products'
 import { Route as AuthenticatedTransactionsRmInwardRouteImport } from './routes/_authenticated/transactions/rm-inward'
+import { Route as AuthenticatedTransactionsTransferRouteImport } from './routes/_authenticated/transactions/transfer'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -67,6 +68,12 @@ const AuthenticatedTransactionsRmInwardRoute =
     path: '/transactions/rm-inward',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedTransactionsTransferRoute =
+  AuthenticatedTransactionsTransferRouteImport.update({
+    id: '/transactions/transfer',
+    path: '/transactions/transfer',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -77,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
   '/masters/products': typeof AuthenticatedMastersProductsRoute
   '/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
+  '/transactions/transfer': typeof AuthenticatedTransactionsTransferRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -87,6 +95,7 @@ export interface FileRoutesByTo {
   '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
   '/masters/products': typeof AuthenticatedMastersProductsRoute
   '/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
+  '/transactions/transfer': typeof AuthenticatedTransactionsTransferRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -99,6 +108,7 @@ export interface FileRoutesById {
   '/_authenticated/masters/materials': typeof AuthenticatedMastersMaterialsRoute
   '/_authenticated/masters/products': typeof AuthenticatedMastersProductsRoute
   '/_authenticated/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
+  '/_authenticated/transactions/transfer': typeof AuthenticatedTransactionsTransferRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/masters/materials'
     | '/masters/products'
     | '/transactions/rm-inward'
+    | '/transactions/transfer'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/masters/materials'
     | '/masters/products'
     | '/transactions/rm-inward'
+    | '/transactions/transfer'
   id:
     | '__root__'
     | '/'
@@ -132,6 +144,7 @@ export interface FileRouteTypes {
     | '/_authenticated/masters/materials'
     | '/_authenticated/masters/products'
     | '/_authenticated/transactions/rm-inward'
+    | '/_authenticated/transactions/transfer'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTransactionsRmInwardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/transactions/transfer': {
+      id: '/_authenticated/transactions/transfer'
+      path: '/transactions/transfer'
+      fullPath: '/transactions/transfer'
+      preLoaderRoute: typeof AuthenticatedTransactionsTransferRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -215,6 +235,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedMastersMaterialsRoute: typeof AuthenticatedMastersMaterialsRoute
   AuthenticatedMastersProductsRoute: typeof AuthenticatedMastersProductsRoute
   AuthenticatedTransactionsRmInwardRoute: typeof AuthenticatedTransactionsRmInwardRoute
+  AuthenticatedTransactionsTransferRoute: typeof AuthenticatedTransactionsTransferRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -225,6 +246,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMastersProductsRoute: AuthenticatedMastersProductsRoute,
   AuthenticatedTransactionsRmInwardRoute:
     AuthenticatedTransactionsRmInwardRoute,
+  AuthenticatedTransactionsTransferRoute:
+    AuthenticatedTransactionsTransferRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
