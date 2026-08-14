@@ -23,7 +23,7 @@ export const Route = createFileRoute("/_authenticated/masters/materials")({
       { property: "og:description", content: "Raw material codes, categories and reorder levels." },
     ],
   }),
-  component: MaterialMaster;
+  component: MaterialMaster,
 });
 
 const BLANK = { code: "", name: "", category: "GRANULES", uom: "KG", minimum_stock: 0, description: "", status: true };
