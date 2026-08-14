@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedMastersJobbersRouteImport } from './routes/_authenticated/masters/jobbers'
+import { Route as AuthenticatedMastersMaterialsRouteImport } from './routes/_authenticated/masters/materials'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,18 +41,26 @@ const AuthenticatedMastersJobbersRoute =
     path: '/masters/jobbers',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedMastersMaterialsRoute =
+  AuthenticatedMastersMaterialsRouteImport.update({
+    id: '/masters/materials',
+    path: '/masters/materials',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
+  '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
+  '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -60,12 +69,14 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
+  '/_authenticated/masters/materials': typeof AuthenticatedMastersMaterialsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/masters/jobbers'
+  fullPaths:
+    '/' | '/auth' | '/dashboard' | '/masters/jobbers' | '/masters/materials'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/masters/jobbers'
+  to: '/' | '/auth' | '/dashboard' | '/masters/jobbers' | '/masters/materials'
   id:
     | '__root__'
     | '/'
@@ -73,6 +84,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/dashboard'
     | '/_authenticated/masters/jobbers'
+    | '/_authenticated/masters/materials'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -118,17 +130,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMastersJobbersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/masters/materials': {
+      id: '/_authenticated/masters/materials'
+      path: '/masters/materials'
+      fullPath: '/masters/materials'
+      preLoaderRoute: typeof AuthenticatedMastersMaterialsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedMastersJobbersRoute: typeof AuthenticatedMastersJobbersRoute
+  AuthenticatedMastersMaterialsRoute: typeof AuthenticatedMastersMaterialsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedMastersJobbersRoute: AuthenticatedMastersJobbersRoute,
+  AuthenticatedMastersMaterialsRoute: AuthenticatedMastersMaterialsRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
