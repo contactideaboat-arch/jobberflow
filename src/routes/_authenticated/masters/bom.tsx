@@ -95,20 +95,20 @@ function BomMaster() {
   };
 
   const save = async () => {
-    if (!productId) return toast.error("Select a finished product.");
-    if (!lines.length) return toast.error("Add at least one raw material line.");
+    if (!productId) { toast.error("Select a finished product."); return; }
+    if (!lines.length) { toast.error("Add at least one raw material line."); return; }
     if (lines.some((l) => !l.material_id || Number(l.standard_quantity) <= 0))
-      return toast.error("Every line needs a material and a quantity greater than zero.");
+      { toast.error("Every line needs a material and a quantity greater than zero."); return; }
     if (new Set(lines.map((l) => l.material_id)).size !== lines.length)
-      return toast.error("A material can appear only once in a BOM.");
+      { toast.error("A material can appear only once in a BOM."); return; }
     if (lines.filter((l) => l.is_primary_material).length !== 1)
-      return toast.error("Exactly one line must be marked as the primary material.");
+      { toast.error("Exactly one line must be marked as the primary material."); return; }
 
     setBusy(true);
     const { data: num, error: numErr } = await db.rpc("next_voucher_number", { _prefix: "BOM" });
     if (numErr) {
       setBusy(false);
-      return toast.error(errMsg(numErr));
+      { toast.error(errMsg(numErr)); return; }
     }
     await db.from("bom_headers").update({ active: false, effective_to: effFrom }).eq("product_id", productId).eq("active", true);
     const { data: header, error } = await db
@@ -126,7 +126,7 @@ function BomMaster() {
       .single();
     if (error) {
       setBusy(false);
-      return toast.error(errMsg(error));
+      { toast.error(errMsg(error)); return; }
     }
     const { error: itemErr } = await db.from("bom_items").insert(
       lines.map((l, idx) => ({
@@ -139,7 +139,7 @@ function BomMaster() {
       })),
     );
     setBusy(false);
-    if (itemErr) return toast.error(errMsg(itemErr));
+    if (itemErr) { toast.error(errMsg(itemErr)); return; }
     toast.success(`BOM ${num} created. Earlier versions for this product were deactivated.`);
     setOpen(false);
     resetForm();
@@ -151,7 +151,7 @@ function BomMaster() {
       await db.from("bom_headers").update({ active: false }).eq("product_id", b.product_id).eq("active", true);
     }
     const { error } = await db.from("bom_headers").update({ active: !b.active }).eq("id", b.id);
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     invalidate([["bom_headers-full"], ["bom_headers"]]);
   };
 
