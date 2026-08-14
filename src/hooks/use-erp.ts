@@ -1,5 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+
+/** Loosely typed client for generic ERP grids/reports. */
+export const db = supabase as any;
 
 export type Role = "admin" | "store" | "management" | "viewer";
 
@@ -17,7 +21,7 @@ export function useRole() {
   return useQuery({
     queryKey: ["my-role"],
     queryFn: async () => {
-      const { data, error } = await supabase.rpc("ensure_profile", { _full_name: null });
+      const { data, error } = await db.rpc("ensure_profile", {});
       if (error) throw error;
       return (data as Role) ?? "viewer";
     },
@@ -27,26 +31,29 @@ export function useRole() {
 
 export const canWrite = (role?: Role | null) => role === "admin" || role === "store";
 
-export function useList<T = Record<string, unknown>>(
-  key: unknown[],
+/** Generic list query: `useRows("jobbers", ["jobbers"], q => q.order("code"))` */
+export function useRows<T = any>(
   table: string,
-  build?: (q: ReturnType<typeof supabase.from>) => unknown,
+  key: unknown[],
+  build?: (q: any) => any,
+  select = "*",
 ) {
   return useQuery({
     queryKey: key,
     queryFn: async () => {
-      const base = supabase.from(table) as never;
-      const q = build ? build(base) : (supabase.from(table) as never as { select: (s: string) => unknown }).select("*");
-      const { data, error } = (await q) as { data: T[] | null; error: { message: string } | null };
+      let q = db.from(table).select(select);
+      if (build) q = build(q);
+      const { data, error } = await q;
       if (error) throw error;
-      return data ?? [];
+      return (data ?? []) as T[];
     },
   });
 }
 
-export function useInvalidateAll() {
+export function useInvalidate() {
   const qc = useQueryClient();
-  return () => qc.invalidateQueries();
+  return (keys?: unknown[][]) => {
+    if (!keys) return qc.invalidateQueries();
+    keys.forEach((k) => qc.invalidateQueries({ queryKey: k }));
+  };
 }
-
-export const RAW = supabase;
