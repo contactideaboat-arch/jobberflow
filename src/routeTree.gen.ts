@@ -17,6 +17,7 @@ import { Route as AuthenticatedMastersBomRouteImport } from './routes/_authentic
 import { Route as AuthenticatedMastersJobbersRouteImport } from './routes/_authenticated/masters/jobbers'
 import { Route as AuthenticatedMastersMaterialsRouteImport } from './routes/_authenticated/masters/materials'
 import { Route as AuthenticatedMastersProductsRouteImport } from './routes/_authenticated/masters/products'
+import { Route as AuthenticatedTransactionsRmInwardRouteImport } from './routes/_authenticated/transactions/rm-inward'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -60,6 +61,12 @@ const AuthenticatedMastersProductsRoute =
     path: '/masters/products',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedTransactionsRmInwardRoute =
+  AuthenticatedTransactionsRmInwardRouteImport.update({
+    id: '/transactions/rm-inward',
+    path: '/transactions/rm-inward',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -69,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
   '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
   '/masters/products': typeof AuthenticatedMastersProductsRoute
+  '/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +86,7 @@ export interface FileRoutesByTo {
   '/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
   '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
   '/masters/products': typeof AuthenticatedMastersProductsRoute
+  '/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +98,7 @@ export interface FileRoutesById {
   '/_authenticated/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
   '/_authenticated/masters/materials': typeof AuthenticatedMastersMaterialsRoute
   '/_authenticated/masters/products': typeof AuthenticatedMastersProductsRoute
+  '/_authenticated/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/masters/jobbers'
     | '/masters/materials'
     | '/masters/products'
+    | '/transactions/rm-inward'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/masters/jobbers'
     | '/masters/materials'
     | '/masters/products'
+    | '/transactions/rm-inward'
   id:
     | '__root__'
     | '/'
@@ -119,6 +131,7 @@ export interface FileRouteTypes {
     | '/_authenticated/masters/jobbers'
     | '/_authenticated/masters/materials'
     | '/_authenticated/masters/products'
+    | '/_authenticated/transactions/rm-inward'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -185,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMastersProductsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/transactions/rm-inward': {
+      id: '/_authenticated/transactions/rm-inward'
+      path: '/transactions/rm-inward'
+      fullPath: '/transactions/rm-inward'
+      preLoaderRoute: typeof AuthenticatedTransactionsRmInwardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -194,6 +214,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedMastersJobbersRoute: typeof AuthenticatedMastersJobbersRoute
   AuthenticatedMastersMaterialsRoute: typeof AuthenticatedMastersMaterialsRoute
   AuthenticatedMastersProductsRoute: typeof AuthenticatedMastersProductsRoute
+  AuthenticatedTransactionsRmInwardRoute: typeof AuthenticatedTransactionsRmInwardRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -202,6 +223,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMastersJobbersRoute: AuthenticatedMastersJobbersRoute,
   AuthenticatedMastersMaterialsRoute: AuthenticatedMastersMaterialsRoute,
   AuthenticatedMastersProductsRoute: AuthenticatedMastersProductsRoute,
+  AuthenticatedTransactionsRmInwardRoute:
+    AuthenticatedTransactionsRmInwardRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
