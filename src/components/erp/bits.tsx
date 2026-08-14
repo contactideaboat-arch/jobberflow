@@ -20,7 +20,7 @@ export function KpiCard({
   label: string;
   value: string;
   unit?: string;
-  hint?: string;
+  hint?: string | undefined;
   tone?: "default" | "accent" | "success" | "warning" | "info";
   icon?: ReactNode;
 }) {
@@ -57,7 +57,7 @@ export function Panel({
   title?: string;
   actions?: ReactNode;
   children: ReactNode;
-  className?: string;
+  className?: string | undefined;
 }) {
   return (
     <Card className={cn("shadow-panel", className)}>
@@ -85,11 +85,11 @@ export function SearchSelect({
   className,
 }: {
   options: Option[];
-  value?: string | null;
+  value?: string | null | undefined;
   onChange: (v: string) => void;
-  placeholder?: string;
-  disabled?: boolean;
-  className?: string;
+  placeholder?: string | undefined;
+  disabled?: boolean | undefined;
+  className?: string | undefined;
 }) {
   const [open, setOpen] = useState(false);
   const selected = options.find((o) => o.value === value);
@@ -154,7 +154,7 @@ export function NumInput({
   value: number | string;
   onChange: (n: number) => void;
   step?: string;
-  className?: string;
+  className?: string | undefined;
   disabled?: boolean;
 }) {
   return (
