@@ -298,8 +298,8 @@ function Dashboard() {
         <Panel
           title="High Wastage Vouchers"
           actions={
-            <Link className="text-xs font-medium text-primary" to="/reports">
-              Wastage reports
+            <Link className="text-xs font-medium text-primary" to="/transactions/product-inward">
+              Production register
             </Link>
           }
         >
