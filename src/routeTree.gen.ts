@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedMastersJobbersRouteImport } from './routes/_authenticated/masters/jobbers'
 import { Route as AuthenticatedMastersMaterialsRouteImport } from './routes/_authenticated/masters/materials'
+import { Route as AuthenticatedMastersProductsRouteImport } from './routes/_authenticated/masters/products'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -47,6 +48,12 @@ const AuthenticatedMastersMaterialsRoute =
     path: '/masters/materials',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedMastersProductsRoute =
+  AuthenticatedMastersProductsRouteImport.update({
+    id: '/masters/products',
+    path: '/masters/products',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
   '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
+  '/masters/products': typeof AuthenticatedMastersProductsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,6 +69,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
   '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
+  '/masters/products': typeof AuthenticatedMastersProductsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,13 +79,25 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
   '/_authenticated/masters/materials': typeof AuthenticatedMastersMaterialsRoute
+  '/_authenticated/masters/products': typeof AuthenticatedMastersProductsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/dashboard' | '/masters/jobbers' | '/masters/materials'
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/masters/jobbers'
+    | '/masters/materials'
+    | '/masters/products'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/masters/jobbers' | '/masters/materials'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/masters/jobbers'
+    | '/masters/materials'
+    | '/masters/products'
   id:
     | '__root__'
     | '/'
@@ -85,6 +106,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/masters/jobbers'
     | '/_authenticated/masters/materials'
+    | '/_authenticated/masters/products'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -137,6 +159,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMastersMaterialsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/masters/products': {
+      id: '/_authenticated/masters/products'
+      path: '/masters/products'
+      fullPath: '/masters/products'
+      preLoaderRoute: typeof AuthenticatedMastersProductsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -144,12 +173,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedMastersJobbersRoute: typeof AuthenticatedMastersJobbersRoute
   AuthenticatedMastersMaterialsRoute: typeof AuthenticatedMastersMaterialsRoute
+  AuthenticatedMastersProductsRoute: typeof AuthenticatedMastersProductsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedMastersJobbersRoute: AuthenticatedMastersJobbersRoute,
   AuthenticatedMastersMaterialsRoute: AuthenticatedMastersMaterialsRoute,
+  AuthenticatedMastersProductsRoute: AuthenticatedMastersProductsRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
