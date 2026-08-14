@@ -134,7 +134,15 @@ export function SearchSelect({
   );
 }
 
-export function Field({ label, children, hint }: { label: string; children: ReactNode; hint?: string }) {
+export function Field({
+  label,
+  children,
+  hint,
+}: {
+  label: string;
+  children: ReactNode;
+  hint?: string | undefined;
+}) {
   return (
     <div className="space-y-1.5">
       <Label className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</Label>
