@@ -40,8 +40,11 @@ function AuthPage() {
     setBusy(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
-    if (error) return toast.error(errMsg(error));
-    await supabase.rpc("ensure_profile", { _full_name: fullName || null });
+    if (error) {
+      toast.error(errMsg(error));
+      return;
+    }
+    await supabase.rpc("ensure_profile", { _full_name: fullName || undefined });
     void navigate({ to: "/dashboard" });
   };
 
@@ -54,10 +57,13 @@ function AuthPage() {
       options: { emailRedirectTo: window.location.origin, data: { full_name: fullName } },
     });
     setBusy(false);
-    if (error) return toast.error(errMsg(error));
+    if (error) {
+      toast.error(errMsg(error));
+      return;
+    }
     const { data } = await supabase.auth.getUser();
     if (data.user) {
-      await supabase.rpc("ensure_profile", { _full_name: fullName || null });
+      await supabase.rpc("ensure_profile", { _full_name: fullName || undefined });
       void navigate({ to: "/dashboard" });
     } else {
       toast.success("Account created. Check your email to confirm, then sign in.");
@@ -67,7 +73,10 @@ function AuthPage() {
   const google = async () => {
     const { lovable } = await import("@/integrations/lovable/index");
     const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
-    if (result.error) return toast.error("Google sign-in failed");
+    if (result.error) {
+      toast.error("Google sign-in failed");
+      return;
+    }
     if (result.redirected) return;
     void navigate({ to: "/dashboard" });
   };
