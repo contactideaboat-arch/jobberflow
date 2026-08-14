@@ -10,33 +10,186 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedInventoryWarehouseRouteImport } from './routes/_authenticated/inventory/warehouse'
+import { Route as AuthenticatedMastersBomRouteImport } from './routes/_authenticated/masters/bom'
+import { Route as AuthenticatedMastersJobbersRouteImport } from './routes/_authenticated/masters/jobbers'
+import { Route as AuthenticatedMastersMaterialsRouteImport } from './routes/_authenticated/masters/materials'
+import { Route as AuthenticatedMastersProductsRouteImport } from './routes/_authenticated/masters/products'
+import { Route as AuthenticatedTransactionsMaterialReturnRouteImport } from './routes/_authenticated/transactions/material-return'
+import { Route as AuthenticatedTransactionsProductInwardRouteImport } from './routes/_authenticated/transactions/product-inward'
+import { Route as AuthenticatedTransactionsRmInwardRouteImport } from './routes/_authenticated/transactions/rm-inward'
+import { Route as AuthenticatedTransactionsTransferRouteImport } from './routes/_authenticated/transactions/transfer'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInventoryWarehouseRoute =
+  AuthenticatedInventoryWarehouseRouteImport.update({
+    id: '/inventory/warehouse',
+    path: '/inventory/warehouse',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMastersBomRoute = AuthenticatedMastersBomRouteImport.update({
+  id: '/masters/bom',
+  path: '/masters/bom',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMastersJobbersRoute =
+  AuthenticatedMastersJobbersRouteImport.update({
+    id: '/masters/jobbers',
+    path: '/masters/jobbers',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMastersMaterialsRoute =
+  AuthenticatedMastersMaterialsRouteImport.update({
+    id: '/masters/materials',
+    path: '/masters/materials',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMastersProductsRoute =
+  AuthenticatedMastersProductsRouteImport.update({
+    id: '/masters/products',
+    path: '/masters/products',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTransactionsMaterialReturnRoute =
+  AuthenticatedTransactionsMaterialReturnRouteImport.update({
+    id: '/transactions/material-return',
+    path: '/transactions/material-return',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTransactionsProductInwardRoute =
+  AuthenticatedTransactionsProductInwardRouteImport.update({
+    id: '/transactions/product-inward',
+    path: '/transactions/product-inward',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTransactionsRmInwardRoute =
+  AuthenticatedTransactionsRmInwardRouteImport.update({
+    id: '/transactions/rm-inward',
+    path: '/transactions/rm-inward',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTransactionsTransferRoute =
+  AuthenticatedTransactionsTransferRouteImport.update({
+    id: '/transactions/transfer',
+    path: '/transactions/transfer',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/inventory/warehouse': typeof AuthenticatedInventoryWarehouseRoute
+  '/masters/bom': typeof AuthenticatedMastersBomRoute
+  '/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
+  '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
+  '/masters/products': typeof AuthenticatedMastersProductsRoute
+  '/transactions/material-return': typeof AuthenticatedTransactionsMaterialReturnRoute
+  '/transactions/product-inward': typeof AuthenticatedTransactionsProductInwardRoute
+  '/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
+  '/transactions/transfer': typeof AuthenticatedTransactionsTransferRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/inventory/warehouse': typeof AuthenticatedInventoryWarehouseRoute
+  '/masters/bom': typeof AuthenticatedMastersBomRoute
+  '/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
+  '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
+  '/masters/products': typeof AuthenticatedMastersProductsRoute
+  '/transactions/material-return': typeof AuthenticatedTransactionsMaterialReturnRoute
+  '/transactions/product-inward': typeof AuthenticatedTransactionsProductInwardRoute
+  '/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
+  '/transactions/transfer': typeof AuthenticatedTransactionsTransferRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/inventory/warehouse': typeof AuthenticatedInventoryWarehouseRoute
+  '/_authenticated/masters/bom': typeof AuthenticatedMastersBomRoute
+  '/_authenticated/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
+  '/_authenticated/masters/materials': typeof AuthenticatedMastersMaterialsRoute
+  '/_authenticated/masters/products': typeof AuthenticatedMastersProductsRoute
+  '/_authenticated/transactions/material-return': typeof AuthenticatedTransactionsMaterialReturnRoute
+  '/_authenticated/transactions/product-inward': typeof AuthenticatedTransactionsProductInwardRoute
+  '/_authenticated/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
+  '/_authenticated/transactions/transfer': typeof AuthenticatedTransactionsTransferRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/inventory/warehouse'
+    | '/masters/bom'
+    | '/masters/jobbers'
+    | '/masters/materials'
+    | '/masters/products'
+    | '/transactions/material-return'
+    | '/transactions/product-inward'
+    | '/transactions/rm-inward'
+    | '/transactions/transfer'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/inventory/warehouse'
+    | '/masters/bom'
+    | '/masters/jobbers'
+    | '/masters/materials'
+    | '/masters/products'
+    | '/transactions/material-return'
+    | '/transactions/product-inward'
+    | '/transactions/rm-inward'
+    | '/transactions/transfer'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/inventory/warehouse'
+    | '/_authenticated/masters/bom'
+    | '/_authenticated/masters/jobbers'
+    | '/_authenticated/masters/materials'
+    | '/_authenticated/masters/products'
+    | '/_authenticated/transactions/material-return'
+    | '/_authenticated/transactions/product-inward'
+    | '/_authenticated/transactions/rm-inward'
+    | '/_authenticated/transactions/transfer'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +201,130 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inventory/warehouse': {
+      id: '/_authenticated/inventory/warehouse'
+      path: '/inventory/warehouse'
+      fullPath: '/inventory/warehouse'
+      preLoaderRoute: typeof AuthenticatedInventoryWarehouseRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/masters/bom': {
+      id: '/_authenticated/masters/bom'
+      path: '/masters/bom'
+      fullPath: '/masters/bom'
+      preLoaderRoute: typeof AuthenticatedMastersBomRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/masters/jobbers': {
+      id: '/_authenticated/masters/jobbers'
+      path: '/masters/jobbers'
+      fullPath: '/masters/jobbers'
+      preLoaderRoute: typeof AuthenticatedMastersJobbersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/masters/materials': {
+      id: '/_authenticated/masters/materials'
+      path: '/masters/materials'
+      fullPath: '/masters/materials'
+      preLoaderRoute: typeof AuthenticatedMastersMaterialsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/masters/products': {
+      id: '/_authenticated/masters/products'
+      path: '/masters/products'
+      fullPath: '/masters/products'
+      preLoaderRoute: typeof AuthenticatedMastersProductsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/transactions/material-return': {
+      id: '/_authenticated/transactions/material-return'
+      path: '/transactions/material-return'
+      fullPath: '/transactions/material-return'
+      preLoaderRoute: typeof AuthenticatedTransactionsMaterialReturnRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/transactions/product-inward': {
+      id: '/_authenticated/transactions/product-inward'
+      path: '/transactions/product-inward'
+      fullPath: '/transactions/product-inward'
+      preLoaderRoute: typeof AuthenticatedTransactionsProductInwardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/transactions/rm-inward': {
+      id: '/_authenticated/transactions/rm-inward'
+      path: '/transactions/rm-inward'
+      fullPath: '/transactions/rm-inward'
+      preLoaderRoute: typeof AuthenticatedTransactionsRmInwardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/transactions/transfer': {
+      id: '/_authenticated/transactions/transfer'
+      path: '/transactions/transfer'
+      fullPath: '/transactions/transfer'
+      preLoaderRoute: typeof AuthenticatedTransactionsTransferRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedInventoryWarehouseRoute: typeof AuthenticatedInventoryWarehouseRoute
+  AuthenticatedMastersBomRoute: typeof AuthenticatedMastersBomRoute
+  AuthenticatedMastersJobbersRoute: typeof AuthenticatedMastersJobbersRoute
+  AuthenticatedMastersMaterialsRoute: typeof AuthenticatedMastersMaterialsRoute
+  AuthenticatedMastersProductsRoute: typeof AuthenticatedMastersProductsRoute
+  AuthenticatedTransactionsMaterialReturnRoute: typeof AuthenticatedTransactionsMaterialReturnRoute
+  AuthenticatedTransactionsProductInwardRoute: typeof AuthenticatedTransactionsProductInwardRoute
+  AuthenticatedTransactionsRmInwardRoute: typeof AuthenticatedTransactionsRmInwardRoute
+  AuthenticatedTransactionsTransferRoute: typeof AuthenticatedTransactionsTransferRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedInventoryWarehouseRoute: AuthenticatedInventoryWarehouseRoute,
+  AuthenticatedMastersBomRoute: AuthenticatedMastersBomRoute,
+  AuthenticatedMastersJobbersRoute: AuthenticatedMastersJobbersRoute,
+  AuthenticatedMastersMaterialsRoute: AuthenticatedMastersMaterialsRoute,
+  AuthenticatedMastersProductsRoute: AuthenticatedMastersProductsRoute,
+  AuthenticatedTransactionsMaterialReturnRoute:
+    AuthenticatedTransactionsMaterialReturnRoute,
+  AuthenticatedTransactionsProductInwardRoute:
+    AuthenticatedTransactionsProductInwardRoute,
+  AuthenticatedTransactionsRmInwardRoute:
+    AuthenticatedTransactionsRmInwardRoute,
+  AuthenticatedTransactionsTransferRoute:
+    AuthenticatedTransactionsTransferRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
