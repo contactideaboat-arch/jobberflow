@@ -44,7 +44,7 @@ function AuthPage() {
       toast.error(errMsg(error));
       return;
     }
-    await supabase.rpc("ensure_profile", { _full_name: fullName || undefined });
+    await supabase.rpc("ensure_profile", (fullName ? { _full_name: fullName } : {}));
     void navigate({ to: "/dashboard" });
   };
 
@@ -63,7 +63,7 @@ function AuthPage() {
     }
     const { data } = await supabase.auth.getUser();
     if (data.user) {
-      await supabase.rpc("ensure_profile", { _full_name: fullName || undefined });
+      await supabase.rpc("ensure_profile", (fullName ? { _full_name: fullName } : {}));
       void navigate({ to: "/dashboard" });
     } else {
       toast.success("Account created. Check your email to confirm, then sign in.");
