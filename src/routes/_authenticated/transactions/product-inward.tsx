@@ -26,7 +26,7 @@ export const Route = createFileRoute("/_authenticated/transactions/product-inwar
       { property: "og:description", content: "Production inward with BOM consumption and voucher-level wastage." },
     ],
   }),
-  component: ProductInward;
+  component: ProductInward,
 });
 
 function ProductInward() {
