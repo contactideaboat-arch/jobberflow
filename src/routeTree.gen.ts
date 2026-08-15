@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedReconciliationRouteImport } from './routes/_authenticated/reconciliation'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedInventoryFgLedgerRouteImport } from './routes/_authenticated/inventory/fg-ledger'
 import { Route as AuthenticatedInventoryFinishedGoodsRouteImport } from './routes/_authenticated/inventory/finished-goods'
@@ -48,6 +49,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReconciliationRoute =
+  AuthenticatedReconciliationRouteImport.update({
+    id: '/reconciliation',
+    path: '/reconciliation',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
@@ -141,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/reconciliation': typeof AuthenticatedReconciliationRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
   '/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
@@ -161,6 +169,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/reconciliation': typeof AuthenticatedReconciliationRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
   '/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
@@ -183,6 +192,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/reconciliation': typeof AuthenticatedReconciliationRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
   '/_authenticated/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/reconciliation'
     | '/reports'
     | '/inventory/fg-ledger'
     | '/inventory/finished-goods'
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/reconciliation'
     | '/reports'
     | '/inventory/fg-ledger'
     | '/inventory/finished-goods'
@@ -246,6 +258,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/_authenticated/reconciliation'
     | '/_authenticated/reports'
     | '/_authenticated/inventory/fg-ledger'
     | '/_authenticated/inventory/finished-goods'
@@ -297,6 +310,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reconciliation': {
+      id: '/_authenticated/reconciliation'
+      path: '/reconciliation'
+      fullPath: '/reconciliation'
+      preLoaderRoute: typeof AuthenticatedReconciliationRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/reports': {
@@ -409,6 +429,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedReconciliationRoute: typeof AuthenticatedReconciliationRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedInventoryFgLedgerRoute: typeof AuthenticatedInventoryFgLedgerRoute
   AuthenticatedInventoryFinishedGoodsRoute: typeof AuthenticatedInventoryFinishedGoodsRoute
@@ -428,6 +449,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedReconciliationRoute: AuthenticatedReconciliationRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedInventoryFgLedgerRoute: AuthenticatedInventoryFgLedgerRoute,
   AuthenticatedInventoryFinishedGoodsRoute:
