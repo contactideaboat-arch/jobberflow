@@ -78,11 +78,26 @@ function AdjustmentPage() {
   };
 
   const save = async (post: boolean) => {
-    if (form.quantity <= 0) return toast.error("Quantity must be greater than zero");
-    if (isFg && !form.product_id) return toast.error("Select a finished product");
-    if (!isFg && !form.material_id) return toast.error("Select a raw material");
-    if (form.location_type === "JOBBER" && !form.jobber_id) return toast.error("Select a jobber");
-    if (!form.reason.trim()) return toast.error("Reason is mandatory for an adjustment");
+    if (form.quantity <= 0) {
+      toast.error("Quantity must be greater than zero");
+      return;
+    }
+    if (isFg && !form.product_id) {
+      toast.error("Select a finished product");
+      return;
+    }
+    if (!isFg && !form.material_id) {
+      toast.error("Select a raw material");
+      return;
+    }
+    if (form.location_type === "JOBBER" && !form.jobber_id) {
+      toast.error("Select a jobber");
+      return;
+    }
+    if (!form.reason.trim()) {
+      toast.error("Reason is mandatory for an adjustment");
+      return;
+    }
 
     setBusy(true);
     try {
@@ -122,19 +137,28 @@ function AdjustmentPage() {
 
   const post = async (id: string) => {
     const { error } = await db.rpc("post_stock_adjustment", { _id: id });
-    if (error) return toast.error(errMsg(error));
+    if (error) {
+      toast.error(errMsg(error));
+      return;
+    }
     toast.success("Adjustment posted");
     invalidate();
   };
 
   const cancel = async () => {
-    if (!cancelReason.trim()) return toast.error("Cancellation reason is required");
+    if (!cancelReason.trim()) {
+      toast.error("Cancellation reason is required");
+      return;
+    }
     const { error } = await db.rpc("cancel_voucher", {
       _voucher_type: "ADJUSTMENT",
       _id: cancelId,
       _reason: cancelReason,
     });
-    if (error) return toast.error(errMsg(error));
+    if (error) {
+      toast.error(errMsg(error));
+      return;
+    }
     toast.success("Voucher cancelled and stock reversed");
     setCancelId(null);
     setCancelReason("");
