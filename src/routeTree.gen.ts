@@ -12,12 +12,20 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedReconciliationRouteImport } from './routes/_authenticated/reconciliation'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
+import { Route as AuthenticatedInventoryFgLedgerRouteImport } from './routes/_authenticated/inventory/fg-ledger'
+import { Route as AuthenticatedInventoryFinishedGoodsRouteImport } from './routes/_authenticated/inventory/finished-goods'
+import { Route as AuthenticatedInventoryJobberStockRouteImport } from './routes/_authenticated/inventory/jobber-stock'
+import { Route as AuthenticatedInventoryRmLedgerRouteImport } from './routes/_authenticated/inventory/rm-ledger'
 import { Route as AuthenticatedInventoryWarehouseRouteImport } from './routes/_authenticated/inventory/warehouse'
 import { Route as AuthenticatedMastersBomRouteImport } from './routes/_authenticated/masters/bom'
 import { Route as AuthenticatedMastersJobbersRouteImport } from './routes/_authenticated/masters/jobbers'
 import { Route as AuthenticatedMastersMaterialsRouteImport } from './routes/_authenticated/masters/materials'
 import { Route as AuthenticatedMastersProductsRouteImport } from './routes/_authenticated/masters/products'
+import { Route as AuthenticatedTransactionsAdjustmentRouteImport } from './routes/_authenticated/transactions/adjustment'
 import { Route as AuthenticatedTransactionsMaterialReturnRouteImport } from './routes/_authenticated/transactions/material-return'
 import { Route as AuthenticatedTransactionsProductInwardRouteImport } from './routes/_authenticated/transactions/product-inward'
 import { Route as AuthenticatedTransactionsRmInwardRouteImport } from './routes/_authenticated/transactions/rm-inward'
@@ -37,11 +45,51 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReconciliationRoute =
+  AuthenticatedReconciliationRouteImport.update({
+    id: '/reconciliation',
+    path: '/reconciliation',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInventoryFgLedgerRoute =
+  AuthenticatedInventoryFgLedgerRouteImport.update({
+    id: '/inventory/fg-ledger',
+    path: '/inventory/fg-ledger',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedInventoryFinishedGoodsRoute =
+  AuthenticatedInventoryFinishedGoodsRouteImport.update({
+    id: '/inventory/finished-goods',
+    path: '/inventory/finished-goods',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedInventoryJobberStockRoute =
+  AuthenticatedInventoryJobberStockRouteImport.update({
+    id: '/inventory/jobber-stock',
+    path: '/inventory/jobber-stock',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedInventoryRmLedgerRoute =
+  AuthenticatedInventoryRmLedgerRouteImport.update({
+    id: '/inventory/rm-ledger',
+    path: '/inventory/rm-ledger',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedInventoryWarehouseRoute =
   AuthenticatedInventoryWarehouseRouteImport.update({
     id: '/inventory/warehouse',
@@ -69,6 +117,12 @@ const AuthenticatedMastersProductsRoute =
   AuthenticatedMastersProductsRouteImport.update({
     id: '/masters/products',
     path: '/masters/products',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTransactionsAdjustmentRoute =
+  AuthenticatedTransactionsAdjustmentRouteImport.update({
+    id: '/transactions/adjustment',
+    path: '/transactions/adjustment',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedTransactionsMaterialReturnRoute =
@@ -99,12 +153,20 @@ const AuthenticatedTransactionsTransferRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/reconciliation': typeof AuthenticatedReconciliationRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
+  '/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
+  '/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
+  '/inventory/rm-ledger': typeof AuthenticatedInventoryRmLedgerRoute
   '/inventory/warehouse': typeof AuthenticatedInventoryWarehouseRoute
   '/masters/bom': typeof AuthenticatedMastersBomRoute
   '/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
   '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
   '/masters/products': typeof AuthenticatedMastersProductsRoute
+  '/transactions/adjustment': typeof AuthenticatedTransactionsAdjustmentRoute
   '/transactions/material-return': typeof AuthenticatedTransactionsMaterialReturnRoute
   '/transactions/product-inward': typeof AuthenticatedTransactionsProductInwardRoute
   '/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
@@ -113,12 +175,20 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/reconciliation': typeof AuthenticatedReconciliationRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
+  '/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
+  '/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
+  '/inventory/rm-ledger': typeof AuthenticatedInventoryRmLedgerRoute
   '/inventory/warehouse': typeof AuthenticatedInventoryWarehouseRoute
   '/masters/bom': typeof AuthenticatedMastersBomRoute
   '/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
   '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
   '/masters/products': typeof AuthenticatedMastersProductsRoute
+  '/transactions/adjustment': typeof AuthenticatedTransactionsAdjustmentRoute
   '/transactions/material-return': typeof AuthenticatedTransactionsMaterialReturnRoute
   '/transactions/product-inward': typeof AuthenticatedTransactionsProductInwardRoute
   '/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
@@ -129,12 +199,20 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/reconciliation': typeof AuthenticatedReconciliationRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
+  '/_authenticated/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
+  '/_authenticated/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
+  '/_authenticated/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
+  '/_authenticated/inventory/rm-ledger': typeof AuthenticatedInventoryRmLedgerRoute
   '/_authenticated/inventory/warehouse': typeof AuthenticatedInventoryWarehouseRoute
   '/_authenticated/masters/bom': typeof AuthenticatedMastersBomRoute
   '/_authenticated/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
   '/_authenticated/masters/materials': typeof AuthenticatedMastersMaterialsRoute
   '/_authenticated/masters/products': typeof AuthenticatedMastersProductsRoute
+  '/_authenticated/transactions/adjustment': typeof AuthenticatedTransactionsAdjustmentRoute
   '/_authenticated/transactions/material-return': typeof AuthenticatedTransactionsMaterialReturnRoute
   '/_authenticated/transactions/product-inward': typeof AuthenticatedTransactionsProductInwardRoute
   '/_authenticated/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
@@ -145,12 +223,20 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/admin'
     | '/dashboard'
+    | '/reconciliation'
+    | '/reports'
+    | '/inventory/fg-ledger'
+    | '/inventory/finished-goods'
+    | '/inventory/jobber-stock'
+    | '/inventory/rm-ledger'
     | '/inventory/warehouse'
     | '/masters/bom'
     | '/masters/jobbers'
     | '/masters/materials'
     | '/masters/products'
+    | '/transactions/adjustment'
     | '/transactions/material-return'
     | '/transactions/product-inward'
     | '/transactions/rm-inward'
@@ -159,12 +245,20 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/admin'
     | '/dashboard'
+    | '/reconciliation'
+    | '/reports'
+    | '/inventory/fg-ledger'
+    | '/inventory/finished-goods'
+    | '/inventory/jobber-stock'
+    | '/inventory/rm-ledger'
     | '/inventory/warehouse'
     | '/masters/bom'
     | '/masters/jobbers'
     | '/masters/materials'
     | '/masters/products'
+    | '/transactions/adjustment'
     | '/transactions/material-return'
     | '/transactions/product-inward'
     | '/transactions/rm-inward'
@@ -174,12 +268,20 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/admin'
     | '/_authenticated/dashboard'
+    | '/_authenticated/reconciliation'
+    | '/_authenticated/reports'
+    | '/_authenticated/inventory/fg-ledger'
+    | '/_authenticated/inventory/finished-goods'
+    | '/_authenticated/inventory/jobber-stock'
+    | '/_authenticated/inventory/rm-ledger'
     | '/_authenticated/inventory/warehouse'
     | '/_authenticated/masters/bom'
     | '/_authenticated/masters/jobbers'
     | '/_authenticated/masters/materials'
     | '/_authenticated/masters/products'
+    | '/_authenticated/transactions/adjustment'
     | '/_authenticated/transactions/material-return'
     | '/_authenticated/transactions/product-inward'
     | '/_authenticated/transactions/rm-inward'
@@ -215,11 +317,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reconciliation': {
+      id: '/_authenticated/reconciliation'
+      path: '/reconciliation'
+      fullPath: '/reconciliation'
+      preLoaderRoute: typeof AuthenticatedReconciliationRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inventory/fg-ledger': {
+      id: '/_authenticated/inventory/fg-ledger'
+      path: '/inventory/fg-ledger'
+      fullPath: '/inventory/fg-ledger'
+      preLoaderRoute: typeof AuthenticatedInventoryFgLedgerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inventory/finished-goods': {
+      id: '/_authenticated/inventory/finished-goods'
+      path: '/inventory/finished-goods'
+      fullPath: '/inventory/finished-goods'
+      preLoaderRoute: typeof AuthenticatedInventoryFinishedGoodsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inventory/jobber-stock': {
+      id: '/_authenticated/inventory/jobber-stock'
+      path: '/inventory/jobber-stock'
+      fullPath: '/inventory/jobber-stock'
+      preLoaderRoute: typeof AuthenticatedInventoryJobberStockRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inventory/rm-ledger': {
+      id: '/_authenticated/inventory/rm-ledger'
+      path: '/inventory/rm-ledger'
+      fullPath: '/inventory/rm-ledger'
+      preLoaderRoute: typeof AuthenticatedInventoryRmLedgerRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/inventory/warehouse': {
@@ -257,6 +408,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMastersProductsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/transactions/adjustment': {
+      id: '/_authenticated/transactions/adjustment'
+      path: '/transactions/adjustment'
+      fullPath: '/transactions/adjustment'
+      preLoaderRoute: typeof AuthenticatedTransactionsAdjustmentRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/transactions/material-return': {
       id: '/_authenticated/transactions/material-return'
       path: '/transactions/material-return'
@@ -289,12 +447,20 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedReconciliationRoute: typeof AuthenticatedReconciliationRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
+  AuthenticatedInventoryFgLedgerRoute: typeof AuthenticatedInventoryFgLedgerRoute
+  AuthenticatedInventoryFinishedGoodsRoute: typeof AuthenticatedInventoryFinishedGoodsRoute
+  AuthenticatedInventoryJobberStockRoute: typeof AuthenticatedInventoryJobberStockRoute
+  AuthenticatedInventoryRmLedgerRoute: typeof AuthenticatedInventoryRmLedgerRoute
   AuthenticatedInventoryWarehouseRoute: typeof AuthenticatedInventoryWarehouseRoute
   AuthenticatedMastersBomRoute: typeof AuthenticatedMastersBomRoute
   AuthenticatedMastersJobbersRoute: typeof AuthenticatedMastersJobbersRoute
   AuthenticatedMastersMaterialsRoute: typeof AuthenticatedMastersMaterialsRoute
   AuthenticatedMastersProductsRoute: typeof AuthenticatedMastersProductsRoute
+  AuthenticatedTransactionsAdjustmentRoute: typeof AuthenticatedTransactionsAdjustmentRoute
   AuthenticatedTransactionsMaterialReturnRoute: typeof AuthenticatedTransactionsMaterialReturnRoute
   AuthenticatedTransactionsProductInwardRoute: typeof AuthenticatedTransactionsProductInwardRoute
   AuthenticatedTransactionsRmInwardRoute: typeof AuthenticatedTransactionsRmInwardRoute
@@ -302,12 +468,23 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedReconciliationRoute: AuthenticatedReconciliationRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
+  AuthenticatedInventoryFgLedgerRoute: AuthenticatedInventoryFgLedgerRoute,
+  AuthenticatedInventoryFinishedGoodsRoute:
+    AuthenticatedInventoryFinishedGoodsRoute,
+  AuthenticatedInventoryJobberStockRoute:
+    AuthenticatedInventoryJobberStockRoute,
+  AuthenticatedInventoryRmLedgerRoute: AuthenticatedInventoryRmLedgerRoute,
   AuthenticatedInventoryWarehouseRoute: AuthenticatedInventoryWarehouseRoute,
   AuthenticatedMastersBomRoute: AuthenticatedMastersBomRoute,
   AuthenticatedMastersJobbersRoute: AuthenticatedMastersJobbersRoute,
   AuthenticatedMastersMaterialsRoute: AuthenticatedMastersMaterialsRoute,
   AuthenticatedMastersProductsRoute: AuthenticatedMastersProductsRoute,
+  AuthenticatedTransactionsAdjustmentRoute:
+    AuthenticatedTransactionsAdjustmentRoute,
   AuthenticatedTransactionsMaterialReturnRoute:
     AuthenticatedTransactionsMaterialReturnRoute,
   AuthenticatedTransactionsProductInwardRoute:
