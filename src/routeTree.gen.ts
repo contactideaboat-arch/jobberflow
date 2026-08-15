@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedInventoryFinishedGoodsRouteImport } from './routes/_authenticated/inventory/finished-goods'
 import { Route as AuthenticatedInventoryJobberStockRouteImport } from './routes/_authenticated/inventory/jobber-stock'
 import { Route as AuthenticatedInventoryWarehouseRouteImport } from './routes/_authenticated/inventory/warehouse'
 import { Route as AuthenticatedMastersBomRouteImport } from './routes/_authenticated/masters/bom'
@@ -43,6 +44,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedInventoryFinishedGoodsRoute =
+  AuthenticatedInventoryFinishedGoodsRouteImport.update({
+    id: '/inventory/finished-goods',
+    path: '/inventory/finished-goods',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedInventoryJobberStockRoute =
   AuthenticatedInventoryJobberStockRouteImport.update({
     id: '/inventory/jobber-stock',
@@ -107,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
   '/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
   '/inventory/warehouse': typeof AuthenticatedInventoryWarehouseRoute
   '/masters/bom': typeof AuthenticatedMastersBomRoute
@@ -122,6 +130,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
   '/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
   '/inventory/warehouse': typeof AuthenticatedInventoryWarehouseRoute
   '/masters/bom': typeof AuthenticatedMastersBomRoute
@@ -139,6 +148,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
   '/_authenticated/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
   '/_authenticated/inventory/warehouse': typeof AuthenticatedInventoryWarehouseRoute
   '/_authenticated/masters/bom': typeof AuthenticatedMastersBomRoute
@@ -156,6 +166,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/inventory/finished-goods'
     | '/inventory/jobber-stock'
     | '/inventory/warehouse'
     | '/masters/bom'
@@ -171,6 +182,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/inventory/finished-goods'
     | '/inventory/jobber-stock'
     | '/inventory/warehouse'
     | '/masters/bom'
@@ -187,6 +199,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/_authenticated/inventory/finished-goods'
     | '/_authenticated/inventory/jobber-stock'
     | '/_authenticated/inventory/warehouse'
     | '/_authenticated/masters/bom'
@@ -233,6 +246,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inventory/finished-goods': {
+      id: '/_authenticated/inventory/finished-goods'
+      path: '/inventory/finished-goods'
+      fullPath: '/inventory/finished-goods'
+      preLoaderRoute: typeof AuthenticatedInventoryFinishedGoodsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/inventory/jobber-stock': {
@@ -310,6 +330,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedInventoryFinishedGoodsRoute: typeof AuthenticatedInventoryFinishedGoodsRoute
   AuthenticatedInventoryJobberStockRoute: typeof AuthenticatedInventoryJobberStockRoute
   AuthenticatedInventoryWarehouseRoute: typeof AuthenticatedInventoryWarehouseRoute
   AuthenticatedMastersBomRoute: typeof AuthenticatedMastersBomRoute
@@ -324,6 +345,8 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedInventoryFinishedGoodsRoute:
+    AuthenticatedInventoryFinishedGoodsRoute,
   AuthenticatedInventoryJobberStockRoute:
     AuthenticatedInventoryJobberStockRoute,
   AuthenticatedInventoryWarehouseRoute: AuthenticatedInventoryWarehouseRoute,
