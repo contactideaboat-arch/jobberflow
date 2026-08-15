@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedInventoryFgLedgerRouteImport } from './routes/_authenticated/inventory/fg-ledger'
 import { Route as AuthenticatedInventoryFinishedGoodsRouteImport } from './routes/_authenticated/inventory/finished-goods'
 import { Route as AuthenticatedInventoryJobberStockRouteImport } from './routes/_authenticated/inventory/jobber-stock'
 import { Route as AuthenticatedInventoryRmLedgerRouteImport } from './routes/_authenticated/inventory/rm-ledger'
@@ -45,6 +46,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedInventoryFgLedgerRoute =
+  AuthenticatedInventoryFgLedgerRouteImport.update({
+    id: '/inventory/fg-ledger',
+    path: '/inventory/fg-ledger',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedInventoryFinishedGoodsRoute =
   AuthenticatedInventoryFinishedGoodsRouteImport.update({
     id: '/inventory/finished-goods',
@@ -121,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
   '/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
   '/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
   '/inventory/rm-ledger': typeof AuthenticatedInventoryRmLedgerRoute
@@ -138,6 +146,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
   '/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
   '/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
   '/inventory/rm-ledger': typeof AuthenticatedInventoryRmLedgerRoute
@@ -157,6 +166,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
   '/_authenticated/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
   '/_authenticated/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
   '/_authenticated/inventory/rm-ledger': typeof AuthenticatedInventoryRmLedgerRoute
@@ -176,6 +186,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/inventory/fg-ledger'
     | '/inventory/finished-goods'
     | '/inventory/jobber-stock'
     | '/inventory/rm-ledger'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/inventory/fg-ledger'
     | '/inventory/finished-goods'
     | '/inventory/jobber-stock'
     | '/inventory/rm-ledger'
@@ -211,6 +223,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/_authenticated/inventory/fg-ledger'
     | '/_authenticated/inventory/finished-goods'
     | '/_authenticated/inventory/jobber-stock'
     | '/_authenticated/inventory/rm-ledger'
@@ -259,6 +272,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inventory/fg-ledger': {
+      id: '/_authenticated/inventory/fg-ledger'
+      path: '/inventory/fg-ledger'
+      fullPath: '/inventory/fg-ledger'
+      preLoaderRoute: typeof AuthenticatedInventoryFgLedgerRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/inventory/finished-goods': {
@@ -350,6 +370,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedInventoryFgLedgerRoute: typeof AuthenticatedInventoryFgLedgerRoute
   AuthenticatedInventoryFinishedGoodsRoute: typeof AuthenticatedInventoryFinishedGoodsRoute
   AuthenticatedInventoryJobberStockRoute: typeof AuthenticatedInventoryJobberStockRoute
   AuthenticatedInventoryRmLedgerRoute: typeof AuthenticatedInventoryRmLedgerRoute
@@ -366,6 +387,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedInventoryFgLedgerRoute: AuthenticatedInventoryFgLedgerRoute,
   AuthenticatedInventoryFinishedGoodsRoute:
     AuthenticatedInventoryFinishedGoodsRoute,
   AuthenticatedInventoryJobberStockRoute:
