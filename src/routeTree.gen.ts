@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedInventoryJobberStockRouteImport } from './routes/_authenticated/inventory/jobber-stock'
 import { Route as AuthenticatedInventoryWarehouseRouteImport } from './routes/_authenticated/inventory/warehouse'
 import { Route as AuthenticatedMastersBomRouteImport } from './routes/_authenticated/masters/bom'
 import { Route as AuthenticatedMastersJobbersRouteImport } from './routes/_authenticated/masters/jobbers'
@@ -42,6 +43,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedInventoryJobberStockRoute =
+  AuthenticatedInventoryJobberStockRouteImport.update({
+    id: '/inventory/jobber-stock',
+    path: '/inventory/jobber-stock',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedInventoryWarehouseRoute =
   AuthenticatedInventoryWarehouseRouteImport.update({
     id: '/inventory/warehouse',
@@ -100,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
   '/inventory/warehouse': typeof AuthenticatedInventoryWarehouseRoute
   '/masters/bom': typeof AuthenticatedMastersBomRoute
   '/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
@@ -114,6 +122,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
   '/inventory/warehouse': typeof AuthenticatedInventoryWarehouseRoute
   '/masters/bom': typeof AuthenticatedMastersBomRoute
   '/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
@@ -130,6 +139,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
   '/_authenticated/inventory/warehouse': typeof AuthenticatedInventoryWarehouseRoute
   '/_authenticated/masters/bom': typeof AuthenticatedMastersBomRoute
   '/_authenticated/masters/jobbers': typeof AuthenticatedMastersJobbersRoute
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/inventory/jobber-stock'
     | '/inventory/warehouse'
     | '/masters/bom'
     | '/masters/jobbers'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/inventory/jobber-stock'
     | '/inventory/warehouse'
     | '/masters/bom'
     | '/masters/jobbers'
@@ -175,6 +187,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/_authenticated/inventory/jobber-stock'
     | '/_authenticated/inventory/warehouse'
     | '/_authenticated/masters/bom'
     | '/_authenticated/masters/jobbers'
@@ -220,6 +233,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inventory/jobber-stock': {
+      id: '/_authenticated/inventory/jobber-stock'
+      path: '/inventory/jobber-stock'
+      fullPath: '/inventory/jobber-stock'
+      preLoaderRoute: typeof AuthenticatedInventoryJobberStockRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/inventory/warehouse': {
@@ -290,6 +310,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedInventoryJobberStockRoute: typeof AuthenticatedInventoryJobberStockRoute
   AuthenticatedInventoryWarehouseRoute: typeof AuthenticatedInventoryWarehouseRoute
   AuthenticatedMastersBomRoute: typeof AuthenticatedMastersBomRoute
   AuthenticatedMastersJobbersRoute: typeof AuthenticatedMastersJobbersRoute
@@ -303,6 +324,8 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedInventoryJobberStockRoute:
+    AuthenticatedInventoryJobberStockRoute,
   AuthenticatedInventoryWarehouseRoute: AuthenticatedInventoryWarehouseRoute,
   AuthenticatedMastersBomRoute: AuthenticatedMastersBomRoute,
   AuthenticatedMastersJobbersRoute: AuthenticatedMastersJobbersRoute,
