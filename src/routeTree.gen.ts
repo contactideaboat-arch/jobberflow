@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedInventoryFgLedgerRouteImport } from './routes/_authenticated/inventory/fg-ledger'
 import { Route as AuthenticatedInventoryFinishedGoodsRouteImport } from './routes/_authenticated/inventory/finished-goods'
 import { Route as AuthenticatedInventoryJobberStockRouteImport } from './routes/_authenticated/inventory/jobber-stock'
@@ -45,6 +46,11 @@ const AuthRoute = AuthRouteImport.update({
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedInventoryFgLedgerRoute =
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
   '/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
   '/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
@@ -154,6 +161,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
   '/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
   '/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
@@ -175,6 +183,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
   '/_authenticated/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
   '/_authenticated/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/reports'
     | '/inventory/fg-ledger'
     | '/inventory/finished-goods'
     | '/inventory/jobber-stock'
@@ -215,6 +225,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/reports'
     | '/inventory/fg-ledger'
     | '/inventory/finished-goods'
     | '/inventory/jobber-stock'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/_authenticated/reports'
     | '/_authenticated/inventory/fg-ledger'
     | '/_authenticated/inventory/finished-goods'
     | '/_authenticated/inventory/jobber-stock'
@@ -285,6 +297,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/inventory/fg-ledger': {
@@ -390,6 +409,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedInventoryFgLedgerRoute: typeof AuthenticatedInventoryFgLedgerRoute
   AuthenticatedInventoryFinishedGoodsRoute: typeof AuthenticatedInventoryFinishedGoodsRoute
   AuthenticatedInventoryJobberStockRoute: typeof AuthenticatedInventoryJobberStockRoute
@@ -408,6 +428,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedInventoryFgLedgerRoute: AuthenticatedInventoryFgLedgerRoute,
   AuthenticatedInventoryFinishedGoodsRoute:
     AuthenticatedInventoryFinishedGoodsRoute,
