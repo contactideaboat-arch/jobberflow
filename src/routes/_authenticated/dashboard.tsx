@@ -19,6 +19,7 @@ import {
   Warehouse,
 } from "lucide-react";
 import { PageHeader } from "@/components/erp/AppShell";
+import { WorkflowJourney } from "@/components/erp/WorkflowJourney";
 import { useRows } from "@/hooks/use-erp";
 import { KG, PCS, PCT } from "@/lib/erp";
 import { cn } from "@/lib/utils";
@@ -27,9 +28,15 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
       { title: "Operations Control Hub — JobWork ERP" },
-      { name: "description", content: "Live operational KPIs and direct access to every JobWork ERP module." },
+      {
+        name: "description",
+        content: "Live operational KPIs and direct access to every JobWork ERP module.",
+      },
       { property: "og:title", content: "Operations Control Hub — JobWork ERP" },
-      { property: "og:description", content: "Live stock and production KPIs with direct module navigation." },
+      {
+        property: "og:description",
+        content: "Live stock and production KPIs with direct module navigation.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -106,23 +113,44 @@ function Dashboard() {
   const jobberStock = useRows("jobber_stock", ["jobber_stock"]);
   const fg = useRows("finished_goods_stock", ["finished_goods_stock"]);
   const jobbers = useRows("jobbers", ["jobbers"], (q) => q.eq("status", true));
-  const products = useRows("finished_products", ["dashboard-products"], (q) => q.eq("status", true));
+  const products = useRows("finished_products", ["dashboard-products"], (q) =>
+    q.eq("status", true),
+  );
   const materials = useRows("raw_materials", ["dashboard-materials"], (q) => q.eq("status", true));
-  const inwards = useRows(
-    "product_inward_headers",
-    ["dash-inwards"],
-    (q) => q.order("voucher_date", { ascending: false }).limit(200),
+  const inwards = useRows("product_inward_headers", ["dash-inwards"], (q) =>
+    q.order("voucher_date", { ascending: false }).limit(200),
   );
 
-  const whTotal = (warehouse.data ?? []).reduce((sum: number, row: any) => sum + Number(row.balance), 0);
-  const jobberTotal = (jobberStock.data ?? []).reduce((sum: number, row: any) => sum + Number(row.balance), 0);
+  const dashboardQueries = [warehouse, jobberStock, fg, jobbers, products, materials, inwards];
+  const isLoading = dashboardQueries.some((query) => query.isLoading);
+  const hasError = dashboardQueries.some((query) => query.isError);
+
+  const whTotal = (warehouse.data ?? []).reduce(
+    (sum: number, row: any) => sum + Number(row.balance),
+    0,
+  );
+  const jobberTotal = (jobberStock.data ?? []).reduce(
+    (sum: number, row: any) => sum + Number(row.balance),
+    0,
+  );
   const fgTotal = (fg.data ?? []).reduce((sum: number, row: any) => sum + Number(row.balance), 0);
-  const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().slice(0, 10);
-  const monthInwards = (inwards.data ?? []).filter((row: any) => row.status === "POSTED" && row.voucher_date >= monthStart);
-  const productionMonth = monthInwards.reduce((sum: number, row: any) => sum + Number(row.finished_quantity), 0);
-  const wastageMonth = monthInwards.reduce((sum: number, row: any) => sum + Number(row.overall_wastage_kg), 0);
+  const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+    .toISOString()
+    .slice(0, 10);
+  const monthInwards = (inwards.data ?? []).filter(
+    (row: any) => row.status === "POSTED" && row.voucher_date >= monthStart,
+  );
+  const productionMonth = monthInwards.reduce(
+    (sum: number, row: any) => sum + Number(row.finished_quantity),
+    0,
+  );
+  const wastageMonth = monthInwards.reduce(
+    (sum: number, row: any) => sum + Number(row.overall_wastage_kg),
+    0,
+  );
   const averageWastage = monthInwards.length
-    ? monthInwards.reduce((sum: number, row: any) => sum + Number(row.wastage_percentage), 0) / monthInwards.length
+    ? monthInwards.reduce((sum: number, row: any) => sum + Number(row.wastage_percentage), 0) /
+      monthInwards.length
     : 0;
 
   const modules: Module[] = [
@@ -130,13 +158,23 @@ function Dashboard() {
       title: "Masters",
       eyebrow: "Core data",
       metricLabel: "Active records",
-      metric: String((jobbers.data?.length ?? 0) + (products.data?.length ?? 0) + (materials.data?.length ?? 0)),
+      metric: String(
+        (jobbers.data?.length ?? 0) + (products.data?.length ?? 0) + (materials.data?.length ?? 0),
+      ),
       icon: Layers3,
       tone: "primary",
       links: [
         { label: "Jobber Master", description: "Contractor profiles", to: "/masters/jobbers" },
-        { label: "Raw Material Master", description: "Materials and stock limits", to: "/masters/materials" },
-        { label: "Finished Product Master", description: "Product catalogue", to: "/masters/products" },
+        {
+          label: "Raw Material Master",
+          description: "Materials and stock limits",
+          to: "/masters/materials",
+        },
+        {
+          label: "Finished Product Master",
+          description: "Product catalogue",
+          to: "/masters/products",
+        },
         { label: "BOM Master", description: "Recipes and revisions", to: "/masters/bom" },
       ],
     },
@@ -148,11 +186,26 @@ function Dashboard() {
       icon: Boxes,
       tone: "success",
       links: [
-        { label: "Warehouse Stock", description: "Material at warehouse", to: "/inventory/warehouse" },
-        { label: "Jobber Stock", description: "Material at jobbers", to: "/inventory/jobber-stock" },
-        { label: "Finished Goods Stock", description: "Ready product balance", to: "/inventory/finished-goods" },
-        { label: "Raw Material Ledger", description: "Material movement history", to: "/inventory/rm-ledger" },
-        { label: "Finished Goods Ledger", description: "Product movement history", to: "/inventory/fg-ledger" },
+        {
+          label: "Raw Material Stock",
+          description: "Warehouse and jobber positions together",
+          to: "/inventory/warehouse",
+        },
+        {
+          label: "Finished Goods Stock",
+          description: "Ready product balance",
+          to: "/inventory/finished-goods",
+        },
+        {
+          label: "Raw Material Ledger",
+          description: "Material movement history",
+          to: "/inventory/rm-ledger",
+        },
+        {
+          label: "Finished Goods Ledger",
+          description: "Product movement history",
+          to: "/inventory/fg-ledger",
+        },
       ],
     },
     {
@@ -163,11 +216,31 @@ function Dashboard() {
       icon: ArrowLeftRight,
       tone: "accent",
       links: [
-        { label: "Raw Material Inward", description: "Receive materials", to: "/transactions/rm-inward" },
-        { label: "Material Transfer to Jobber", description: "Issue for production", to: "/transactions/transfer" },
-        { label: "Product Inward from Jobber", description: "Receive finished goods", to: "/transactions/product-inward" },
-        { label: "Material Return from Jobber", description: "Return unused material", to: "/transactions/material-return" },
-        { label: "Stock Adjustment", description: "Correct stock balances", to: "/transactions/adjustment" },
+        {
+          label: "Raw Material Inward",
+          description: "Receive materials",
+          to: "/transactions/rm-inward",
+        },
+        {
+          label: "Material Transfer to Jobber",
+          description: "Issue for production",
+          to: "/transactions/transfer",
+        },
+        {
+          label: "Product Inward from Jobber",
+          description: "Receive finished goods",
+          to: "/transactions/product-inward",
+        },
+        {
+          label: "Material Return from Jobber",
+          description: "Return unused material",
+          to: "/transactions/material-return",
+        },
+        {
+          label: "Stock Adjustment",
+          description: "Correct stock balances",
+          to: "/transactions/adjustment",
+        },
       ],
     },
     {
@@ -179,7 +252,11 @@ function Dashboard() {
       tone: "info",
       links: [
         { label: "Reports Centre", description: "Production and wastage reports", to: "/reports" },
-        { label: "Jobber Reconciliation", description: "Material accountability", to: "/reconciliation" },
+        {
+          label: "Jobber Reconciliation",
+          description: "Material accountability",
+          to: "/reconciliation",
+        },
       ],
     },
     {
@@ -189,38 +266,108 @@ function Dashboard() {
       metric: "Users & settings",
       icon: Settings2,
       tone: "neutral",
-      links: [{ label: "Users & Settings", description: "Roles, company and audit trail", to: "/admin" }],
+      links: [
+        { label: "Users & Settings", description: "Roles, company and audit trail", to: "/admin" },
+      ],
     },
   ];
 
   const kpis = [
-    { label: "Warehouse raw material", value: KG(whTotal), unit: "KG", icon: Warehouse, to: "/inventory/warehouse" as AppPath, tone: "default" },
-    { label: "Raw material at jobbers", value: KG(jobberTotal), unit: "KG", icon: Factory, to: "/inventory/jobber-stock" as AppPath, tone: "accent" },
-    { label: "Finished goods stock", value: PCS(fgTotal), unit: "PCS", icon: Package, to: "/inventory/finished-goods" as AppPath, tone: "success" },
-    { label: "Active jobbers", value: String(jobbers.data?.length ?? 0), icon: Users, to: "/masters/jobbers" as AppPath, tone: "info" },
-    { label: "Production this month", value: PCS(productionMonth), unit: "PCS", icon: TrendingUp, to: "/transactions/product-inward" as AppPath, tone: "default" },
-    { label: "Wastage this month", value: KG(wastageMonth), unit: "KG", icon: Trash2, to: "/reports" as AppPath, tone: "warning" },
+    {
+      label: "Warehouse raw material",
+      value: KG(whTotal),
+      unit: "KG",
+      icon: Warehouse,
+      to: "/inventory/warehouse" as AppPath,
+      tone: "default",
+    },
+    {
+      label: "Raw material at jobbers",
+      value: KG(jobberTotal),
+      unit: "KG",
+      icon: Factory,
+      to: "/inventory/jobber-stock" as AppPath,
+      tone: "accent",
+    },
+    {
+      label: "Finished goods stock",
+      value: PCS(fgTotal),
+      unit: "PCS",
+      icon: Package,
+      to: "/inventory/finished-goods" as AppPath,
+      tone: "success",
+    },
+    {
+      label: "Active jobbers",
+      value: String(jobbers.data?.length ?? 0),
+      icon: Users,
+      to: "/masters/jobbers" as AppPath,
+      tone: "info",
+    },
+    {
+      label: "Production this month",
+      value: PCS(productionMonth),
+      unit: "PCS",
+      icon: TrendingUp,
+      to: "/transactions/product-inward" as AppPath,
+      tone: "default",
+    },
+    {
+      label: "Wastage this month",
+      value: KG(wastageMonth),
+      unit: "KG",
+      icon: Trash2,
+      to: "/reports" as AppPath,
+      tone: "warning",
+    },
   ];
 
   return (
-    <div className="mx-auto max-w-[1480px]">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-5">
-        <PageHeader
-          title="Operational Control Hub"
-          breadcrumb={["Overview", "Dashboard"]}
-          subtitle="Live production control and direct access to every operational workspace."
-        />
-        <div className="mb-5 flex items-center gap-2 rounded-full border border-success/25 bg-success/10 px-3 py-1.5 text-[11px] font-bold uppercase text-success">
-          <span className="size-2 rounded-full bg-success" />
-          Live data connected
-        </div>
-      </div>
+    <div>
+      <PageHeader
+        title="Operations overview"
+        breadcrumb={["Overview", "Dashboard"]}
+        subtitle="Start with the current production stage, then use the detailed workspaces for records, analysis, and control."
+        actions={
+          <div
+            className={cn(
+              "inline-flex items-center gap-2 rounded-sm border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em]",
+              hasError
+                ? "border-destructive/30 bg-destructive/8 text-destructive"
+                : isLoading
+                  ? "border-info/30 bg-info/8 text-info"
+                  : "border-success/30 bg-success/8 text-success",
+            )}
+            role="status"
+          >
+            <span
+              className={cn(
+                "size-1.5 rounded-full",
+                hasError ? "bg-destructive" : isLoading ? "animate-pulse bg-info" : "bg-success",
+              )}
+            />
+            {hasError
+              ? "Data needs attention"
+              : isLoading
+                ? "Syncing live data"
+                : "Live data connected"}
+          </div>
+        }
+      />
 
-      {/* // ============ COMMENTED OUT: Operating position KPI strip (not needed) ============
-      <section aria-labelledby="kpi-heading" className="py-5">
-        <div className="mb-3 flex items-center justify-between">
-          <h2 id="kpi-heading" className="text-sm font-bold uppercase text-muted-foreground">Operating position</h2>
-          <span className="text-xs text-muted-foreground">Select any KPI to open its details</span>
+      <WorkflowJourney />
+
+      <section aria-labelledby="kpi-heading" className="mb-6">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <h2
+            id="kpi-heading"
+            className="text-sm font-bold uppercase tracking-[0.1em] text-muted-foreground"
+          >
+            Operating position
+          </h2>
+          <span className="text-xs text-muted-foreground">
+            Select any measure to open its source
+          </span>
         </div>
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
           {kpis.map((kpi) => {
@@ -229,65 +376,126 @@ function Dashboard() {
               <Link
                 key={kpi.label}
                 to={kpi.to}
-                className="group rounded-lg border bg-card p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-panel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="group rounded-lg border bg-card p-4 shadow-panel transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-primary/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div className="text-[10px] font-bold uppercase text-muted-foreground">{kpi.label}</div>
-                  <Icon className="size-4 text-muted-foreground transition-colors group-hover:text-primary" />
+                  <div className="text-[10px] font-bold uppercase leading-relaxed tracking-wider text-muted-foreground">
+                    {kpi.label}
+                  </div>
+                  <Icon
+                    className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
+                    aria-hidden="true"
+                  />
                 </div>
-                <div className={cn("num mt-3 text-2xl font-bold", kpi.tone === "accent" && "text-accent-foreground", kpi.tone === "success" && "text-success", kpi.tone === "info" && "text-info", kpi.tone === "warning" && "text-warning-foreground")}>
-                  {kpi.value}
-                  {kpi.unit && <span className="ml-1 text-[10px] font-semibold text-muted-foreground">{kpi.unit}</span>}
+                <div
+                  className={cn(
+                    "num mt-3 text-2xl font-bold",
+                    kpi.tone === "accent" && "text-accent-foreground",
+                    kpi.tone === "success" && "text-success",
+                    kpi.tone === "info" && "text-info",
+                    kpi.tone === "warning" && "text-warning-foreground",
+                  )}
+                >
+                  {isLoading ? (
+                    <span
+                      className="inline-block h-7 w-20 animate-pulse bg-muted"
+                      aria-label="Loading"
+                    />
+                  ) : (
+                    kpi.value
+                  )}
+                  {!isLoading && kpi.unit && (
+                    <span className="ml-1 text-[10px] font-semibold text-muted-foreground">
+                      {kpi.unit}
+                    </span>
+                  )}
                 </div>
                 <div className="mt-3 flex items-center gap-1 text-[11px] font-semibold text-primary opacity-70 transition-opacity group-hover:opacity-100">
-                  View details <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                  View details{" "}
+                  <ArrowRight
+                    className="size-3 transition-transform group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
                 </div>
               </Link>
             );
           })}
         </div>
       </section>
-      ============ END COMMENTED OUT KPI STRIP ============ */}
-
 
       <section aria-labelledby="modules-heading" className="pb-6">
         <div className="mb-3 flex items-center gap-2">
           <Gauge className="size-4 text-primary" />
-          <h2 id="modules-heading" className="text-sm font-bold uppercase text-muted-foreground">Module command center</h2>
+          <h2 id="modules-heading" className="text-sm font-bold uppercase text-muted-foreground">
+            Module command center
+          </h2>
         </div>
-        <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {modules.map((module) => {
+        <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-12">
+          {modules.map((module, moduleIndex) => {
             const Icon = module.icon;
             const tone = toneStyles[module.tone];
+            const spanClass = [
+              "xl:col-span-4",
+              "xl:col-span-8",
+              "xl:col-span-7",
+              "xl:col-span-5",
+              "xl:col-span-4",
+            ][moduleIndex];
             return (
-              <article key={module.title} className={cn("overflow-hidden rounded-lg border border-t-4 bg-card shadow-sm transition-shadow duration-200 hover:shadow-panel", tone.top)}>
+              <article
+                key={module.title}
+                className={cn(
+                  "overflow-hidden rounded-lg border-t-2 bg-card shadow-panel transition-[transform,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/30",
+                  spanClass,
+                  tone.top,
+                )}
+              >
                 <div className="flex items-start justify-between gap-4 border-b p-5">
                   <div>
                     <div className="mb-3 flex items-center gap-3">
-                      <span className={cn("flex size-10 items-center justify-center rounded-lg", tone.icon)}>
+                      <span
+                        className={cn(
+                          "flex size-10 items-center justify-center rounded-lg",
+                          tone.icon,
+                        )}
+                      >
                         <Icon className="size-5" />
                       </span>
                       <div>
-                        <p className="text-[10px] font-bold uppercase text-muted-foreground">{module.eyebrow}</p>
+                        <p className="text-[10px] font-bold uppercase text-muted-foreground">
+                          {module.eyebrow}
+                        </p>
                         <h3 className="text-lg font-bold">{module.title}</h3>
                       </div>
                     </div>
                   </div>
                   <div className="max-w-36 text-right">
-                    <p className="text-[9px] font-bold uppercase text-muted-foreground">{module.metricLabel}</p>
-                    <p className={cn("num mt-1 text-lg font-bold", tone.text)}>{module.metric}</p>
+                    <p className="text-[9px] font-bold uppercase text-muted-foreground">
+                      {module.metricLabel}
+                    </p>
+                    <p className={cn("num mt-1 text-lg font-bold", tone.text)}>
+                      {isLoading ? "Loading…" : hasError ? "Unavailable" : module.metric}
+                    </p>
                   </div>
                 </div>
-                <nav aria-label={`${module.title} pages`} className="p-3">
+                <nav
+                  aria-label={`${module.title} pages`}
+                  className={cn("p-3", moduleIndex === 1 && "md:grid md:grid-cols-2 md:gap-1")}
+                >
                   {module.links.map((item) => (
                     <Link
                       key={item.to}
                       to={item.to}
-                      className={cn("group/link flex min-h-14 items-center justify-between gap-3 rounded-md px-3 py-2 transition-colors", tone.hover)}
+                      className={cn(
+                        "group/link flex min-h-14 items-center justify-between gap-3 rounded-md px-3 py-2 transition-colors",
+                        tone.hover,
+                      )}
                     >
                       <span className="min-w-0">
                         <span className="block text-sm font-semibold">{item.label}</span>
-                        <span className="block truncate text-[11px] text-muted-foreground">{item.description}</span>
+                        <span className="block truncate text-[11px] text-muted-foreground">
+                          {item.description}
+                        </span>
                       </span>
                       <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover/link:translate-x-0.5" />
                     </Link>
@@ -297,7 +505,7 @@ function Dashboard() {
             );
           })}
 
-          <aside className="flex min-h-56 flex-col justify-between rounded-lg border bg-sidebar p-5 text-sidebar-foreground shadow-panel">
+          <aside className="flex min-h-56 flex-col justify-between rounded-lg border border-sidebar-border bg-sidebar p-5 text-sidebar-foreground shadow-panel md:col-span-1 xl:col-span-8">
             <div>
               <div className="mb-4 flex items-center justify-between">
                 <span className="flex size-10 items-center justify-center rounded-lg bg-sidebar-accent">
@@ -309,7 +517,8 @@ function Dashboard() {
               </div>
               <h3 className="text-lg font-bold">Production snapshot</h3>
               <p className="mt-1 text-xs leading-relaxed text-sidebar-foreground/65">
-                {PCS(productionMonth)} pieces received with {KG(wastageMonth)} KG recorded wastage this month.
+                {PCS(productionMonth)} pieces received with {KG(wastageMonth)} KG recorded wastage
+                this month.
               </p>
             </div>
             <Link

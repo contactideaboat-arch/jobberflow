@@ -144,8 +144,17 @@
     border-color: var(--color-border);
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
+    min-width: 320px;
     background-color: var(--color-background);
+    background-image:
+      linear-gradient(oklch(from var(--color-foreground) h s l / 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(from var(--color-foreground) h s l / 0.018) 1px, transparent 1px);
+    background-size: 32px 32px;
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -157,6 +166,157 @@
   .font-display {
     font-family: var(--font-display);
     letter-spacing: -0.01em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 55%, transparent);
+    color: var(--color-foreground);
+  }
+}
+
+@layer components {
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    transform: translateY(-150%);
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+    padding: 0.625rem 0.875rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    transition: transform 160ms ease;
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  .route-stage {
+    animation: route-enter 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .route-progress {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 80;
+    height: 2px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100%);
+    background: color-mix(in oklab, var(--color-primary) 16%, transparent);
+  }
+
+  .route-progress::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 42%;
+    background: var(--color-primary);
+    transform: translateX(-100%);
+  }
+
+  .route-progress.is-active {
+    opacity: 1;
+  }
+
+  .route-progress.is-active::after {
+    animation: route-progress 900ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  .sidebar-link {
+    color: color-mix(in oklab, var(--color-sidebar-foreground) 78%, transparent);
+    transition:
+      color 180ms ease,
+      background-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .sidebar-link::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: 50%;
+    width: 2px;
+    height: 0;
+    background: var(--color-sidebar-primary);
+    transform: translateY(-50%);
+    transition: height 180ms ease;
+  }
+
+  .sidebar-link:hover {
+    color: var(--color-sidebar-foreground);
+    background: var(--color-sidebar-accent);
+    transform: translateX(2px);
+  }
+
+  .sidebar-link.is-active {
+    color: var(--color-sidebar-foreground);
+    background: color-mix(
+      in oklab,
+      var(--color-sidebar-accent) 86%,
+      var(--color-sidebar-primary) 14%
+    );
+    font-weight: 600;
+  }
+
+  .sidebar-link.is-active::before {
+    height: 1.25rem;
+  }
+
+  .nav-group-button:hover {
+    color: var(--color-sidebar-foreground);
+    background: color-mix(in oklab, var(--color-sidebar-accent) 52%, transparent);
+  }
+
+  .auth-grid {
+    background-image:
+      linear-gradient(oklch(1 0 0 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(1 0 0 / 0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: linear-gradient(to bottom right, black, transparent 75%);
+  }
+
+  .auth-stage {
+    animation: route-enter 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .journey-panel {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background: var(--color-card);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .journey-icon {
+    border-radius: var(--radius-sm);
+  }
+}
+
+@keyframes route-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes route-progress {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(340%);
   }
 }
 
@@ -197,6 +357,25 @@
     padding: 0.5rem 0.75rem;
     font-weight: 600;
     background-color: var(--color-muted);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .route-stage {
+    animation: none;
   }
 }
 
