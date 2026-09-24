@@ -216,6 +216,7 @@ function Dashboard() {
         </div>
       </div>
 
+      {/* // ============ COMMENTED OUT: Operating position KPI strip (not needed) ============
       <section aria-labelledby="kpi-heading" className="py-5">
         <div className="mb-3 flex items-center justify-between">
           <h2 id="kpi-heading" className="text-sm font-bold uppercase text-muted-foreground">Operating position</h2>
@@ -246,6 +247,8 @@ function Dashboard() {
           })}
         </div>
       </section>
+      ============ END COMMENTED OUT KPI STRIP ============ */}
+
 
       <section aria-labelledby="modules-heading" className="pb-6">
         <div className="mb-3 flex items-center gap-2">
