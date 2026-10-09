@@ -36,11 +36,13 @@ Built around the core principle that sending material to a jobber is not consump
 ## Brand Commitments
 
 - Name: JobberFlow. Hand-authored icon set in `src/components/icons` (no icon library).
-- Visual world "Signboard" chosen by the user on 2026-10-09 (replacing the earlier bone/ink/amber palette): enamel-teal shell, off-white board ground, chrome yellow for the warehouse and primary action, tomato red only for loss and long-out material; Big Shoulders Display for page titles, section titles and figures, Archivo for all UI.
+- Visual world "Steel ledger" — the ledger book of someone who has to be right. Flat surfaces separated by 1px rules; steel blue for action, focus and "you are here"; red only for loss, long-out material and destructive actions; amber for "look at this" including a failed load; green only for a posted voucher. One type family (Archivo), tabular figures, 11px type floor. Small deliberate radii, no gradients, and a single sanctioned shadow for floating layers only. `DESIGN.md` documents the system in full.
+- The design contract lives in `src/styles.css`. When prose and that file disagree, the file is right.
 
 ## Evidence on Hand
 
 - Real operational data lives in Supabase. No testimonials, customers or metrics exist for marketing use; do not fabricate them.
+- Figures shown in `ProductShot.tsx` are deliberate marketing mockups, not records. They must never be reused as real data.
 
 ## Product Principles
 
@@ -48,3 +50,4 @@ Built around the core principle that sending material to a jobber is not consump
 2. The workflow order (receive, issue, produce, reconcile) is the spine of navigation.
 3. Fast for repeat daily entry; calm for occasional review.
 4. Read-only users see the same truth without write affordances.
+5. State the truth, not a plausible default. An unset limit reads as no limit; a failed query reads as failed; an empty register says what would fill it.

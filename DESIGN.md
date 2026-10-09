@@ -1,313 +1,263 @@
----
-name: JobberFlow
-description: Job work, inventory and reconciliation for a manufacturer that sends material out to jobbers, lettered like a godown signboard.
-colors:
-  board-ground: "oklch(0.968 0.006 100)"
-  ink: "oklch(0.2 0.025 215)"
-  subtle-ground: "oklch(0.94 0.008 105)"
-  card: "oklch(0.993 0.003 100)"
-  raised: "oklch(1 0 0)"
-  enamel-teal: "oklch(0.43 0.075 205)"
-  enamel-teal-ink: "oklch(0.985 0.005 100)"
-  teal-wash: "oklch(0.93 0.014 195)"
-  teal-wash-ink: "oklch(0.3 0.05 205)"
-  muted: "oklch(0.944 0.007 105)"
-  muted-ink: "oklch(0.47 0.02 210)"
-  chrome-yellow: "oklch(0.86 0.165 92)"
-  chrome-yellow-ink: "oklch(0.24 0.045 80)"
-  tomato: "oklch(0.6 0.2 33)"
-  tomato-ink: "oklch(0.985 0.005 100)"
-  success-green: "oklch(0.54 0.12 160)"
-  warning-amber: "oklch(0.79 0.15 75)"
-  info-blue: "oklch(0.55 0.08 220)"
-  rule: "oklch(0.875 0.01 110)"
-  rule-strong: "oklch(0.74 0.016 110)"
-  input-stroke: "oklch(0.83 0.012 110)"
-  paint-green: "oklch(0.5 0.1 160)"
-  paint-plum: "oklch(0.47 0.11 345)"
-  paint-sky: "oklch(0.66 0.09 228)"
-  shell-teal: "oklch(0.33 0.058 205)"
-  shell-ink: "oklch(0.93 0.02 190)"
-  shell-row: "oklch(0.39 0.062 205)"
-  shell-rule: "oklch(0.43 0.055 205)"
-  shell-subtle: "oklch(0.77 0.04 195)"
-typography:
-  display:
-    fontFamily: "Big Shoulders Display, Archivo, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "4.75rem"
-    fontWeight: 800
-    lineHeight: 0.92
-    letterSpacing: "0.005em"
-  headline:
-    fontFamily: "Big Shoulders Display, Archivo, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "2.5rem"
-    fontWeight: 800
-    lineHeight: 1
-    letterSpacing: "0.005em"
-  title:
-    fontFamily: "Big Shoulders Display, Archivo, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.5rem"
-    fontWeight: 800
-    lineHeight: 0.92
-    letterSpacing: "0.005em"
-  body:
-    fontFamily: "Archivo, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.875rem"
-    fontWeight: 400
-    lineHeight: 1.55
-    fontFeature: "\"cv05\" 1"
-  table:
-    fontFamily: "Archivo, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.8125rem"
-    fontWeight: 400
-    lineHeight: 1.55
-    fontFeature: "\"tnum\""
-  label:
-    fontFamily: "Archivo, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.75rem"
-    fontWeight: 600
-    lineHeight: 1.35
-  code:
-    fontFamily: "JetBrains Mono, ui-monospace, SFMono-Regular, monospace"
-    fontSize: "0.75rem"
-    fontWeight: 500
-rounded:
-  xs: "2px"
-  sm: "3px"
-  md: "4px"
-  lg: "5px"
-  xl: "6px"
-spacing:
-  tile-gap: "6px"
-  cell-y: "7px"
-  cell-x: "12px"
-  panel: "20px"
-  panel-lg: "24px"
-  page: "24px"
-  section: "48px"
-components:
-  button-primary:
-    backgroundColor: "{colors.enamel-teal}"
-    textColor: "{colors.enamel-teal-ink}"
-    rounded: "{rounded.md}"
-    padding: "8px 16px"
-    height: "36px"
-  button-signal:
-    backgroundColor: "{colors.chrome-yellow}"
-    textColor: "{colors.chrome-yellow-ink}"
-    rounded: "{rounded.md}"
-    padding: "0 12px"
-    height: "36px"
-  button-outline:
-    backgroundColor: "{colors.board-ground}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.md}"
-    padding: "0 12px"
-    height: "36px"
-  button-destructive:
-    backgroundColor: "{colors.tomato}"
-    textColor: "{colors.tomato-ink}"
-    rounded: "{rounded.md}"
-    padding: "8px 16px"
-    height: "36px"
-  input:
-    backgroundColor: "{colors.board-ground}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.md}"
-    padding: "4px 12px"
-    height: "36px"
-  nav-row:
-    textColor: "{colors.shell-ink}"
-    rounded: "{rounded.md}"
-    padding: "0 8px"
-    height: "32px"
-  nav-row-active:
-    backgroundColor: "{colors.shell-row}"
-    textColor: "{colors.enamel-teal-ink}"
-    rounded: "{rounded.md}"
-  new-voucher:
-    backgroundColor: "{colors.chrome-yellow}"
-    textColor: "{colors.chrome-yellow-ink}"
-    rounded: "{rounded.md}"
-    padding: "0 12px"
-    height: "36px"
-  board-tile-warehouse:
-    backgroundColor: "{colors.chrome-yellow}"
-    textColor: "{colors.chrome-yellow-ink}"
-    rounded: "{rounded.sm}"
-    padding: "24px"
-  board-tile-jobber:
-    backgroundColor: "{colors.enamel-teal}"
-    textColor: "{colors.enamel-teal-ink}"
-    rounded: "{rounded.sm}"
-    padding: "24px"
-  days-plate:
-    backgroundColor: "{colors.tomato}"
-    textColor: "{colors.tomato-ink}"
-    padding: "0 24px"
-    height: "32px"
-  status-live:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.board-ground}"
-    rounded: "{rounded.sm}"
-    padding: "6px 10px"
-  table-head:
-    backgroundColor: "{colors.subtle-ground}"
-    textColor: "{colors.muted-ink}"
-    padding: "7px 12px"
----
-
 # Design System: JobberFlow
+
+> **This document describes the system in `src/styles.css`.** That file is the
+> contract; this is the prose around it. If the two disagree, `styles.css` is
+> right and this file is out of date. An earlier version of this document
+> described "Signboard" — enamel teal, chrome yellow, Big Shoulders Display —
+> which was replaced. Do not reintroduce those names.
 
 ## Overview
 
-**Creative North Star: "The Signboard"**
+**Creative North Star: "Steel ledger"**
 
-JobberFlow is lettered and painted like the boards over a godown door and a trader's shop: flat enamel paint, a teal shell, an off-white board, black ink, chrome yellow and a tomato red that only ever means trouble. The world is working signage, not a dashboard theme. Paint is unmodulated, depth comes from borders and ink rules rather than shadows, and heavy condensed lettering is reserved for the things a sign would actually say: the page name, the section name, the number.
+JobberFlow is a working instrument, not a dashboard theme. The reference is a
+ledger book kept by someone who has to be right: a near-white page, ruled lines,
+figures aligned on the decimal, one pen for entries and one for the margin.
 
-Density follows the work. Staff post vouchers all day, so tables are ledger-tight (13px rows, 7px cell padding, tabular figures) and controls sit at 32 to 36px. The signage moments are few and large: a page title, a section title with a 2px ink rule under it, a headline figure whose decimals and unit drop to a smaller size. Everything between is Archivo at 14px.
+Everything follows from who uses it. Store staff post vouchers through a long
+day on a desktop and need density, stable positions and nothing that moves
+without cause. An owner checks a position, sometimes from a phone, and needs the
+answer to be unambiguous. So: flat surfaces separated by hairlines, tabular
+figures everywhere, and colour reserved almost entirely for meaning.
 
-The signature is the custody board: one painted tile per location, its width set by its share of the kilograms in custody, framed by a painted keyline, with a red days plate on any jobber that has sat too long. The wall is the chart.
+The one indulgence is the custody board on the dashboard — a band whose
+segments are sized by the kilograms they represent. It is a figure, not a
+chart, and it has a complete text equivalent in the table beneath it, which is
+what makes it safe to read.
 
-**Key Characteristics:**
-- Flat enamel paint; no gradients, no card shadows.
-- Enamel-teal shell (sidebar and header band) around an off-white board ground.
-- Chrome yellow marks the warehouse, the live signal, selection and the high-intent action.
-- Tomato red is reserved for loss and long-out material.
-- Big Shoulders Display uppercase for titles and figures only; Archivo for all UI.
-- Small, deliberate corners (2 to 5px); 1px rules, 2px ink rules for boards.
-- Hand-authored 1.5-stroke icon set; no icon library.
+**Key characteristics**
+
+- Flat paint. Shadows only on surfaces that genuinely float.
+- One type family (Archivo). Hierarchy comes from size and weight, never from
+  uppercase lettering or a second display face.
+- Steel blue means "you can act here" or "you are here" — never decoration.
+- Red means loss, wastage over the limit, long-out material, or a destructive
+  action. Nothing else is ever red.
+- 1px rules do the separating. Radii stay small and deliberate (3–10px).
+- Hand-authored 1.5-stroke icon set in `@/components/icons`. No icon library.
 
 ## Colors
 
-Enamel paints on an off-white board: one cool teal for structure, one warm yellow for signal, one red for loss, and an ink that is nearly black with a teal cast. All tokens are OKLCH semantic custom properties in `src/styles.css`, with a full `.dark` counterpart.
+All colours are OKLCH semantic custom properties declared in `src/styles.css`.
+Components use the token (`bg-accent`, `text-destructive`) and never a literal.
 
 ### Primary
-- **Enamel Teal** (enamel-teal): links, default buttons, the focus ring, inline text actions, the first jobber paint and past months in the production strip. The structural colour of the app.
-- **Shell Teal** (shell-teal): the sidebar and the sticky header band, a deeper teal so the shell reads as the painted frame around the board. Rows within it use **Shell Row** (shell-row) for hover and active fill, **Shell Rule** (shell-rule) for dividers and station rings, **Shell Subtle** (shell-subtle) for group labels and idle icons.
 
-### Secondary
-- **Chrome Yellow** (chrome-yellow): the warehouse tile, the live dot, the current month bar, the New voucher trigger, the Reconcile action, text selection (at 32%) and table row hover (at 6%). Text on it is always **Chrome Yellow Ink** (chrome-yellow-ink), never white.
-
-### Tertiary
-- **Tomato** (tomato): the destructive token. Loss figures (wastage), the long-out days plate, long-out counts and days in tables, error status, destructive buttons.
-- **Board Paints** (paint-green, paint-plum, paint-sky): jobber tiles take enamel-teal, paint-green, paint-plum, paint-sky in turn. These are the `--chart-*` tokens and stay the order jobber tiles use.
+- **Steel blue** (`--primary`): links, the default button, focus rings, inline
+  text actions, the active sidebar row. It is the colour of an affordance.
+- **Steel blue, raised** (`--primary-soft` / `--primary-soft-foreground`): the
+  account initials and soft badges.
 
 ### Neutral
-- **Board Ground** (board-ground): the page ground, a warm off-white.
-- **Ink** (ink): body text, the 2px board and section rules, the live status plate.
-- **Card** (card) and **Subtle Ground** (subtle-ground): tables and lists sit on card; table heads and footers sit on subtle ground.
-- **Muted Ink** (muted-ink): secondary text, table head labels, panel labels.
-- **Rule** (rule) / **Rule Strong** (rule-strong) / **Input Stroke** (input-stroke): 1px dividers, table head underline and outline buttons, field strokes.
-- **Status** (success-green, warning-amber, info-blue): semantic states only. Warning amber fills a cover bar that has fallen under 25%.
 
-### Named Rules
-**The Red Means Loss Rule.** Tomato appears only on loss, long-out material, errors and destructive actions. Nothing decorative is red.
+- **Ground** (`--background`): the page.
+- **Card** (`--card`) and **Raised** (`--raised`): working surfaces. A table
+  sits on card; a table head or total row sits on **Subtle** (`--subtle`).
+- **Ink** (`--foreground`): body text and rules.
+- **Muted ink** (`--muted-foreground`): secondary text, column heads, units,
+  helper text. 5.0:1 on the ground.
+- **Rules**: `--border` for dividers, `--border-strong` where a line carries
+  weight, `--input` for control outlines (3:1, deliberately darker than a
+  divider so an input reads as fillable).
 
-**The Warehouse Is Yellow Rule.** The warehouse tile is always chrome yellow; jobbers never take it. Yellow on a screen means our own godown, live state, or the one action to take now.
+### Status
 
-**The Semantic Token Rule.** Components use semantic tokens (`bg-accent`, `text-destructive`, `var(--color-chart-1)`), never literal colours.
+Each has a strong token and a soft tint, and every pair was measured at 4.5:1
+or better.
+
+- **Success** — a voucher that has posted. Never spent on anything else.
+- **Warning** — "look at this": a draft, a figure over the wastage limit, and
+  **a failed load**. A failed request is a system state, not a loss of
+  material, so it wears amber and never red.
+- **Destructive** — loss, wastage over the limit, long-out material, and
+  destructive actions.
+- **Info** — neutral emphasis where nothing is wrong and nothing is posted.
+
+### Named rules
+
+**The Red Means Loss rule.** `--destructive` appears only on a figure that does
+not add up, material that is or may be lost, and actions that remove or reverse
+a record. Nothing decorative is red. In particular a _cancelled_ voucher is a
+reversal, not a loss, so it is neutral — see `StatusBadge` in `AppShell.tsx`,
+which encodes that rule and must be used rather than re-implemented.
+
+**The Steel Means Act rule.** `--primary` marks something you can act on or
+where you currently are. It is never used for emphasis on a figure.
+
+**The Semantic Token rule.** Never hardcode a colour. Every status colour is a
+named token so that misuse is structurally awkward rather than merely
+discouraged.
 
 ## Typography
 
-**Display Font:** Big Shoulders Display, weight 800 (with Archivo fallback)
-**Body Font:** Archivo, variable width and weight (with ui-sans-serif fallback)
-**Label/Mono Font:** JetBrains Mono for voucher numbers and material codes
+**One family: Archivo**, variable weight. `--font-display` resolves to the same
+family; there is no separate display face. `--font-mono` is a system mono,
+reserved for code.
 
-**Character:** Condensed, heavy signwriter capitals set against a sturdy grotesque. The sign does the shouting in a few places; Archivo does all the reading and typing.
+### Scale
 
-### Hierarchy
-- **Display** (800, 3.5rem mobile to 4.75rem desktop, 0.92): the custody total. Decimals at 0.45em and unit at 0.4em, both at 60% opacity.
-- **Headline** (800, 2rem to 2.5rem, 1): page titles (every `h1` is lettered automatically) and panel figures at 2.5rem; tile figures at 2.25 to 2.75rem.
-- **Title** (800, 1.5rem, 0.92, uppercase): section titles, tile names (1.25 to 1.625rem), the sidebar wordmark, empty-state headings.
-- **Body** (400, 0.875rem, 1.55): all running UI text. Subtitles cap at max-w-2xl.
-- **Table** (400 to 600, 0.8125rem, tabular figures): ledger cells. Heads at 0.625rem, 600, uppercase, 0.06em tracking.
-- **Label** (500 to 600, 0.75rem or 11px): panel labels, link actions, notes, status plates. Sentence case.
+Fixed steps, nothing below 11px. Figures use the readout steps with tabular
+numerals.
 
-### Named Rules
-**The Sign Says Little Rule.** Display lettering (`.sign`, `.readout`, `h1`) is for page titles, section titles, tile names and headline figures. Every control, label, nav item and table stays in Archivo. `h2` to `h4` default to Archivo 600 unless a section title opts into `.sign`.
+| Step                                  | Size    | Use                              |
+| ------------------------------------- | ------- | -------------------------------- |
+| `text-2xs` / `label-xs`               | 11px    | short labels. Sentence case      |
+| `text-xs`                             | 12px    | helper text, notes, column heads |
+| `text-sm`                             | 14px    | body, table cells, controls      |
+| `text-base`                           | 16px    | dialog titles                    |
+| `text-readout-sm` … `text-readout-xl` | 18–36px | figures                          |
 
-**The Tabular Figure Rule.** Every quantity, share and day count uses tabular numerals (`num`). KG at 3 decimals, en-IN grouping.
+### Named rules
+
+**The Tabular Figure rule.** Every quantity, balance, percentage and count uses
+`.num` (`font-variant-numeric: tabular-nums`). Columns of figures are
+right-aligned so the decimal point lines up down the page.
+
+**Three decimals are not decoration.** Kilograms in this trade run to three
+decimals. `.kpi-decimals` keeps them visible but quiet so a reader lands on the
+whole number first. Hiding them would misstate the precision the system holds.
+
+**Sentence case, including in small type.** Letterspaced capitals at 11px are
+the slowest thing on the screen to read. Hierarchy comes from weight and size.
+`.rule-eyebrow` (uppercase, 0.14em) is the one exception and is reserved for
+marketing section labels.
+
+**Headings are set by their call site.** `h1`–`h4` in `@layer base` set only the
+voice — family, weight 600, tight tracking — never the size. Sizing a heading by
+tag is how the same word renders two different ways on two pages.
 
 ## Layout
 
-Sidebar shell plus a fluid board. The sidebar is a fixed teal column on desktop that collapses to an icon rail (Ctrl+B) and becomes a sheet (`min(18rem, 86vw)`) below `lg` (1024px). A sticky 56px header band in shell teal carries the location and role. Content pads 12 / 16 / 24px by breakpoint inside a `90rem` max container.
+A fixed sidebar on `lg` and up (256px, or a 68px rail toggled with Ctrl+B),
+collapsing to a sheet (`min(18rem, 86vw)`) below it. A sticky 56px top bar
+carries the breadcrumb on the left and role/date on the right. Content pads
+16/20/32px by breakpoint inside a `90rem` container.
 
-Pages open with a header block (title, subtitle, actions) closed by a 1px rule and 20px gap. Sections are separated by 48px. Section heads sit on a 2px ink rule with the title left and a text link right. Secondary sections split on a 12-column grid (5 / 7) at `lg` with 40px gutters.
+Every workspace page opens with `<PageHeader>`: title, one sentence of context,
+actions on the right, closed by a 1px rule. This is the single most important
+consistency in the product — if a screen does not use it, it does not belong.
 
-The custody board is a single flex row on `sm` and up (min height 224px, 6px gaps), each tile's `flex-grow` set to its kg share with a floor of 6. Below `sm` tiles stack and a 12px weight-split strip above them keeps the proportions visible. Month panels sit in a 2-up grid that becomes 4-up at `lg`.
+Dense registers use `erp-table` inside `GridScroll`, with a `min-w` so they
+scroll horizontally rather than compressing. Below `lg`, wide tables keep a
+sticky first column so the record identity stays on screen while the numbers
+scroll.
 
-## Elevation & Depth
+## Elevation & depth
 
-Flat. Surfaces at rest have no shadow; separation comes from 1px rules, card-on-ground tone shifts, and 2px ink rules on framed boards. The one sanctioned shadow belongs to surfaces that genuinely float above the page: popovers, dropdowns, selects, dialogs, sheets, hover cards, toasts.
+Flat. A surface at rest has no shadow. Separation is 1px rules and a card-on-
+ground tone shift.
 
-### Shadow Vocabulary
-- **Float** (`box-shadow: 0 1px 1px oklch(0.2 0.02 255 / 0.04), 0 8px 24px -6px oklch(0.2 0.02 255 / 0.14), 0 24px 48px -12px oklch(0.2 0.02 255 / 0.1)`): floating overlays only.
+### Shadow vocabulary
 
-### Named Rules
-**The Flat Paint Rule.** No gradients, glows or card shadows on painted or resting surfaces. If it does not float above the page, it does not cast a shadow. (The skeleton sheen is a loading mechanism, not paint.)
+- **Float** (`--shadow-float`): popovers, dropdowns, dialogs, sheets, toasts,
+  hover cards. Nothing else.
+
+### Named rules
+
+**The Flat Paint rule.** If it does not float above the page, it does not cast
+a shadow. The skeleton sheen is a loading mechanism, not decoration.
 
 ## Shapes
 
-Small, deliberate corners: 2px for skeletons, bars and kbd, 3px for tiles, status plates, tables and lists, 4px for buttons, inputs and nav rows, 5px for panels. Nothing is pill-shaped except dots. Signboards are framed: a 1px keyline in the tile's own ink, inset 8px, at 28% opacity. Boards that group several readings use a 2px ink border with 2px ink rules between panels. Empty boards use a 2px dashed strong rule.
+Small and deliberate: 3px for bars, skeletons and kbd; 4px for badges and nav
+rows; 6px for controls; 8px for panels; 10–12px for large floating surfaces.
+Nothing is pill-shaped except dots.
 
 ## Components
 
 ### Buttons
-Painted and plain; they press rather than glow.
-- **Shape:** gently squared (4px).
-- **Primary:** enamel teal with off-white text, 36px tall, 16px sides. Hover lightens to 90%.
-- **Signal:** chrome yellow with yellow ink for the one action to take now (Reconcile, New voucher). Hover darkens via `brightness(0.95)` or mixes 12% white in the shell.
-- **Outline:** 1px input stroke on board ground; hover fills chrome yellow.
-- **Press:** every button drops 1px on `:active`. Focus is a 2px ring in enamel teal (chrome yellow inside the shell).
-- **Text action:** enamel teal 12px 600 with an underline that draws in from the left on hover and focus.
 
-### Cards / Containers
-- **Corner Style:** 3 to 5px.
-- **Background:** card on board ground.
-- **Shadow Strategy:** none (see Elevation).
-- **Border:** 1px rule; framed boards take 2px ink.
-- **Internal Padding:** 20px, 24px at `sm`. Lists use 16px by 14px rows.
+`default` is the one action a screen is for. `outline` is everything secondary.
+`ghost` has no chrome until hover and carries row actions. `destructive` only
+removes or reverses. Sizes are tokenised (`h-control`, `h-control-sm`,
+`h-control-lg`); every size grows to a 44px target on coarse pointers. Pressed
+sinks 1px rather than scaling. `loading` swaps in a spinner, sets
+`aria-busy` and blocks repeat presses — and handlers still guard their own
+write, because a double click can land twice before React commits the disabled
+state.
 
-### Inputs / Fields
-- **Style:** 1px input stroke, transparent fill, 4px corners, 36px tall, 12px sides.
-- **Focus:** 1px ring in enamel teal.
-- **Disabled:** 50% opacity, not-allowed cursor.
+### Tables (`erp-table`)
 
-### Tables
-Ledger-grade: 13px body, 7px by 12px cells, 1px rules between rows, subtle-ground head with 10px uppercase labels and a strong rule beneath, numbers right-aligned in tabular figures, a 6% chrome-yellow wash on row hover. Cancelled rows drop to 55% opacity.
+13px body, 36px rows, 12px column heads on the subtle ground. Numeric columns
+right-aligned. Hover is a neutral wash; a selected row takes `--selected`.
 
-### Navigation
-- **Style:** shell teal column; rows 32px, 13px Archivo, 4px corners, icons 16px in 24px slots.
-- **Hover:** a quieter version of the active fill (shell row at 62%).
-- **Active:** shell-row fill, 600 weight, icon lit chrome yellow. No edge stripe.
-- **Workflow spine:** the daily-flow group (Receive, Issue, Receive output, Reconcile) reads as one production line: each icon sits in a ringed station joined by a 1px shell-rule line; the active station fills chrome yellow.
-- **New voucher:** a full-width chrome-yellow trigger at the top of the sidebar, shown to writers only; its plus rotates 45 degrees when open.
-- **Rail:** collapsed state keeps icons centred with tooltips; group labels become 24px hairlines.
-- **Mobile:** the shell becomes a sheet; the header band shows the wordmark lettered as a sign.
+### The three states of a table
 
-### Custody Board (signature)
-One painted tile per location: warehouse first in chrome yellow, then up to four jobbers in board-paint order, then a muted "N more" tile. Width is share of kg in custody. Each tile carries its name lettered as a sign, share percentage, a headline kg figure and a quiet note. A painted keyline frames it at 28% and paints to 90% on hover or focus while the lettering lifts 2px. The whole tile is the link. A jobber with no movement for over 30 days carries a 32px tomato days plate along the bottom. Tiles settle from equal widths to their weight once on load (720ms); reduced motion skips it.
+`RegisterState` is the only way a table expresses loading, error or empty, so
+the distinction cannot be forgotten at a call site. This is not tidiness: a
+register that renders "No records found." while loading or after a failed query
+tells an operator whose access has lapsed that there is no data, which is the
+most damaging thing this application can say. `queryStatus(query)` derives the
+state from a TanStack Query result.
 
-### Status Plate
-A small 3px-cornered plate in the page header: ink with a chrome-yellow dot when live, muted while loading, tomato on error.
+### Registers (`useGrid`)
 
-## Do's and Don'ts
+Search, filter, sort and page all happen on the rows already loaded. Export
+from `grid.matched` — every row that passes the current filters — so a file
+always contains what the screen says it contains.
 
-### Do:
-- **Do** letter page titles, section titles and headline figures in Big Shoulders Display 800 uppercase, and nothing else.
-- **Do** keep paint flat and separate surfaces with 1px rules or 2px ink rules.
-- **Do** use chrome yellow for the warehouse, live state and the single high-intent action on a view.
-- **Do** set every quantity in tabular figures, KG to 3 decimals, with decimals and unit smaller than the whole on headline figures.
-- **Do** draw icons from `src/components/icons` (24 grid, 1.5 stroke, round caps and joins, currentColor).
-- **Do** make every board tile and record a real link to its records.
-- **Do** keep motion to one authored entrance per surface and short colour transitions (120 to 220ms); honour reduced motion.
+### Status indicators
 
-### Don't:
-- **Don't** use gradients, glows or shadows on resting surfaces; `--shadow-float` is for floating overlays only.
-- **Don't** use tomato red for anything but loss, long-out material, errors and destructive actions.
-- **Don't** put white text on chrome yellow.
-- **Don't** set controls, nav items, labels or tables in the display face.
-- **Don't** add an icon library or glyph characters as icons.
-- **Don't** mark active nav rows with an edge stripe; active is a fill with the icon lit.
-- **Don't** hardcode colours in components.
+Never colour alone. A badge states its condition in a word. `WastageCell` adds
+the words "Over 5.00%" and a marker rule when a figure breaches the company's
+threshold, and adds nothing at all when it does not.
+
+### Forms
+
+`<Field>` wires label to control, links hint and error through
+`aria-describedby`, and marks the control invalid and required. It distinguishes
+**Required**, **Optional** and **Calculated**. `<ReadOnlyValue>` draws a value
+that cannot be edited on the subtle ground with no input border, so it can never
+be mistaken for a field. Validation belongs next to the field that caused it,
+and recoverable errors must not clear what was typed.
+
+### Dialogs
+
+`useGuardedClose(dirty, setOpen)` asks before discarding input. Every dialog
+carries a title and description. Confirmations name the consequence
+("Discard this entry?"), not just "Are you sure?".
+
+## Motion
+
+Motion happens once on arrival, then the element sits still. Entrances:
+`route-stage`, `rise`, `board-settle`, `grow-x`, `grow-y`, `skeleton-sweep`.
+
+Durations and easings are tokens: `--ease-settle` for entrances, 150ms default
+for state changes, 150–220ms for simple interface transitions.
+
+**Rules**
+
+- Data updates do not animate unless the change is causal.
+- A figure never counts up. A figure that animates cannot be trusted at a
+  glance, and this is a financial instrument.
+- Reduced motion drops travel and scale, keeps short opacity and colour
+  transitions so affordances fade rather than snap.
+
+## Do's and don'ts
+
+**Do**
+
+- Use `PageHeader`, `Panel`, `Badge`, `Button`, `erp-table` and the grid before
+  writing a local version of any of them.
+- Reach for `RegisterState` rather than an ad-hoc empty row.
+- Name the source of a figure. If it is a voucher, say so.
+- Show what is genuinely true: no limit means no limit, not a default.
+
+**Don't**
+
+- Don't hardcode colours. Don't use a second font family.
+- Don't introduce sub-11px type.
+- Don't use red for anything but loss or a destructive action.
+- Don't add a shadow to a surface that isn't floating.
+- Don't put an icon-library glyph in place of a hand-drawn one.
+- Don't animate a number.
+
+## Known debt
+
+- `.dark` defines a subset of the tokens; `--accent` inverts to chrome yellow
+  there and the soft status tints are undefined. No theme toggle ships, so
+  this is latent rather than live, but the block should either be completed or
+  removed.
+- Several shadcn primitives in `src/components/ui/` have no importers. They
+  are a route to reintroducing defects the ERP components already fixed (16px
+  close targets, unscoped table heads), and are candidates for deletion.
