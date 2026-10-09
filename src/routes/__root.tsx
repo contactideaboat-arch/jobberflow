@@ -15,12 +15,12 @@ import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-dvh items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-foreground">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          The page you’re looking for doesn’t exist or has been moved.
         </p>
         <div className="mt-6">
           <Link
@@ -43,13 +43,14 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-dvh items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
+          This page didn’t load
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+          Something went wrong on our end. Retry the request, or head back to the dashboard and
+          continue from there.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
@@ -77,19 +78,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "JobWork ERP — BOM, Inventory & Jobber Control" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      // Matches the white top bar; the app has one (light) theme.
+      { name: "theme-color", content: "#ffffff" },
+      { title: "JobberFlow. Job work inventory and reconciliation." },
       {
         name: "description",
         content:
-          "Track raw material stock, jobber inventory, BOM consumption, voucher-wise wastage and finished goods in one job work ERP.",
+          "Track raw material stock, jobber-held inventory, BOM consumption, voucher wastage and finished goods in one accountable production system.",
       },
-      { property: "og:title", content: "JobWork ERP — BOM, Inventory & Jobber Control" },
+      { property: "og:title", content: "JobberFlow. Job work inventory and reconciliation." },
       {
         property: "og:description",
         content: "Job work BOM, inventory, production and jobber reconciliation management.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "JobberFlow" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
@@ -101,9 +105,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Archivo:wght@400..700&family=Instrument+Serif:ital@1&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      // Only favicon.ico exists in public/. Declaring a /favicon.svg that was
+      // never added produced a 404 on every page load in every browser.
+      { rel: "icon", href: "/favicon.ico", sizes: "any" },
     ],
   }),
   shellComponent: RootShell,

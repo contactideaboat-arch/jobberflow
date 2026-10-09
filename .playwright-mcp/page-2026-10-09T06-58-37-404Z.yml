@@ -1,0 +1,144 @@
+- generic [active] [ref=f13e1]:
+  - generic [ref=f13e2]:
+    - link "Skip to content" [ref=f13e3] [cursor=pointer]:
+      - /url: "#main-content"
+    - generic [ref=f13e4]:
+      - complementary [ref=f13e5]:
+        - generic [ref=f13e6]:
+          - link "JobberFlow dashboard" [ref=f13e7] [cursor=pointer]:
+            - /url: /dashboard
+            - generic [ref=f13e16]:
+              - generic [ref=f13e17]: JobberFlow
+              - generic [ref=f13e18]: Job work control
+          - button "Collapse sidebar" [ref=f13e19]
+        - button "New voucher" [ref=f13e23]
+        - navigation "Primary navigation" [ref=f13e27]:
+          - region [ref=f13e28]:
+            - heading "Overview" [level=2] [ref=f13e29]
+            - list [ref=f13e30]:
+              - listitem [ref=f13e31]:
+                - link "Dashboard" [ref=f13e32] [cursor=pointer]:
+                  - /url: /dashboard
+          - region [ref=f13e40]:
+            - heading "Daily flow" [level=2] [ref=f13e41]
+            - list [ref=f13e42]:
+              - listitem [ref=f13e43]:
+                - link "Raw material inward" [ref=f13e44] [cursor=pointer]:
+                  - /url: /transactions/rm-inward
+              - listitem [ref=f13e50]:
+                - link "Transfer to jobber" [ref=f13e51] [cursor=pointer]:
+                  - /url: /transactions/transfer
+              - listitem [ref=f13e57]:
+                - link "Product inward" [ref=f13e58] [cursor=pointer]:
+                  - /url: /transactions/product-inward
+              - listitem [ref=f13e65]:
+                - link "Material return" [ref=f13e66] [cursor=pointer]:
+                  - /url: /transactions/material-return
+              - listitem [ref=f13e72]:
+                - link "Stock adjustment" [ref=f13e73] [cursor=pointer]:
+                  - /url: /transactions/adjustment
+          - region [ref=f13e80]:
+            - heading "Stock" [level=2] [ref=f13e81]
+            - list [ref=f13e82]:
+              - listitem [ref=f13e83]:
+                - link "Raw material stock" [ref=f13e84] [cursor=pointer]:
+                  - /url: /inventory/warehouse
+              - listitem [ref=f13e90]:
+                - link "Finished goods" [ref=f13e91] [cursor=pointer]:
+                  - /url: /inventory/finished-goods
+              - listitem [ref=f13e97]:
+                - link "Raw material ledger" [ref=f13e98] [cursor=pointer]:
+                  - /url: /inventory/rm-ledger
+              - listitem [ref=f13e104]:
+                - link "Finished goods ledger" [ref=f13e105] [cursor=pointer]:
+                  - /url: /inventory/fg-ledger
+          - region [ref=f13e111]:
+            - heading "Analysis" [level=2] [ref=f13e112]
+            - list [ref=f13e113]:
+              - listitem [ref=f13e114]:
+                - link "Reports centre" [ref=f13e115] [cursor=pointer]:
+                  - /url: /reports
+              - listitem [ref=f13e122]:
+                - link "Jobber reconciliation" [ref=f13e123] [cursor=pointer]:
+                  - /url: /reconciliation
+          - region [ref=f13e130]:
+            - heading "Masters" [level=2] [ref=f13e131]
+            - list [ref=f13e132]:
+              - listitem [ref=f13e133]:
+                - link "Jobbers" [ref=f13e134] [cursor=pointer]:
+                  - /url: /masters/jobbers
+              - listitem [ref=f13e142]:
+                - link "Raw materials" [ref=f13e143] [cursor=pointer]:
+                  - /url: /masters/materials
+              - listitem [ref=f13e149]:
+                - link "Finished products" [ref=f13e150] [cursor=pointer]:
+                  - /url: /masters/products
+              - listitem [ref=f13e156]:
+                - link "Bills of material" [ref=f13e157] [cursor=pointer]:
+                  - /url: /masters/bom
+        - generic [ref=f13e163]:
+          - link "Users & settings" [ref=f13e164] [cursor=pointer]:
+            - /url: /admin
+          - generic [ref=f13e170]:
+            - generic [aria-hidden] [ref=f13e171]: KK
+            - generic [ref=f13e172]:
+              - paragraph [ref=f13e173]: kkshah2005@gmail.com
+              - paragraph [ref=f13e174]: Store
+            - button "Sign out" [ref=f13e175]
+      - generic [ref=f13e179]:
+        - banner [ref=f13e180]:
+          - paragraph [ref=f13e181]: Dashboard
+        - main [ref=f13e182]:
+          - generic [ref=f13e185]:
+            - generic [ref=f13e186]:
+              - generic [ref=f13e187]:
+                - heading "Material position" [level=1] [ref=f13e188]
+                - paragraph [ref=f13e189]: Good afternoon. Every kilogram you own, where it sits right now, and what came back from the floor.
+              - generic [ref=f13e191]:
+                - generic [ref=f13e192]: Friday, 9 October
+                - status [ref=f13e193]: Reading live figures
+            - region [ref=f13e195]:
+              - generic [ref=f13e196]:
+                - generic [ref=f13e197]:
+                  - heading "In custody" [level=2] [ref=f13e198]
+                  - generic "Loading" [ref=f13e199]
+                  - paragraph [ref=f13e200]
+                - generic [ref=f13e201]:
+                  - link "Stock at jobbers" [ref=f13e202] [cursor=pointer]:
+                    - /url: /inventory/jobber-stock
+                  - link "Reconcile" [ref=f13e203] [cursor=pointer]:
+                    - /url: /reconciliation
+            - region [ref=f13e210]:
+              - generic [ref=f13e211]:
+                - heading "October so far" [level=2] [ref=f13e212]
+                - link "Inward vouchers" [ref=f13e213] [cursor=pointer]:
+                  - /url: /transactions/product-inward
+              - generic [ref=f13e214]:
+                - generic [ref=f13e215]:
+                  - term [ref=f13e216]: Produced
+                  - definition [ref=f13e217]
+                - generic [ref=f13e219]:
+                  - term [ref=f13e220]: Wastage
+                  - definition [ref=f13e221]
+                - generic [ref=f13e223]:
+                  - term [ref=f13e224]: Average wastage
+                  - definition [ref=f13e225]
+                - generic [ref=f13e227]:
+                  - term [ref=f13e228]: Finished goods ready
+                  - definition [ref=f13e229]
+            - generic [ref=f13e233]:
+              - region [ref=f13e234]:
+                - generic [ref=f13e235]:
+                  - heading "Below minimum" [level=2] [ref=f13e236]
+                  - link "Material master" [ref=f13e237] [cursor=pointer]:
+                    - /url: /masters/materials
+              - region [ref=f13e242]:
+                - generic [ref=f13e243]:
+                  - heading "Latest inwards" [level=2] [ref=f13e244]
+                  - link "View register" [ref=f13e245] [cursor=pointer]:
+                    - /url: /transactions/product-inward
+            - paragraph [ref=f13e251]:
+              - text: 0 active jobbers · 0 raw materials · 1 finished product ·
+              - link "Manage masters" [ref=f13e252] [cursor=pointer]:
+                - /url: /masters/jobbers
+  - region "Notifications alt+T"

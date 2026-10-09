@@ -1,16 +1,16 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import {
+  IconArrowRight,
+  IconBalance,
+  IconBoxes,
+  IconCheck,
+  IconFactory,
+  IconPackageCheck,
+  IconSpin,
+  Logo,
+} from "@/components/icons";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import {
-  ArrowRight,
-  Boxes,
-  Check,
-  Factory,
-  Loader2,
-  PackageCheck,
-  PackageOpen,
-  Scale,
-} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,12 +23,12 @@ export const Route = createFileRoute("/auth")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Sign in — JobberFlow" },
+      { title: "Sign in. JobberFlow." },
       {
         name: "description",
         content: "Sign in to manage job work BOM, inventory, production, and jobber stock.",
       },
-      { property: "og:title", content: "Sign in — JobberFlow" },
+      { property: "og:title", content: "Sign in, JobberFlow" },
       {
         property: "og:description",
         content: "Access your job work inventory and production control system.",
@@ -39,10 +39,18 @@ export const Route = createFileRoute("/auth")({
 });
 
 const productionPath = [
-  { label: "Receive materials", detail: "Record inward stock at your warehouse", icon: Boxes },
-  { label: "Issue to jobbers", detail: "Track company-owned material at each unit", icon: Factory },
-  { label: "Post production", detail: "Apply BOM usage and voucher wastage", icon: PackageCheck },
-  { label: "Reconcile", detail: "Review returns, balances, and accountability", icon: Scale },
+  { label: "Receive materials", detail: "Record inward stock at your warehouse", icon: IconBoxes },
+  {
+    label: "Issue to jobbers",
+    detail: "Track company-owned material at each unit",
+    icon: IconFactory,
+  },
+  {
+    label: "Post production",
+    detail: "Apply BOM usage and voucher wastage",
+    icon: IconPackageCheck,
+  },
+  { label: "Reconcile", detail: "Review returns, balances, and accountability", icon: IconBalance },
 ];
 
 function AuthPage() {
@@ -116,25 +124,25 @@ function AuthPage() {
         <div className="auth-grid absolute inset-0 opacity-25" aria-hidden="true" />
         <div className="relative flex items-center gap-3">
           <span className="flex size-10 items-center justify-center bg-sidebar-primary text-sidebar-primary-foreground">
-            <PackageOpen className="size-5" aria-hidden="true" />
+            <Logo className="size-5" aria-hidden="true" />
           </span>
           <div>
             <p className="font-display text-sm font-bold">JobberFlow</p>
-            <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-sidebar-foreground/45">
+            <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-sidebar-foreground/45">
               Operations control
             </p>
           </div>
         </div>
 
         <div className="relative my-auto max-w-xl py-12">
-          <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-sidebar-primary">
+          <p className="mb-4 text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-sidebar-primary">
             BOM · Inventory · Reconciliation
           </p>
-          <h1 className="text-balance font-display text-4xl font-bold leading-[1.05] tracking-[-0.035em] xl:text-5xl">
+          <h2 className="text-balance font-display text-4xl font-bold leading-[1.05] tracking-[-0.035em] xl:text-5xl">
             Every material handoff, accounted for.
-          </h1>
+          </h2>
           <p className="mt-5 max-w-lg text-pretty text-sm leading-7 text-sidebar-foreground/60">
-            Follow production without losing the operating context—from warehouse receipt to jobber
+            Follow production without losing the operating context, from warehouse receipt to jobber
             return and final reconciliation.
           </p>
 
@@ -144,7 +152,7 @@ function AuthPage() {
               return (
                 <li key={step.label} className="bg-sidebar/90 p-4">
                   <div className="flex gap-3">
-                    <span className="num flex size-8 shrink-0 items-center justify-center border border-sidebar-border text-[10px] font-bold text-sidebar-primary">
+                    <span className="num flex size-8 shrink-0 items-center justify-center border border-sidebar-border text-[0.6875rem] font-bold text-sidebar-primary">
                       0{index + 1}
                     </span>
                     <div>
@@ -172,23 +180,29 @@ function AuthPage() {
         <div className="auth-stage w-full max-w-md">
           <div className="mb-8 flex items-center gap-3 lg:hidden">
             <span className="flex size-10 items-center justify-center bg-primary text-primary-foreground">
-              <PackageOpen className="size-5" aria-hidden="true" />
+              <Logo className="size-5" aria-hidden="true" />
             </span>
             <div>
               <p className="font-display text-sm font-bold">JobberFlow</p>
-              <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+              <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
                 Operations control
               </p>
             </div>
           </div>
 
           <div className="mb-6">
-            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">
               Secure workspace
             </p>
-            <h2 className="mt-2 text-3xl font-bold tracking-[-0.03em]">
+            {/*
+              This is the page's h1, not the panel's. The marketing panel on the
+              left is `hidden lg:flex`, so below `lg` the document previously
+              started at an h2 with no h1 at all. One h1, always present; the
+              panel keeps its own heading as an h2.
+            */}
+            <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em]">
               {mode === "signin" ? "Continue to your workspace" : "Create your workspace account"}
-            </h2>
+            </h1>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
               {mode === "signin"
                 ? "Enter your credentials to return to the current production flow."
@@ -232,9 +246,9 @@ function AuthPage() {
                     </div>
                     <Button type="submit" size="lg" className="w-full" disabled={busy}>
                       {busy ? (
-                        <Loader2 className="size-4 animate-spin" />
+                        <IconSpin className="size-4 animate-spin" />
                       ) : (
-                        <ArrowRight className="size-4" />
+                        <IconArrowRight className="size-4" />
                       )}
                       {busy ? "Opening workspace…" : "Continue to dashboard"}
                     </Button>
@@ -276,30 +290,36 @@ function AuthPage() {
                         autoComplete="new-password"
                         minLength={6}
                         required
+                        // The hint below is only announced with the field if
+                        // the input points at it.
+                        aria-describedby="password-hint"
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                       />
-                      <p className="text-[11px] text-muted-foreground">
+                      <p id="password-hint" className="text-xs text-muted-foreground">
                         Use at least 6 characters.
                       </p>
                     </div>
                     <Button type="submit" size="lg" className="w-full" disabled={busy}>
                       {busy ? (
-                        <Loader2 className="size-4 animate-spin" />
+                        <IconSpin className="size-4 animate-spin" />
                       ) : (
-                        <Check className="size-4" />
+                        <IconCheck className="size-4" />
                       )}
                       {busy ? "Creating account…" : "Create administrator account"}
                     </Button>
-                    <p className="flex items-start gap-2 text-[11px] leading-relaxed text-muted-foreground">
-                      <Check className="mt-0.5 size-3.5 shrink-0 text-success" aria-hidden="true" />
+                    <p className="flex items-start gap-2 text-xs leading-relaxed text-muted-foreground">
+                      <IconCheck
+                        className="mt-0.5 size-3.5 shrink-0 text-success"
+                        aria-hidden="true"
+                      />
                       The first account created becomes the system administrator.
                     </p>
                   </form>
                 </TabsContent>
               </Tabs>
 
-              <div className="my-5 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+              <div className="my-5 flex items-center gap-3 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                 <span className="h-px flex-1 bg-border" aria-hidden="true" />
                 or
                 <span className="h-px flex-1 bg-border" aria-hidden="true" />

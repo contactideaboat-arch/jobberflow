@@ -1,135 +1,210 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/erp/AppShell";
-import { EmptyRow, ExportBar, Panel, SearchSelect, Field } from "@/components/erp/bits";
-import { Input } from "@/components/ui/input";
+import { ExportBar, Panel, RegisterState, queryStatus } from "@/components/erp/bits";
+import {
+  FilterSelect,
+  GridPager,
+  GridScroll,
+  GridToolbar,
+  NIL,
+  useGrid,
+} from "@/components/erp/grid";
+import { DateFilter, ScopeLine, humanize } from "@/components/erp/LedgerFilters";
 import { useRows } from "@/hooks/use-erp";
 import { PCS, dmy } from "@/lib/erp";
 
 export const Route = createFileRoute("/_authenticated/inventory/fg-ledger")({
+  validateSearch: (search: Record<string, unknown>): { product?: string } =>
+    typeof search["product"] === "string" ? { product: search["product"] } : {},
   head: () => ({
     meta: [
-      { title: "Finished Goods Ledger — JobWork ERP" },
-      { name: "description", content: "Movement history of finished products with running balance per product." },
-      { property: "og:title", content: "Finished Goods Ledger — JobWork ERP" },
-      { property: "og:description", content: "Production inward, adjustment and reversal history." },
+      { title: "Finished goods ledger | JobberFlow" },
+      {
+        name: "description",
+        content: "Every finished product movement, with a running balance per product.",
+      },
     ],
   }),
   component: FgLedger,
 });
 
 function FgLedger() {
-  const [product, setProduct] = useState("");
+  const initial = Route.useSearch();
+  const [product, setProduct] = useState(initial.product ?? "");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
 
-  const { data: products } = useRows("finished_products", ["finished_products", "all"], (b) => b.order("code"));
-  const { data: jobbers } = useRows("jobbers", ["jobbers", "all"], (b) => b.order("code"));
-  const { data: rows } = useRows("finished_goods_ledger", ["fg_ledger"], (b) =>
-    b.order("transaction_date", { ascending: true }).order("created_at", { ascending: true }).limit(5000),
+  const { data: products } = useRows("finished_products", ["finished_products", "all"], (b) =>
+    b.order("code"),
   );
+  const { data: jobbers } = useRows("jobbers", ["jobbers", "all"], (b) => b.order("code"));
+  const query = useRows("finished_goods_ledger", ["fg_ledger"], (b) =>
+    b
+      .order("transaction_date", { ascending: true })
+      .order("created_at", { ascending: true })
+      .limit(5000),
+  );
+  const status = queryStatus(query);
 
-  const filtered = (rows ?? []).filter((r: any) => {
-    if (product && r.product_id !== product) return false;
-    if (from && r.transaction_date < from) return false;
-    if (to && r.transaction_date > to) return false;
-    return true;
-  });
+  const productById = useMemo(
+    () => new Map((products ?? []).map((p: any) => [p.id, p])),
+    [products],
+  );
+  const jobberById = useMemo(() => new Map((jobbers ?? []).map((j: any) => [j.id, j])), [jobbers]);
+
+  // Running balance per product, accumulated before the date range is applied.
+  const scoped = useMemo(() => {
+    let running = 0;
+    return (query.data ?? [])
+      .filter((r: any) => !product || r.product_id === product)
+      .map((r: any) => {
+        running += Number(r.quantity_in ?? 0) - Number(r.quantity_out ?? 0);
+        return { ...r, running };
+      });
+  }, [query.data, product]);
+  const inRange = scoped.filter(
+    (r: any) => (!from || r.transaction_date >= from) && (!to || r.transaction_date <= to),
+  );
+  const newestFirst = useMemo(() => [...inRange].reverse(), [inRange]);
+  const showBalance = !!product;
 
   const pName = (id: string) => {
-    const p = (products ?? []).find((x: any) => x.id === id);
-    return p ? `${p.code} — ${p.name}` : "-";
+    const p: any = productById.get(id);
+    return p ? `${p.code}, ${p.name}` : NIL;
   };
-  const jName = (id: string | null) => {
-    if (!id) return "-";
-    const j = (jobbers ?? []).find((x: any) => x.id === id);
-    return j ? j.name : "-";
-  };
+  const jName = (id: string | null) => (id ? ((jobberById.get(id) as any)?.name ?? NIL) : NIL);
 
-  let running = 0;
-  const withBalance = filtered.map((r: any) => {
-    running += Number(r.quantity_in ?? 0) - Number(r.quantity_out ?? 0);
-    return { ...r, running };
+  const grid = useGrid(newestFirst, {
+    search: (r: any) =>
+      [
+        r.voucher_number,
+        r.transaction_type,
+        pName(r.product_id),
+        jName(r.jobber_id),
+        r.remarks,
+      ].join(" "),
+    filtersActive: !!(product || from || to),
+    pageSize: 50,
   });
-  const view = [...withBalance].reverse();
+  const cols = showBalance ? 8 : 7;
 
   return (
     <div>
       <PageHeader
-        title="Finished Goods Ledger"
-        breadcrumb={["Inventory", "Finished Goods Ledger"]}
-        subtitle="Every finished product receipt, adjustment and cancellation reversal in date order."
+        title="Finished goods ledger"
+        subtitle="Every finished product receipt, adjustment and reversal in date order. Choose one product to see its running balance."
         actions={
           <ExportBar
             filename="finished-goods-ledger"
-            rows={withBalance.map((r: any) => ({
+            rows={[...grid.matched].reverse().map((r: any) => ({
               Date: dmy(r.transaction_date),
               Voucher: r.voucher_number,
-              Type: r.transaction_type,
+              Type: humanize(r.transaction_type),
               Product: pName(r.product_id),
-              Jobber: jName(r.jobber_id),
+              Jobber: r.jobber_id ? jName(r.jobber_id) : "",
               In: r.quantity_in,
               Out: r.quantity_out,
-              Balance: r.running,
+              ...(showBalance ? { "Running balance": r.running } : {}),
               Remarks: r.remarks,
             }))}
           />
         }
       />
       <Panel>
-        <div className="grid gap-3 border-b p-3 sm:grid-cols-3">
-          <Field label="Product">
-            <SearchSelect
-              options={[
-                { value: "", label: "All products" },
-                ...(products ?? []).map((p: any) => ({ value: p.id, label: `${p.code} — ${p.name}` })),
-              ]}
-              value={product}
-              onChange={setProduct}
-              placeholder="All products"
-            />
-          </Field>
-          <Field label="From date">
-            <Input type="date" className="h-9" value={from} onChange={(e) => setFrom(e.target.value)} />
-          </Field>
-          <Field label="To date">
-            <Input type="date" className="h-9" value={to} onChange={(e) => setTo(e.target.value)} />
-          </Field>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="erp-table">
+        <GridToolbar
+          grid={grid}
+          searchLabel="Search movements"
+          placeholder="Voucher, type, product or jobber"
+          noun={["movement", "movements"]}
+          onReset={() => {
+            setProduct("");
+            setFrom("");
+            setTo("");
+          }}
+        >
+          <FilterSelect
+            label="Product"
+            value={product}
+            onChange={(value) => {
+              setProduct(value);
+              grid.resetPage();
+            }}
+            options={[
+              { value: "", label: "All products" },
+              ...(products ?? []).map((p: any) => ({ value: p.id, label: `${p.code}, ${p.name}` })),
+            ]}
+          />
+          <DateFilter label="From" value={from} onChange={setFrom} max={to || undefined} />
+          <DateFilter label="To" value={to} onChange={setTo} min={from || undefined} />
+        </GridToolbar>
+        <ScopeLine parts={[product ? pName(product) : "All products"]} from={from} to={to} />
+        <GridScroll sticky>
+          <table className="erp-table min-w-[52rem]">
+            <caption className="sr-only">Finished goods movements, newest first</caption>
             <thead>
               <tr>
-                <th>Date</th>
-                <th>Voucher</th>
-                <th>Type</th>
-                <th>Product</th>
-                <th>Jobber</th>
-                <th className="text-right">In</th>
-                <th className="text-right">Out</th>
-                <th className="text-right">Balance</th>
+                <th scope="col">Date</th>
+                <th scope="col">Voucher</th>
+                <th scope="col">Type</th>
+                <th scope="col">Product</th>
+                <th scope="col">Jobber</th>
+                <th scope="col" className="text-right!">
+                  In (pcs)
+                </th>
+                <th scope="col" className="text-right!">
+                  Out (pcs)
+                </th>
+                {showBalance && (
+                  <th scope="col" className="text-right!">
+                    Balance (pcs)
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody>
-              {view.length === 0 && <EmptyRow cols={8} />}
-              {view.map((r: any) => (
-                <tr key={r.id}>
-                  <td className="num whitespace-nowrap">{dmy(r.transaction_date)}</td>
-                  <td className="num whitespace-nowrap text-xs">{r.voucher_number ?? "-"}</td>
-                  <td className="text-xs font-medium">{r.transaction_type}</td>
-                  <td>{pName(r.product_id)}</td>
-                  <td className="text-xs">{jName(r.jobber_id)}</td>
-                  <td className="num text-right text-success">{Number(r.quantity_in) ? PCS(r.quantity_in) : "-"}</td>
-                  <td className="num text-right text-destructive">
-                    {Number(r.quantity_out) ? PCS(r.quantity_out) : "-"}
-                  </td>
-                  <td className="num text-right font-semibold">{PCS(r.running)}</td>
-                </tr>
-              ))}
+              {status !== "ready" ? (
+                <RegisterState status={status} cols={cols} onRetry={() => void query.refetch()} />
+              ) : grid.matched.length === 0 ? (
+                <RegisterState
+                  status="ready"
+                  cols={cols}
+                  emptyTitle={
+                    grid.isFiltered ? "No movements match these filters." : "No movements yet."
+                  }
+                  emptyBody={
+                    grid.isFiltered
+                      ? "Widen the date range or clear the product filter."
+                      : "Posting a product inward records finished goods here."
+                  }
+                />
+              ) : (
+                grid.pageRows.map((r: any) => (
+                  <tr key={r.id}>
+                    <th scope="row" className="num whitespace-nowrap text-left font-normal">
+                      {dmy(r.transaction_date)}
+                    </th>
+                    <td className="num whitespace-nowrap font-medium">{r.voucher_number ?? NIL}</td>
+                    <td className="whitespace-nowrap">{humanize(r.transaction_type)}</td>
+                    <td className="max-w-56 truncate">{pName(r.product_id)}</td>
+                    <td className="max-w-40 truncate">{jName(r.jobber_id)}</td>
+                    <td className="num text-right">
+                      {Number(r.quantity_in) ? PCS(r.quantity_in) : NIL}
+                    </td>
+                    <td className="num text-right">
+                      {Number(r.quantity_out) ? PCS(r.quantity_out) : NIL}
+                    </td>
+                    {showBalance && (
+                      <td className="num text-right font-semibold">{PCS(r.running)}</td>
+                    )}
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
-        </div>
+        </GridScroll>
+        <GridPager grid={grid} />
       </Panel>
     </div>
   );

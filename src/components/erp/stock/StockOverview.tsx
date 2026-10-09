@@ -1,27 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMemo, useState } from "react";
-import { Boxes, Factory, PackageSearch, Warehouse } from "lucide-react";
 import { PageHeader } from "@/components/erp/AppShell";
-import { ExportBar, Panel, SearchSelect } from "@/components/erp/bits";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { ExportBar, Panel } from "@/components/erp/bits";
+import { FilterSelect, GridPager, GridToolbar, useGrid } from "@/components/erp/grid";
 import { useRows } from "@/hooks/use-erp";
-import { KG } from "@/lib/erp";
 import { cn } from "@/lib/utils";
 import { StockSummary } from "./StockSummary";
 import { StockTable } from "./StockTable";
 import type { StockRow, StockView } from "./stock-types";
 
-const viewOptions: Array<{ value: StockView; label: string; icon: typeof Boxes }> = [
-  { value: "all", label: "All stock", icon: Boxes },
-  { value: "warehouse", label: "Warehouse", icon: Warehouse },
-  { value: "jobbers", label: "Jobbers", icon: Factory },
+const VIEWS: { value: StockView; label: string }[] = [
+  { value: "all", label: "All locations" },
+  { value: "warehouse", label: "Godown" },
+  { value: "jobbers", label: "Jobbers" },
 ];
 
+const STATES = [
+  { value: "", label: "Any state" },
+  { value: "below", label: "Below minimum" },
+  { value: "difference", label: "Reconciliation difference" },
+  { value: "held", label: "Has balance" },
+];
+
+/**
+ * Raw material stock, wherever it sits. One register for the godown and every
+ * jobber, because the question is "where is this material", and a location
+ * filter answers it without a second screen.
+ */
 export function StockOverview({ initialView = "all" }: { initialView?: StockView }) {
   const [view, setView] = useState<StockView>(initialView);
-  const [query, setQuery] = useState("");
   const [jobberId, setJobberId] = useState("");
+  const [state, setState] = useState("");
   const warehouse = useRows("warehouse_stock", ["warehouse_stock"]);
   const jobbers = useRows("jobber_stock", ["jobber_stock"]);
   const jobberMaster = useRows("jobbers", ["jobbers", "all"], (builder) => builder.order("code"));
@@ -64,23 +73,27 @@ export function StockOverview({ initialView = "all" }: { initialView?: StockView
     return [...warehouseRows, ...jobberRows];
   }, [warehouse.data, jobbers.data]);
 
-  const filtered = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-    return stockRows
-      .filter((row) => view === "all" || row.location === view)
-      .filter((row) => !jobberId || row.jobberId === jobberId)
-      .filter((row) =>
-        [row.materialCode, row.materialName, row.category, row.jobberCode, row.jobberName]
-          .join(" ")
-          .toLowerCase()
-          .includes(normalizedQuery),
-      )
-      .sort((left, right) =>
-        `${left.materialCode}${left.location}${left.jobberCode}`.localeCompare(
-          `${right.materialCode}${right.location}${right.jobberCode}`,
-        ),
-      );
-  }, [jobberId, query, stockRows, view]);
+  const grid = useGrid(stockRows, {
+    search: (row) =>
+      [row.materialCode, row.materialName, row.category, row.jobberCode, row.jobberName].join(" "),
+    filter: (row) =>
+      (view === "all" || row.location === view) &&
+      (!jobberId || row.jobberId === jobberId) &&
+      (!state ||
+        (state === "below" && row.location === "warehouse" && row.balance < row.minimumStock) ||
+        (state === "difference" && row.balance < -0.0005) ||
+        (state === "held" && Math.abs(row.balance) > 0.0005)),
+    filtersActive: view !== initialView || !!jobberId || !!state,
+    sorters: {
+      material: (row) => row.materialCode,
+      location: (row) => (row.location === "warehouse" ? "" : (row.jobberName ?? "")),
+      inbound: (row) => row.inbound,
+      outbound: (row) => row.outbound,
+      balance: (row) => row.balance,
+      minimum: (row) => row.minimumStock,
+    },
+    initialSort: { key: "material", direction: "asc" },
+  });
 
   const isLoading = warehouse.isLoading || jobbers.isLoading;
   const isError = warehouse.isError || jobbers.isError;
@@ -88,13 +101,13 @@ export function StockOverview({ initialView = "all" }: { initialView?: StockView
     void warehouse.refetch();
     void jobbers.refetch();
   };
-  const exportRows = filtered.map((row) => ({
-    Location: row.location === "warehouse" ? "Company warehouse" : "Jobber",
-    Jobber: row.jobberId ? `${row.jobberCode} — ${row.jobberName}` : "",
-    "Material Code": row.materialCode,
+  const exportRows = grid.matched.map((row) => ({
+    Location: row.location === "warehouse" ? "Company godown" : "Jobber",
+    Jobber: row.jobberId ? `${row.jobberCode}, ${row.jobberName}` : "",
+    "Material code": row.materialCode,
     Material: row.materialName,
-    "Inbound / Received": row.inbound,
-    "Outbound / Standard Consumed": row.outbound,
+    "In or received": row.inbound,
+    "Out or standard consumed": row.outbound,
     Wastage: row.wastage,
     Returned: row.returned,
     Adjustment: row.adjustment,
@@ -107,78 +120,75 @@ export function StockOverview({ initialView = "all" }: { initialView?: StockView
     <div>
       <PageHeader
         title="Raw material stock"
-        breadcrumb={["Inventory", "Stock overview"]}
-        subtitle="See warehouse and jobber-held material together. Material remains company-owned until production consumes it."
-        actions={<ExportBar filename="combined-raw-material-stock" rows={exportRows} />}
+        subtitle="Every raw material balance, in your godown and at each jobber. Material stays company stock until production consumes it."
+        actions={<ExportBar filename="raw-material-stock" rows={exportRows} />}
       />
       <StockSummary rows={stockRows} isLoading={isLoading} isError={isError} />
       <Panel>
-        <div className="flex flex-col gap-3 border-b p-3 xl:flex-row xl:items-center">
+        <GridToolbar
+          grid={grid}
+          searchLabel="Search stock"
+          placeholder="Material, code or jobber"
+          noun={["position", "positions"]}
+          onReset={() => {
+            setView(initialView);
+            setJobberId("");
+            setState("");
+          }}
+        >
           <div
-            className="inline-grid w-full grid-cols-3 rounded-md bg-muted p-1 xl:inline-flex xl:w-auto"
-            aria-label="Stock location filter"
+            role="group"
+            aria-label="Location"
+            className="inline-flex h-control-sm items-center gap-0.5 rounded-md border bg-subtle p-0.5 pointer-coarse:min-h-11"
           >
-            {viewOptions.map((option) => {
-              const Icon = option.icon;
-              return (
-                <Button
-                  key={option.value}
-                  type="button"
-                  size="sm"
-                  variant="ghost"
-                  aria-pressed={view === option.value}
-                  onClick={() => {
-                    setView(option.value);
-                    if (option.value !== "jobbers") setJobberId("");
-                  }}
-                  className={cn(
-                    "justify-center",
-                    view === option.value && "bg-card text-foreground shadow-sm hover:bg-card",
-                  )}
-                >
-                  <Icon className="size-3.5" />
-                  <span className="hidden sm:inline">{option.label}</span>
-                </Button>
-              );
-            })}
-          </div>
-          <div className="relative min-w-0 flex-1 xl:max-w-sm">
-            <Input
-              className="h-9 pl-9"
-              aria-label="Search combined stock"
-              placeholder="Search material, jobber, or code…"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
-            <PackageSearch
-              className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
-              aria-hidden="true"
-            />
+            {VIEWS.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                aria-pressed={view === option.value}
+                onClick={() => {
+                  setView(option.value);
+                  if (option.value === "warehouse") setJobberId("");
+                  grid.resetPage();
+                }}
+                className={cn(
+                  "h-full cursor-pointer rounded-[5px] px-2.5 text-[0.8125rem] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring pointer-coarse:min-h-11",
+                  view === option.value && "bg-card text-foreground ring-1 ring-border",
+                )}
+              >
+                {option.label}
+              </button>
+            ))}
           </div>
           {view !== "warehouse" && (
-            <div className="w-full xl:w-60">
-              <SearchSelect
-                options={[
-                  { value: "", label: "All jobbers" },
-                  ...(jobberMaster.data ?? []).map((row: any) => ({
-                    value: row.id,
-                    label: `${row.code} — ${row.name}`,
-                  })),
-                ]}
-                value={jobberId}
-                onChange={setJobberId}
-                placeholder="All jobbers"
-              />
-            </div>
+            <FilterSelect
+              label="Jobber"
+              value={jobberId}
+              onChange={(value) => {
+                setJobberId(value);
+                grid.resetPage();
+              }}
+              options={[
+                { value: "", label: "All jobbers" },
+                ...(jobberMaster.data ?? []).map((row: any) => ({
+                  value: row.id,
+                  label: `${row.code}, ${row.name}`,
+                })),
+              ]}
+            />
           )}
-          <div className="ml-auto flex items-center gap-3 text-xs text-muted-foreground">
-            <span>{filtered.length} positions</span>
-            <span className="num font-semibold text-foreground">
-              {KG(filtered.reduce((sum, row) => sum + row.balance, 0))} KG
-            </span>
-          </div>
-        </div>
-        <StockTable rows={filtered} isLoading={isLoading} isError={isError} retry={retry} />
+          <FilterSelect
+            label="State"
+            value={state}
+            onChange={(value) => {
+              setState(value);
+              grid.resetPage();
+            }}
+            options={STATES}
+          />
+        </GridToolbar>
+        <StockTable grid={grid} isLoading={isLoading} isError={isError} retry={retry} />
+        <GridPager grid={grid} />
       </Panel>
     </div>
   );

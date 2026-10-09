@@ -1,7 +1,7 @@
 import * as React from "react";
+import { IconPanelLeft } from "@/components/icons";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { PanelLeft } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -276,7 +276,7 @@ const SidebarTrigger = React.forwardRef<
       }}
       {...props}
     >
-      <PanelLeft />
+      <IconPanelLeft />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );
@@ -337,7 +337,7 @@ const SidebarInput = React.forwardRef<
       ref={ref}
       data-sidebar="input"
       className={cn(
-        "h-8 w-full bg-background shadow-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+        "h-8 w-full bg-background focus-visible:ring-2 focus-visible:ring-sidebar-ring",
         className,
       )}
       {...props}

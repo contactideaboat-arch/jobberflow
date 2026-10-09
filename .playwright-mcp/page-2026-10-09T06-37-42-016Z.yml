@@ -1,0 +1,821 @@
+- generic [ref=f8e2]:
+  - link "Skip to content" [ref=f8e3] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f8e4]:
+    - generic [ref=f8e6]:
+      - link "Vardhman Metal Art - top of page" [ref=f8e7] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f8e9]:
+          - generic [ref=f8e10]:
+            - generic [ref=f8e11]: VARDHMAN
+            - superscript [ref=f8e12]: TM
+          - generic [ref=f8e13]: METAL ART
+      - navigation "Primary" [ref=f8e14]:
+        - link "Our Legacy" [ref=f8e16] [cursor=pointer]:
+          - /url: /legacy
+        - link "Products" [ref=f8e18] [cursor=pointer]:
+          - /url: /products
+        - link "Process" [ref=f8e22] [cursor=pointer]:
+          - /url: /#process
+        - link "Gallery" [ref=f8e24] [cursor=pointer]:
+          - /url: /gallery
+        - link "Contact Us" [ref=f8e26] [cursor=pointer]:
+          - /url: /contact
+      - link "Get a Quote" [ref=f8e28] [cursor=pointer]:
+        - /url: /#quote
+  - main [ref=f8e32]:
+    - generic [ref=f8e33]:
+      - generic [ref=f8e34]:
+        - generic [ref=f8e35]:
+          - button "Show Brass Medal" [ref=f8e37]:
+            - img [ref=f8e38]:
+              - generic [ref=f8e55]: V
+              - generic [ref=f8e56]: VARDHMAN · EST. 1977
+          - button "Show Copper Yantra" [ref=f8e58] [cursor=pointer]
+          - button "Show Steel ID Badge" [ref=f8e88] [cursor=pointer]:
+            - img [ref=f8e89]:
+              - generic [ref=f8e99]: VARDHMAN METAL ART
+              - generic [ref=f8e122]: No. 0147
+        - generic [ref=f8e124]:
+          - generic [ref=f8e126]:
+            - paragraph [ref=f8e127]: Brass Medal
+            - paragraph [ref=f8e128]: Ø 60 mm · Antique finish
+          - generic [ref=f8e130]:
+            - button "Show Brass Medal" [pressed] [ref=f8e131] [cursor=pointer]
+            - button "Show Copper Yantra" [ref=f8e133] [cursor=pointer]
+            - button "Show Steel ID Badge" [ref=f8e135] [cursor=pointer]
+      - generic [ref=f8e137]:
+        - generic [ref=f8e138]:
+          - generic [ref=f8e139]: Direct Manufacturer & Exporter
+          - list [ref=f8e140]:
+            - listitem [ref=f8e141]: Udyam verified
+            - listitem [ref=f8e142]: Est. 1977
+            - listitem [ref=f8e143]: Shipping worldwide
+        - heading [level=1] [ref=f8e144]:
+          - text: World-Class Photochemical Etching,
+          - emphasis [ref=f8e145]: Made in India.
+        - paragraph [ref=f8e146]: Three generations of metal craftsmanship. One standard of precision - whether you order ten pieces or ten thousand.
+        - generic [ref=f8e147]:
+          - link "Get A Quote" [ref=f8e148] [cursor=pointer]:
+            - /url: /#quote
+            - generic [ref=f8e149]:
+              - generic [ref=f8e150]: Get A Quote
+              - generic [aria-hidden] [ref=f8e151]:
+                - generic [ref=f8e153]: G
+                - generic [ref=f8e155]: e
+                - generic [ref=f8e157]: t
+                - generic [ref=f8e161]: A
+                - generic [ref=f8e165]: Q
+                - generic [ref=f8e167]: u
+                - generic [ref=f8e169]: o
+                - generic [ref=f8e171]: t
+                - generic [ref=f8e173]: e
+          - link "Chat On WhatsApp" [ref=f8e174] [cursor=pointer]:
+            - /url: https://wa.me/917434000529?text=Hello%20Vardhman%20Metal%20Art%2C%20I%20would%20like%20to%20enquire%20about%20precision%20photochemical%20etched%20metal%20products.
+            - generic [ref=f8e177]:
+              - generic [ref=f8e178]: Chat On WhatsApp
+              - generic [aria-hidden] [ref=f8e179]:
+                - generic [ref=f8e181]: C
+                - generic [ref=f8e183]: h
+                - generic [ref=f8e185]: a
+                - generic [ref=f8e187]: t
+                - generic [ref=f8e191]: O
+                - generic [ref=f8e193]: "n"
+                - generic [ref=f8e197]: W
+                - generic [ref=f8e199]: h
+                - generic [ref=f8e201]: a
+                - generic [ref=f8e203]: t
+                - generic [ref=f8e205]: s
+                - generic [ref=f8e207]: A
+                - generic [ref=f8e209]: p
+                - generic [ref=f8e211]: p
+    - generic [ref=f8e213]:
+      - generic [ref=f8e214]:
+        - heading "Choose your standard" [level=2] [ref=f8e215]
+        - paragraph [ref=f8e216]: Three tiers. One standard of precision.
+        - paragraph [ref=f8e217]: Quality should never depend on quantity. Pick the finish, metal and lead time that fits your order - every tier is etched in our own factory in Dudheshwar, Ahmedabad.
+      - generic [ref=f8e218]:
+        - article [ref=f8e219]:
+          - generic [aria-hidden] [ref=f8e222]: "01"
+          - generic [ref=f8e223]:
+            - paragraph [ref=f8e224]: High-Volume Institutional Solutions
+            - heading "Vardhman Essentials" [level=3] [ref=f8e225]
+            - paragraph [ref=f8e226]: Institutional runs of medals, badges, plaques and sanman patra - the tier built for tender paperwork and school and department orders.
+            - generic [ref=f8e227]:
+              - generic [ref=f8e228]:
+                - term [ref=f8e229]: Materials
+                - definition [ref=f8e230]: Wood, acrylic, sourced foil
+              - generic [ref=f8e231]:
+                - term [ref=f8e232]: Best for
+                - definition [ref=f8e233]: Bulk orders, government, schools
+            - link "Request A Quote" [ref=f8e235] [cursor=pointer]:
+              - /url: /#quote
+              - generic [ref=f8e236]:
+                - generic [ref=f8e237]: Request A Quote
+                - generic [aria-hidden] [ref=f8e238]:
+                  - generic [ref=f8e240]: R
+                  - generic [ref=f8e242]: e
+                  - generic [ref=f8e244]: q
+                  - generic [ref=f8e246]: u
+                  - generic [ref=f8e248]: e
+                  - generic [ref=f8e250]: s
+                  - generic [ref=f8e252]: t
+                  - generic [ref=f8e256]: A
+                  - generic [ref=f8e260]: Q
+                  - generic [ref=f8e262]: u
+                  - generic [ref=f8e264]: o
+                  - generic [ref=f8e266]: t
+                  - generic [ref=f8e268]: e
+        - article [ref=f8e269]:
+          - generic [ref=f8e270]: Most chosen
+          - generic [aria-hidden] [ref=f8e273]: "02"
+          - generic [ref=f8e274]:
+            - paragraph [ref=f8e275]: Premium Craftsmanship
+            - heading "Vardhman Artisan" [level=3] [ref=f8e276]
+            - paragraph [ref=f8e277]: The tier most of our repeat business sits in. Hand-finished copper, brass and stainless steel for corporate gifting, lobby signage and hospitality work.
+            - generic [ref=f8e278]:
+              - generic [ref=f8e279]:
+                - term [ref=f8e280]: Materials
+                - definition [ref=f8e281]: Copper, brass, stainless steel
+              - generic [ref=f8e282]:
+                - term [ref=f8e283]: Best for
+                - definition [ref=f8e284]: Corporate gifts, architecture, hotels
+            - link "Request A Quote" [ref=f8e286] [cursor=pointer]:
+              - /url: /#quote
+              - generic [ref=f8e287]:
+                - generic [ref=f8e288]: Request A Quote
+                - generic [aria-hidden] [ref=f8e289]:
+                  - generic [ref=f8e291]: R
+                  - generic [ref=f8e293]: e
+                  - generic [ref=f8e295]: q
+                  - generic [ref=f8e297]: u
+                  - generic [ref=f8e299]: e
+                  - generic [ref=f8e301]: s
+                  - generic [ref=f8e303]: t
+                  - generic [ref=f8e307]: A
+                  - generic [ref=f8e311]: Q
+                  - generic [ref=f8e313]: u
+                  - generic [ref=f8e315]: o
+                  - generic [ref=f8e317]: t
+                  - generic [ref=f8e319]: e
+        - article [ref=f8e320]:
+          - generic [aria-hidden] [ref=f8e323]: "03"
+          - generic [ref=f8e324]:
+            - paragraph [ref=f8e325]: Luxury Diplomatic Gifts
+            - heading "Vardhman Signature" [level=3] [ref=f8e326]
+            - paragraph [ref=f8e327]: Our highest finish. Fine silver, gold and gold-plated presentation pieces, made in runs as small as ten for diplomatic gifts and executive awards.
+            - generic [ref=f8e328]:
+              - generic [ref=f8e329]:
+                - term [ref=f8e330]: Materials
+                - definition [ref=f8e331]: Fine silver, gold, gold & silver plating
+              - generic [ref=f8e332]:
+                - term [ref=f8e333]: Best for
+                - definition [ref=f8e334]: Diplomatic gifts, executive awards
+            - link "Request A Quote" [ref=f8e336] [cursor=pointer]:
+              - /url: /#quote
+              - generic [ref=f8e337]:
+                - generic [ref=f8e338]: Request A Quote
+                - generic [aria-hidden] [ref=f8e339]:
+                  - generic [ref=f8e341]: R
+                  - generic [ref=f8e343]: e
+                  - generic [ref=f8e345]: q
+                  - generic [ref=f8e347]: u
+                  - generic [ref=f8e349]: e
+                  - generic [ref=f8e351]: s
+                  - generic [ref=f8e353]: t
+                  - generic [ref=f8e357]: A
+                  - generic [ref=f8e361]: Q
+                  - generic [ref=f8e363]: u
+                  - generic [ref=f8e365]: o
+                  - generic [ref=f8e367]: t
+                  - generic [ref=f8e369]: e
+      - paragraph [ref=f8e370]:
+        - text: Buying a single yantra or a personal gift? There is no minimum order on the
+        - link "Yantra Collection" [ref=f8e371] [cursor=pointer]:
+          - /url: /#products
+        - text: .
+    - region "Institutional clients" [ref=f8e372]:
+      - generic [ref=f8e374]:
+        - paragraph [ref=f8e375]: Trusted by
+        - paragraph [ref=f8e376]: Supplying India's leading institutions
+      - group "Client logos" [ref=f8e377]:
+        - generic [ref=f8e379]:
+          - list [ref=f8e380]:
+            - listitem [ref=f8e381]:
+              - figure "Indian Air Force" [ref=f8e382]
+            - listitem [ref=f8e385]:
+              - figure "Gujarat Police" [ref=f8e386]
+            - listitem [ref=f8e389]:
+              - figure "ISRO" [ref=f8e390]
+            - listitem [ref=f8e393]:
+              - figure "ONGC" [ref=f8e394]
+            - listitem [ref=f8e397]:
+              - figure "Gujarat High Court" [ref=f8e398]
+            - listitem [ref=f8e401]:
+              - figure "IIT (ISM) Dhanbad" [ref=f8e402]
+            - listitem [ref=f8e405]:
+              - figure "IIM Ahmedabad" [ref=f8e406]
+            - listitem [ref=f8e409]:
+              - figure "NFSU" [ref=f8e410]
+            - listitem [ref=f8e413]:
+              - figure "Nirma" [ref=f8e414]
+            - listitem [ref=f8e417]:
+              - figure "ADGPI Indian Army" [ref=f8e418]
+            - listitem [ref=f8e421]:
+              - figure "Amneal" [ref=f8e422]
+            - listitem [ref=f8e425]:
+              - figure "Anecdote" [ref=f8e426]
+            - listitem [ref=f8e429]:
+              - figure "Cadila Healthcare" [ref=f8e430]
+            - listitem [ref=f8e433]:
+              - figure "Indrashil University" [ref=f8e434]
+            - listitem [ref=f8e437]:
+              - figure "Institute of Civil Engineering" [ref=f8e438]
+            - listitem [ref=f8e441]:
+              - figure "NDDB Dairy Services" [ref=f8e442]
+            - listitem [ref=f8e445]:
+              - figure "Torrent Pharma" [ref=f8e446]
+            - listitem [ref=f8e449]:
+              - figure "Adani University" [ref=f8e450]
+            - listitem [ref=f8e453]:
+              - figure "Corona Pharmacy" [ref=f8e454]
+            - listitem [ref=f8e457]:
+              - figure "Garvi Gujarat" [ref=f8e458]
+            - listitem [ref=f8e461]:
+              - figure "GUJSAIL" [ref=f8e462]
+            - listitem [ref=f8e465]:
+              - figure "JITO" [ref=f8e466]
+            - listitem [ref=f8e469]:
+              - figure "Reliance" [ref=f8e470]
+            - listitem [ref=f8e473]:
+              - figure "Retina Foundation" [ref=f8e474]
+            - listitem [ref=f8e477]:
+              - figure "Torrent" [ref=f8e478]
+          - list [aria-hidden] [ref=f8e481]:
+            - listitem [ref=f8e482]:
+              - figure [ref=f8e483]:
+                - generic [ref=f8e485]: Indian Air Force
+            - listitem [ref=f8e486]:
+              - figure [ref=f8e487]:
+                - generic [ref=f8e489]: Gujarat Police
+            - listitem [ref=f8e490]:
+              - figure [ref=f8e491]:
+                - generic [ref=f8e493]: ISRO
+            - listitem [ref=f8e494]:
+              - figure [ref=f8e495]:
+                - generic [ref=f8e497]: ONGC
+            - listitem [ref=f8e498]:
+              - figure [ref=f8e499]:
+                - generic [ref=f8e501]: Gujarat High Court
+            - listitem [ref=f8e502]:
+              - figure [ref=f8e503]:
+                - generic [ref=f8e505]: IIT (ISM) Dhanbad
+            - listitem [ref=f8e506]:
+              - figure [ref=f8e507]:
+                - generic [ref=f8e509]: IIM Ahmedabad
+            - listitem [ref=f8e510]:
+              - figure [ref=f8e511]:
+                - generic [ref=f8e513]: NFSU
+            - listitem [ref=f8e514]:
+              - figure [ref=f8e515]:
+                - generic [ref=f8e517]: Nirma
+            - listitem [ref=f8e518]:
+              - figure [ref=f8e519]:
+                - generic [ref=f8e521]: ADGPI Indian Army
+            - listitem [ref=f8e522]:
+              - figure [ref=f8e523]:
+                - generic [ref=f8e525]: Amneal
+            - listitem [ref=f8e526]:
+              - figure [ref=f8e527]:
+                - generic [ref=f8e529]: Anecdote
+            - listitem [ref=f8e530]:
+              - figure [ref=f8e531]:
+                - generic [ref=f8e533]: Cadila Healthcare
+            - listitem [ref=f8e534]:
+              - figure [ref=f8e535]:
+                - generic [ref=f8e537]: Indrashil University
+            - listitem [ref=f8e538]:
+              - figure [ref=f8e539]:
+                - generic [ref=f8e541]: Institute of Civil Engineering
+            - listitem [ref=f8e542]:
+              - figure [ref=f8e543]:
+                - generic [ref=f8e545]: NDDB Dairy Services
+            - listitem [ref=f8e546]:
+              - figure [ref=f8e547]:
+                - generic [ref=f8e549]: Torrent Pharma
+            - listitem [ref=f8e550]:
+              - figure [ref=f8e551]:
+                - generic [ref=f8e553]: Adani University
+            - listitem [ref=f8e554]:
+              - figure [ref=f8e555]:
+                - generic [ref=f8e557]: Corona Pharmacy
+            - listitem [ref=f8e558]:
+              - figure [ref=f8e559]:
+                - generic [ref=f8e561]: Garvi Gujarat
+            - listitem [ref=f8e562]:
+              - figure [ref=f8e563]:
+                - generic [ref=f8e565]: GUJSAIL
+            - listitem [ref=f8e566]:
+              - figure [ref=f8e567]:
+                - generic [ref=f8e569]: JITO
+            - listitem [ref=f8e570]:
+              - figure [ref=f8e571]:
+                - generic [ref=f8e573]: Reliance
+            - listitem [ref=f8e574]:
+              - figure [ref=f8e575]:
+                - generic [ref=f8e577]: Retina Foundation
+            - listitem [ref=f8e578]:
+              - figure [ref=f8e579]:
+                - generic [ref=f8e581]: Torrent
+      - paragraph [ref=f8e582]: The logos drift on their own. Drag the strip sideways, or focus it and use the left and right arrow keys, to move through them.
+    - generic [ref=f8e584]:
+      - generic [ref=f8e585]:
+        - generic [ref=f8e586]:
+          - generic [ref=f8e587]:
+            - heading "Who are you ordering for?" [level=2] [ref=f8e588]
+            - paragraph [ref=f8e589]: Start here
+          - paragraph [ref=f8e590]: Government tender, corporate bulk run, or a single piece shipped abroad - each path below leads straight to what you need.
+        - link "Talk to us" [ref=f8e591] [cursor=pointer]:
+          - /url: /#quote
+      - generic [ref=f8e595]:
+        - article [ref=f8e596]:
+          - generic [aria-hidden]: "01"
+          - generic [ref=f8e597]:
+            - heading "Government & Institutions" [level=3] [ref=f8e598]:
+              - generic [aria-hidden] [ref=f8e599]: \
+              - text: Government & Institutions
+            - paragraph [ref=f8e600]: We are a registered GeM supplier and understand tenders, documentation and delivery deadlines.
+          - generic [ref=f8e601]:
+            - list [ref=f8e602]:
+              - listitem [ref=f8e603]: Bulk medals, badges & pins
+              - listitem [ref=f8e604]: Plaques, shields & sanman patra
+              - listitem [ref=f8e605]: Ceremony awards & mementos
+            - link "SEE GOVERNMENT SUPPLY" [ref=f8e607] [cursor=pointer]:
+              - /url: /#quote
+              - generic [ref=f8e608]:
+                - generic [ref=f8e609]: SEE GOVERNMENT SUPPLY
+                - generic [aria-hidden] [ref=f8e610]:
+                  - generic [ref=f8e612]: S
+                  - generic [ref=f8e614]: E
+                  - generic [ref=f8e616]: E
+                  - generic [ref=f8e620]: G
+                  - generic [ref=f8e622]: O
+                  - generic [ref=f8e624]: V
+                  - generic [ref=f8e626]: E
+                  - generic [ref=f8e628]: R
+                  - generic [ref=f8e630]: "N"
+                  - generic [ref=f8e632]: M
+                  - generic [ref=f8e634]: E
+                  - generic [ref=f8e636]: "N"
+                  - generic [ref=f8e638]: T
+                  - generic [ref=f8e642]: S
+                  - generic [ref=f8e644]: U
+                  - generic [ref=f8e646]: P
+                  - generic [ref=f8e648]: P
+                  - generic [ref=f8e650]: L
+                  - generic [ref=f8e652]: "Y"
+        - article [ref=f8e653]:
+          - generic [aria-hidden]: "02"
+          - generic [ref=f8e654]:
+            - heading "Corporate" [level=3] [ref=f8e655]:
+              - generic [aria-hidden] [ref=f8e656]: \
+              - text: Corporate
+            - paragraph [ref=f8e657]: Bulk gifting and employee recognition with clear bulk pricing and reliable schedules.
+          - generic [ref=f8e658]:
+            - list [ref=f8e659]:
+              - listitem [ref=f8e660]: Diwali & festival gifting
+              - listitem [ref=f8e661]: Employee recognition mementos
+              - listitem [ref=f8e662]: Office signage & ID badges
+            - link "SEE CORPORATE GIFTING" [ref=f8e664] [cursor=pointer]:
+              - /url: /#quote
+              - generic [ref=f8e665]:
+                - generic [ref=f8e666]: SEE CORPORATE GIFTING
+                - generic [aria-hidden] [ref=f8e667]:
+                  - generic [ref=f8e669]: S
+                  - generic [ref=f8e671]: E
+                  - generic [ref=f8e673]: E
+                  - generic [ref=f8e677]: C
+                  - generic [ref=f8e679]: O
+                  - generic [ref=f8e681]: R
+                  - generic [ref=f8e683]: P
+                  - generic [ref=f8e685]: O
+                  - generic [ref=f8e687]: R
+                  - generic [ref=f8e689]: A
+                  - generic [ref=f8e691]: T
+                  - generic [ref=f8e693]: E
+                  - generic [ref=f8e697]: G
+                  - generic [ref=f8e699]: I
+                  - generic [ref=f8e701]: F
+                  - generic [ref=f8e703]: T
+                  - generic [ref=f8e705]: I
+                  - generic [ref=f8e707]: "N"
+                  - generic [ref=f8e709]: G
+        - article [ref=f8e710]:
+          - generic [aria-hidden]: "03"
+          - generic [ref=f8e711]:
+            - heading "Personal & Export" [level=3] [ref=f8e712]:
+              - generic [aria-hidden] [ref=f8e713]: \
+              - text: Personal & Export
+            - paragraph [ref=f8e714]: Order one yantra or a full set of wedding invitations, with insured shipping worldwide.
+          - generic [ref=f8e715]:
+            - list [ref=f8e716]:
+              - listitem [ref=f8e717]: 500+ yantra designs
+              - listitem [ref=f8e718]: Metal wedding kankotri
+              - listitem [ref=f8e719]: Personalised keepsakes
+            - link "SEE YANTRA COLLECTION" [ref=f8e721] [cursor=pointer]:
+              - /url: /#quote
+              - generic [ref=f8e722]:
+                - generic [ref=f8e723]: SEE YANTRA COLLECTION
+                - generic [aria-hidden] [ref=f8e724]:
+                  - generic [ref=f8e726]: S
+                  - generic [ref=f8e728]: E
+                  - generic [ref=f8e730]: E
+                  - generic [ref=f8e734]: "Y"
+                  - generic [ref=f8e736]: A
+                  - generic [ref=f8e738]: "N"
+                  - generic [ref=f8e740]: T
+                  - generic [ref=f8e742]: R
+                  - generic [ref=f8e744]: A
+                  - generic [ref=f8e748]: C
+                  - generic [ref=f8e750]: O
+                  - generic [ref=f8e752]: L
+                  - generic [ref=f8e754]: L
+                  - generic [ref=f8e756]: E
+                  - generic [ref=f8e758]: C
+                  - generic [ref=f8e760]: T
+                  - generic [ref=f8e762]: I
+                  - generic [ref=f8e764]: O
+                  - generic [ref=f8e766]: "N"
+    - generic [ref=f8e768]:
+      - generic [ref=f8e769]:
+        - generic [ref=f8e770]:
+          - generic [ref=f8e771]:
+            - heading "What we make" [level=2] [ref=f8e772]
+            - paragraph [ref=f8e773]: Products
+          - paragraph [ref=f8e774]: Etched on brass, copper, silver and gold - plus acrylic and wood where it makes sense. Send us artwork, or choose from our catalogue.
+        - link "Request a Quote" [ref=f8e775] [cursor=pointer]:
+          - /url: /#quote
+      - generic [ref=f8e779]:
+        - article [ref=f8e780]:
+          - generic [ref=f8e783]:
+            - generic [ref=f8e784]:
+              - generic [ref=f8e785]: "01"
+              - generic [ref=f8e786]: 500+ designs
+            - heading "Yantras" [level=3] [ref=f8e787]
+            - paragraph [ref=f8e788]: Sri Yantra, Ganesh, Lakshmi, Navgraha and more - in brass, copper, silver and gold.
+            - link "Explore Designs" [ref=f8e790] [cursor=pointer]:
+              - /url: /#quote
+              - generic [ref=f8e791]:
+                - generic [ref=f8e792]: Explore Designs
+                - generic [aria-hidden] [ref=f8e793]:
+                  - generic [ref=f8e795]: E
+                  - generic [ref=f8e797]: x
+                  - generic [ref=f8e799]: p
+                  - generic [ref=f8e801]: l
+                  - generic [ref=f8e803]: o
+                  - generic [ref=f8e805]: r
+                  - generic [ref=f8e807]: e
+                  - generic [ref=f8e811]: D
+                  - generic [ref=f8e813]: e
+                  - generic [ref=f8e815]: s
+                  - generic [ref=f8e817]: i
+                  - generic [ref=f8e819]: g
+                  - generic [ref=f8e821]: "n"
+                  - generic [ref=f8e823]: s
+        - article [ref=f8e824]:
+          - img "A cabinet of finished star-topped trophies in copper, brass and silver" [ref=f8e826]
+          - generic [ref=f8e827]:
+            - generic [ref=f8e828]:
+              - generic [ref=f8e829]: "02"
+              - generic [ref=f8e830]: Institutional
+            - heading "Awards & Recognition" [level=3] [ref=f8e831]
+            - paragraph [ref=f8e832]: Trophies, medals, sanman patra, commemorative plaques and shields.
+            - link "See Catalogue" [ref=f8e834] [cursor=pointer]:
+              - /url: /#quote
+              - generic [ref=f8e835]:
+                - generic [ref=f8e836]: See Catalogue
+                - generic [aria-hidden] [ref=f8e837]:
+                  - generic [ref=f8e839]: S
+                  - generic [ref=f8e841]: e
+                  - generic [ref=f8e843]: e
+                  - generic [ref=f8e847]: C
+                  - generic [ref=f8e849]: a
+                  - generic [ref=f8e851]: t
+                  - generic [ref=f8e853]: a
+                  - generic [ref=f8e855]: l
+                  - generic [ref=f8e857]: o
+                  - generic [ref=f8e859]: g
+                  - generic [ref=f8e861]: u
+                  - generic [ref=f8e863]: e
+        - article [ref=f8e864]:
+          - generic [ref=f8e867]:
+            - generic [ref=f8e868]:
+              - generic [ref=f8e869]: "03"
+              - generic [ref=f8e870]: Bulk pricing
+            - heading "Corporate Gifting" [level=3] [ref=f8e871]
+            - paragraph [ref=f8e872]: Mementos, Diwali gifts and executive gifts, with tiered bulk pricing.
+            - link "Get Bulk Pricing" [ref=f8e874] [cursor=pointer]:
+              - /url: /#quote
+              - generic [ref=f8e875]:
+                - generic [ref=f8e876]: Get Bulk Pricing
+                - generic [aria-hidden] [ref=f8e877]:
+                  - generic [ref=f8e879]: G
+                  - generic [ref=f8e881]: e
+                  - generic [ref=f8e883]: t
+                  - generic [ref=f8e887]: B
+                  - generic [ref=f8e889]: u
+                  - generic [ref=f8e891]: l
+                  - generic [ref=f8e893]: k
+                  - generic [ref=f8e897]: P
+                  - generic [ref=f8e899]: r
+                  - generic [ref=f8e901]: i
+                  - generic [ref=f8e903]: c
+                  - generic [ref=f8e905]: i
+                  - generic [ref=f8e907]: "n"
+                  - generic [ref=f8e909]: g
+        - article [ref=f8e910]:
+          - generic [ref=f8e913]:
+            - generic [ref=f8e914]:
+              - generic [ref=f8e915]: "04"
+              - generic [ref=f8e916]: No MOQ
+            - heading "Wedding & Keepsakes" [level=3] [ref=f8e917]
+            - paragraph [ref=f8e918]: Metal kankotri invitations, anniversary gifts and personalised keepsakes.
+            - link "Start An Order" [ref=f8e920] [cursor=pointer]:
+              - /url: /#quote
+              - generic [ref=f8e921]:
+                - generic [ref=f8e922]: Start An Order
+                - generic [aria-hidden] [ref=f8e923]:
+                  - generic [ref=f8e925]: S
+                  - generic [ref=f8e927]: t
+                  - generic [ref=f8e929]: a
+                  - generic [ref=f8e931]: r
+                  - generic [ref=f8e933]: t
+                  - generic [ref=f8e937]: A
+                  - generic [ref=f8e939]: "n"
+                  - generic [ref=f8e943]: O
+                  - generic [ref=f8e945]: r
+                  - generic [ref=f8e947]: d
+                  - generic [ref=f8e949]: e
+                  - generic [ref=f8e951]: r
+        - article [ref=f8e952]:
+          - generic [ref=f8e955]:
+            - generic [ref=f8e956]:
+              - generic [ref=f8e957]: "05"
+              - generic [ref=f8e958]: Machine plates
+            - heading "ID & Signage" [level=3] [ref=f8e959]
+            - paragraph [ref=f8e960]: Machine data plates, name badges, desk plates and department signage.
+            - link "Request Specs" [ref=f8e962] [cursor=pointer]:
+              - /url: /#quote
+              - generic [ref=f8e963]:
+                - generic [ref=f8e964]: Request Specs
+                - generic [aria-hidden] [ref=f8e965]:
+                  - generic [ref=f8e967]: R
+                  - generic [ref=f8e969]: e
+                  - generic [ref=f8e971]: q
+                  - generic [ref=f8e973]: u
+                  - generic [ref=f8e975]: e
+                  - generic [ref=f8e977]: s
+                  - generic [ref=f8e979]: t
+                  - generic [ref=f8e983]: S
+                  - generic [ref=f8e985]: p
+                  - generic [ref=f8e987]: e
+                  - generic [ref=f8e989]: c
+                  - generic [ref=f8e991]: s
+        - article [ref=f8e992]:
+          - generic [ref=f8e995]:
+            - generic [ref=f8e996]:
+              - generic [ref=f8e997]: "06"
+              - generic [ref=f8e998]: From your file
+            - heading "Custom Engraving" [level=3] [ref=f8e999]
+            - paragraph [ref=f8e1000]: Bespoke designs produced from your CorelDRAW, AI, PDF or JPG artwork.
+            - link "Upload Artwork" [ref=f8e1002] [cursor=pointer]:
+              - /url: /#quote
+              - generic [ref=f8e1003]:
+                - generic [ref=f8e1004]: Upload Artwork
+                - generic [aria-hidden] [ref=f8e1005]:
+                  - generic [ref=f8e1007]: U
+                  - generic [ref=f8e1009]: p
+                  - generic [ref=f8e1011]: l
+                  - generic [ref=f8e1013]: o
+                  - generic [ref=f8e1015]: a
+                  - generic [ref=f8e1017]: d
+                  - generic [ref=f8e1021]: A
+                  - generic [ref=f8e1023]: r
+                  - generic [ref=f8e1025]: t
+                  - generic [ref=f8e1027]: w
+                  - generic [ref=f8e1029]: o
+                  - generic [ref=f8e1031]: r
+                  - generic [ref=f8e1033]: k
+    - generic [ref=f8e1037]:
+      - generic [ref=f8e1039]:
+        - generic [ref=f8e1040]:
+          - heading "How we work" [level=2] [ref=f8e1041]
+          - paragraph [ref=f8e1042]: Process
+        - paragraph [ref=f8e1043]: Modern photochemical etching instead of hand engraving - which means perfect consistency, intricate detail and no variation between pieces.
+      - list [ref=f8e1044]:
+        - listitem:
+          - paragraph: Brief
+          - 'heading "Step 1: Consultation" [level=3]':
+            - generic: "Step 1:"
+            - text: Consultation
+          - paragraph: Share your requirement - quantity, material, size and deadline.
+          - generic [aria-hidden]: "01"
+        - listitem:
+          - paragraph: Preparation
+          - 'heading "Step 2: Artwork" [level=3]':
+            - generic: "Step 2:"
+            - text: Artwork
+          - paragraph: We prepare your design, or build it from a reference image.
+          - generic [aria-hidden]: "02"
+        - listitem:
+          - paragraph: Approval
+          - 'heading "Step 3: Proof Approval" [level=3]':
+            - generic: "Step 3:"
+            - text: Proof Approval
+          - paragraph: You approve a digital proof before anything goes to production.
+          - generic [aria-hidden]: "03"
+        - listitem:
+          - paragraph: Production
+          - 'heading "Step 4: Precision Etching" [level=3]':
+            - generic: "Step 4:"
+            - text: Precision Etching
+          - paragraph: Photochemical etching - the same process used for PCB-grade precision.
+          - generic [aria-hidden]: "04"
+        - listitem:
+          - paragraph: Inspection
+          - 'heading "Step 5: Quality Check" [level=3]':
+            - generic: "Step 5:"
+            - text: Quality Check
+          - paragraph: Every piece is checked against the approved proof, one by one.
+          - generic [aria-hidden]: "05"
+        - listitem:
+          - paragraph: Delivery
+          - 'heading "Step 6: Pack & Ship" [level=3]':
+            - generic: "Step 6:"
+            - text: Pack & Ship
+          - paragraph: Secure packing, insured delivery - pan-India and worldwide.
+          - generic [aria-hidden]: "06"
+    - generic [ref=f8e1046]:
+      - generic [ref=f8e1047]:
+        - paragraph [ref=f8e1048]: Why buyers choose us
+        - heading "Made in our own factory, by the same family, since 1977." [level=2] [ref=f8e1049]
+      - list [ref=f8e1050]:
+        - listitem [ref=f8e1051]:
+          - generic [ref=f8e1052]:
+            - generic [aria-hidden] [ref=f8e1053]: "01."
+            - heading "Real experience" [level=3] [ref=f8e1054]
+          - paragraph [ref=f8e1055]: Over 45 years in metal craftsmanship, run by the third generation of the same family.
+        - listitem [ref=f8e1056]:
+          - generic [ref=f8e1057]:
+            - generic [aria-hidden] [ref=f8e1058]: "02."
+            - heading "Real materials" [level=3] [ref=f8e1059]
+          - paragraph [ref=f8e1060]: Genuine brass, copper, silver and gold. No cheap mixed metals, ever.
+        - listitem [ref=f8e1061]:
+          - generic [ref=f8e1062]:
+            - generic [aria-hidden] [ref=f8e1063]: "03."
+            - heading "Real communication" [level=3] [ref=f8e1064]
+          - paragraph [ref=f8e1065]: Speak directly to our core team - no bots, no call centres.
+        - listitem [ref=f8e1066]:
+          - generic [ref=f8e1067]:
+            - generic [aria-hidden] [ref=f8e1068]: "04."
+            - heading "Proven trust" [level=3] [ref=f8e1069]
+          - paragraph [ref=f8e1070]: Chosen by the Indian Air Force, Gujarat Police, ONGC, ISRO, IIT, IIM and the Gujarat High Court.
+    - generic [ref=f8e1073]:
+      - generic [ref=f8e1074]:
+        - paragraph [ref=f8e1075]: Export
+        - heading "From Ahmedabad to the world" [level=2] [ref=f8e1076]
+        - paragraph [ref=f8e1077]: Our work travels with customers across continents, with secure, insured international shipping. Many of our buyers overseas are part of the Indian diaspora who want authentic, well-crafted metal art made in India.
+        - list [ref=f8e1078]:
+          - listitem [ref=f8e1079]: Secure insured shipping
+          - listitem [ref=f8e1080]: DHL / courier worldwide
+          - listitem [ref=f8e1081]: Export documentation
+      - list [ref=f8e1082]:
+        - listitem [ref=f8e1083]:
+          - generic [ref=f8e1084]: United States
+          - generic [ref=f8e1085]: North America
+        - listitem [ref=f8e1086]:
+          - generic [ref=f8e1087]: United Kingdom
+          - generic [ref=f8e1088]: Europe
+        - listitem [ref=f8e1089]:
+          - generic [ref=f8e1090]: UAE
+          - generic [ref=f8e1091]: Middle East
+        - listitem [ref=f8e1092]:
+          - generic [ref=f8e1093]: Canada
+          - generic [ref=f8e1094]: North America
+        - listitem [ref=f8e1095]:
+          - generic [ref=f8e1096]: Australia
+          - generic [ref=f8e1097]: Oceania
+    - generic [ref=f8e1099]:
+      - generic [ref=f8e1100]:
+        - generic [ref=f8e1101]:
+          - generic [ref=f8e1102]:
+            - heading "Recent work" [level=2] [ref=f8e1103]
+            - paragraph [ref=f8e1104]: Gallery
+          - paragraph [ref=f8e1105]: Real product photography from our factory and finished orders - no stock imagery.
+        - link "Request product samples" [ref=f8e1106] [cursor=pointer]:
+          - /url: /#quote
+      - list [ref=f8e1110]:
+        - listitem [ref=f8e1111]:
+          - 'button "Enlarge: Sri Yantra - brass, Artisan tier" [ref=f8e1112] [cursor=pointer]'
+        - listitem [ref=f8e1114]:
+          - 'button "Enlarge: Institutional medal - 500 off" [ref=f8e1115] [cursor=pointer]'
+        - listitem [ref=f8e1117]:
+          - 'button "Enlarge: Sanman patra - copper" [ref=f8e1118] [cursor=pointer]'
+        - listitem [ref=f8e1120]:
+          - 'button "Enlarge: Wedding kankotri set" [ref=f8e1121] [cursor=pointer]'
+        - listitem [ref=f8e1123]:
+          - 'button "Enlarge: Precision coin - Dubai Expo" [ref=f8e1124] [cursor=pointer]'
+        - listitem [ref=f8e1126]:
+          - 'button "Enlarge: Machine data plate - SS" [ref=f8e1127] [cursor=pointer]'
+        - listitem [ref=f8e1129]:
+          - 'button "Enlarge: Corporate memento - brass" [ref=f8e1130] [cursor=pointer]'
+        - listitem [ref=f8e1132]:
+          - 'button "Enlarge: Department signage" [ref=f8e1133] [cursor=pointer]'
+  - contentinfo [ref=f8e1135]:
+    - heading "Site footer" [level=2] [ref=f8e1136]
+    - generic [ref=f8e1137]:
+      - generic [ref=f8e1138]:
+        - generic [ref=f8e1139]:
+          - generic [ref=f8e1142]:
+            - generic [ref=f8e1143]:
+              - generic [ref=f8e1144]: VARDHMAN
+              - superscript [ref=f8e1145]: TM
+            - generic [ref=f8e1146]: METAL ART
+          - paragraph [ref=f8e1147]: World-Class Photochemical Etching, Made in India.
+        - navigation "Products" [ref=f8e1148]:
+          - heading "Products" [level=3] [ref=f8e1149]
+          - list [ref=f8e1150]:
+            - listitem [ref=f8e1151]:
+              - link "Yantra Collection" [ref=f8e1152] [cursor=pointer]:
+                - /url: /#quote
+            - listitem [ref=f8e1154]:
+              - link "Awards & Recognition" [ref=f8e1155] [cursor=pointer]:
+                - /url: /#quote
+            - listitem [ref=f8e1157]:
+              - link "Corporate Gifting" [ref=f8e1158] [cursor=pointer]:
+                - /url: /#quote
+            - listitem [ref=f8e1160]:
+              - link "Wedding & Keepsakes" [ref=f8e1161] [cursor=pointer]:
+                - /url: /#quote
+            - listitem [ref=f8e1163]:
+              - link "ID & Signage" [ref=f8e1164] [cursor=pointer]:
+                - /url: /#quote
+            - listitem [ref=f8e1166]:
+              - link "Custom Engraving" [ref=f8e1167] [cursor=pointer]:
+                - /url: /#quote
+        - navigation "Company" [ref=f8e1169]:
+          - heading "Company" [level=3] [ref=f8e1170]
+          - list [ref=f8e1171]:
+            - listitem [ref=f8e1172]:
+              - link "Our Legacy" [ref=f8e1173] [cursor=pointer]:
+                - /url: /legacy
+            - listitem [ref=f8e1175]:
+              - link "Government & Institutional Supply" [ref=f8e1176] [cursor=pointer]:
+                - /url: /#start
+            - listitem [ref=f8e1178]:
+              - link "Our Process" [ref=f8e1179] [cursor=pointer]:
+                - /url: /#process
+            - listitem [ref=f8e1181]:
+              - link "Product Catalogue" [ref=f8e1182] [cursor=pointer]:
+                - /url: /products
+            - listitem [ref=f8e1184]:
+              - link "Gallery" [ref=f8e1185] [cursor=pointer]:
+                - /url: /gallery
+            - listitem [ref=f8e1187]:
+              - link "Contact Us" [ref=f8e1188] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=f8e1190]:
+          - heading "Contact" [level=3] [ref=f8e1191]
+          - generic [ref=f8e1192]:
+            - generic [ref=f8e1193]:
+              - generic [ref=f8e1194]: Factory & office
+              - generic [ref=f8e1195]: I/11 Ravi Estate, Rustam Mill Compound,
+              - generic [ref=f8e1196]: Dudheshwar Road, Dudheshwar,
+              - generic [ref=f8e1197]: Ahmedabad 380004, Gujarat
+            - generic [ref=f8e1198]:
+              - generic [ref=f8e1199]: Showroom
+              - generic [ref=f8e1200]: Navkar Handicraft,
+              - generic [ref=f8e1201]: Vastrapur, Ahmedabad
+      - generic [ref=f8e1203]:
+        - heading "Certifications & registrations" [level=3] [ref=f8e1204]
+        - list [ref=f8e1205]:
+          - listitem [ref=f8e1206]:
+            - img "ISO 9001:2015" [ref=f8e1207]
+          - listitem [ref=f8e1208]:
+            - img "ZED Bronze" [ref=f8e1209]
+          - listitem [ref=f8e1210]:
+            - img "MSME Registered" [ref=f8e1211]
+          - listitem [ref=f8e1212]:
+            - img "GeM Supplier" [ref=f8e1213]
+          - listitem [ref=f8e1214]:
+            - img "Make in India" [ref=f8e1215]
+      - generic [ref=f8e1216]:
+        - generic [ref=f8e1217]: © 2026 Vardhman Metal Art. Crafting since 1977.
+        - generic [ref=f8e1218]:
+          - link "Privacy Policy" [ref=f8e1219] [cursor=pointer]:
+            - /url: /#top
+          - link "Terms of Service" [ref=f8e1220] [cursor=pointer]:
+            - /url: /#top
+          - link "Shipping & Returns" [ref=f8e1221] [cursor=pointer]:
+            - /url: /#top
+  - region "Notifications alt+T"

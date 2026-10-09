@@ -1,0 +1,207 @@
+- generic [active] [ref=f14e1]:
+  - generic [ref=f14e2]:
+    - link "Skip to content" [ref=f14e3] [cursor=pointer]:
+      - /url: "#main-content"
+    - generic [ref=f14e4]:
+      - complementary [ref=f14e5]:
+        - generic [ref=f14e6]:
+          - link "JobberFlow dashboard" [ref=f14e7] [cursor=pointer]:
+            - /url: /dashboard
+            - generic [ref=f14e16]:
+              - generic [ref=f14e17]: JobberFlow
+              - generic [ref=f14e18]: Job work control
+          - button "Collapse sidebar" [ref=f14e19]
+        - button "New voucher" [ref=f14e23]
+        - navigation "Primary navigation" [ref=f14e27]:
+          - region [ref=f14e28]:
+            - heading "Overview" [level=2] [ref=f14e29]
+            - list [ref=f14e30]:
+              - listitem [ref=f14e31]:
+                - link "Dashboard" [ref=f14e32] [cursor=pointer]:
+                  - /url: /dashboard
+          - region [ref=f14e40]:
+            - heading "Daily flow" [level=2] [ref=f14e41]
+            - list [ref=f14e42]:
+              - listitem [ref=f14e43]:
+                - link "Raw material inward" [ref=f14e44] [cursor=pointer]:
+                  - /url: /transactions/rm-inward
+              - listitem [ref=f14e50]:
+                - link "Transfer to jobber" [ref=f14e51] [cursor=pointer]:
+                  - /url: /transactions/transfer
+              - listitem [ref=f14e57]:
+                - link "Product inward" [ref=f14e58] [cursor=pointer]:
+                  - /url: /transactions/product-inward
+              - listitem [ref=f14e65]:
+                - link "Material return" [ref=f14e66] [cursor=pointer]:
+                  - /url: /transactions/material-return
+              - listitem [ref=f14e72]:
+                - link "Stock adjustment" [ref=f14e73] [cursor=pointer]:
+                  - /url: /transactions/adjustment
+          - region [ref=f14e80]:
+            - heading "Stock" [level=2] [ref=f14e81]
+            - list [ref=f14e82]:
+              - listitem [ref=f14e83]:
+                - link "Raw material stock" [ref=f14e84] [cursor=pointer]:
+                  - /url: /inventory/warehouse
+              - listitem [ref=f14e90]:
+                - link "Finished goods" [ref=f14e91] [cursor=pointer]:
+                  - /url: /inventory/finished-goods
+              - listitem [ref=f14e97]:
+                - link "Raw material ledger" [ref=f14e98] [cursor=pointer]:
+                  - /url: /inventory/rm-ledger
+              - listitem [ref=f14e104]:
+                - link "Finished goods ledger" [ref=f14e105] [cursor=pointer]:
+                  - /url: /inventory/fg-ledger
+          - region [ref=f14e111]:
+            - heading "Analysis" [level=2] [ref=f14e112]
+            - list [ref=f14e113]:
+              - listitem [ref=f14e114]:
+                - link "Reports centre" [ref=f14e115] [cursor=pointer]:
+                  - /url: /reports
+              - listitem [ref=f14e122]:
+                - link "Jobber reconciliation" [ref=f14e123] [cursor=pointer]:
+                  - /url: /reconciliation
+          - region [ref=f14e130]:
+            - heading "Masters" [level=2] [ref=f14e131]
+            - list [ref=f14e132]:
+              - listitem [ref=f14e133]:
+                - link "Jobbers" [ref=f14e134] [cursor=pointer]:
+                  - /url: /masters/jobbers
+              - listitem [ref=f14e142]:
+                - link "Raw materials" [ref=f14e143] [cursor=pointer]:
+                  - /url: /masters/materials
+              - listitem [ref=f14e149]:
+                - link "Finished products" [ref=f14e150] [cursor=pointer]:
+                  - /url: /masters/products
+              - listitem [ref=f14e156]:
+                - link "Bills of material" [ref=f14e157] [cursor=pointer]:
+                  - /url: /masters/bom
+        - generic [ref=f14e163]:
+          - link "Users & settings" [ref=f14e164] [cursor=pointer]:
+            - /url: /admin
+          - generic [ref=f14e170]:
+            - generic [aria-hidden] [ref=f14e171]: KK
+            - generic [ref=f14e172]:
+              - paragraph [ref=f14e173]: kkshah2005@gmail.com
+              - paragraph [ref=f14e174]: Store
+            - button "Sign out" [ref=f14e175]
+      - generic [ref=f14e179]:
+        - banner [ref=f14e180]:
+          - paragraph [ref=f14e181]: Dashboard
+        - main [ref=f14e182]:
+          - generic [ref=f14e185]:
+            - generic [ref=f14e186]:
+              - generic [ref=f14e187]:
+                - heading "Material position" [level=1] [ref=f14e188]
+                - paragraph [ref=f14e189]: Good afternoon. Every kilogram you own, where it sits right now, and what came back from the floor.
+              - generic [ref=f14e191]:
+                - generic [ref=f14e192]: Friday, 9 October
+                - status [ref=f14e193]: Live
+            - region [ref=f14e195]:
+              - generic [ref=f14e196]:
+                - generic [ref=f14e197]:
+                  - heading "In custody" [level=2] [ref=f14e198]
+                  - generic [ref=f14e253]:
+                    - text: "580"
+                    - generic [ref=f14e254]: ".000"
+                    - text: kg
+                  - paragraph [ref=f14e200]:
+                    - text: Across the warehouse and 1 jobber.
+                    - generic [ref=f14e255]: 1 with no movement in 30+ days.
+                - generic [ref=f14e201]:
+                  - link "Stock at jobbers" [ref=f14e202] [cursor=pointer]:
+                    - /url: /inventory/jobber-stock
+                  - link "Reconcile" [ref=f14e203] [cursor=pointer]:
+                    - /url: /reconciliation
+              - list "Material by location" [ref=f14e256]:
+                - listitem [ref=f14e257]:
+                  - link "Warehouse stock" [ref=f14e258] [cursor=pointer]:
+                    - /url: /inventory/warehouse
+                  - generic:
+                    - generic: Warehouse
+                    - generic: 57%
+                  - generic:
+                    - generic: 328kg
+                    - generic: Company godown
+                - listitem [ref=f14e259]:
+                  - link "Reconcile DASRATH BHAI CTM" [ref=f14e260] [cursor=pointer]:
+                    - /url: /reconciliation?jobber=740f4df6-62e0-4341-8f6b-5032e4597217
+                  - generic:
+                    - generic: DASRATH BHAI CTM
+                    - generic: 43%
+                  - generic:
+                    - generic: 252kg
+                    - generic: 45 days since last movement
+                  - generic [ref=f14e261]:
+                    - generic [ref=f14e262]: 45 days
+                    - text: no movement
+              - table [ref=f14e264]:
+                - rowgroup [ref=f14e265]:
+                  - row [ref=f14e266]:
+                    - columnheader "Jobber" [ref=f14e267]
+                    - columnheader "Holding" [ref=f14e268]
+                    - columnheader "Share" [ref=f14e269]
+                    - columnheader "Last movement" [ref=f14e270]
+                    - columnheader "Days quiet" [ref=f14e271]
+                - rowgroup [ref=f14e272]:
+                  - row [ref=f14e273]:
+                    - cell [ref=f14e274]:
+                      - link "DASRATH BHAI CTM" [ref=f14e275] [cursor=pointer]:
+                        - /url: /reconciliation?jobber=740f4df6-62e0-4341-8f6b-5032e4597217
+                    - cell "252.000 kg" [ref=f14e276]
+                    - cell "43%" [ref=f14e277]
+                    - cell "25 Aug 2026" [ref=f14e278]
+                    - cell "45" [ref=f14e279]
+            - region [ref=f14e210]:
+              - generic [ref=f14e211]:
+                - heading "October so far" [level=2] [ref=f14e212]
+                - link "Inward vouchers" [ref=f14e213] [cursor=pointer]:
+                  - /url: /transactions/product-inward
+              - generic [ref=f14e214]:
+                - generic [ref=f14e215]:
+                  - term [ref=f14e216]: Produced
+                  - definition [ref=f14e217]:
+                    - generic [ref=f14e280]: 0pcs
+                - generic [ref=f14e219]:
+                  - term [ref=f14e220]: Wastage
+                  - definition [ref=f14e221]:
+                    - generic [ref=f14e281]:
+                      - text: "0"
+                      - generic [ref=f14e282]: ".000"
+                      - text: kg
+                - generic [ref=f14e223]:
+                  - term [ref=f14e224]: Average wastage
+                  - definition [ref=f14e225]:
+                    - generic [ref=f14e226]: —
+                - generic [ref=f14e227]:
+                  - term [ref=f14e228]: Finished goods ready
+                  - definition [ref=f14e229]:
+                    - generic [ref=f14e283]: 0pcs
+              - generic [ref=f14e232]:
+                - text: No product inward posted in the last six months.
+                - link "Post a product inward" [ref=f14e284] [cursor=pointer]:
+                  - /url: /transactions/product-inward
+            - generic [ref=f14e233]:
+              - region [ref=f14e234]:
+                - generic [ref=f14e235]:
+                  - heading "Below minimum" [level=2] [ref=f14e236]
+                  - link "Material master" [ref=f14e237] [cursor=pointer]:
+                    - /url: /masters/materials
+                - generic [ref=f14e285]:
+                  - paragraph [ref=f14e286]: All 5 materials above minimum
+                  - paragraph [ref=f14e287]: Nothing needs reordering against the levels you set.
+              - region [ref=f14e242]:
+                - generic [ref=f14e243]:
+                  - heading "Latest inwards" [level=2] [ref=f14e244]
+                  - link "View register" [ref=f14e245] [cursor=pointer]:
+                    - /url: /transactions/product-inward
+                - generic [ref=f14e288]:
+                  - paragraph [ref=f14e289]: Nothing received yet
+                  - paragraph [ref=f14e290]: When a jobber sends finished goods back, post the inward voucher and it shows up here with its wastage.
+                  - link "Record a product inward" [ref=f14e291] [cursor=pointer]:
+                    - /url: /transactions/product-inward
+            - paragraph [ref=f14e251]:
+              - text: 4 active jobbers · 8 raw materials · 1 finished product ·
+              - link "Manage masters" [ref=f14e252] [cursor=pointer]:
+                - /url: /masters/jobbers
+  - region "Notifications alt+T"
