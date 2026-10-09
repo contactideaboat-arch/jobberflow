@@ -1,0 +1,372 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-09T07:03:41.690Z",
+  "title": "Design System: JobberFlow",
+  "extensions": {
+    "colorMeta": {
+      "enamel-teal": {
+        "role": "primary",
+        "displayName": "Enamel Teal",
+        "canonical": "oklch(0.43 0.075 205)",
+        "tonalRamp": [
+          "oklch(0.2 0.075 205)",
+          "oklch(0.3 0.075 205)",
+          "oklch(0.4 0.075 205)",
+          "oklch(0.5 0.075 205)",
+          "oklch(0.6 0.075 205)",
+          "oklch(0.7 0.075 205)",
+          "oklch(0.82 0.075 205)",
+          "oklch(0.95 0.075 205)"
+        ]
+      },
+      "shell-teal": {
+        "role": "primary",
+        "displayName": "Shell Teal",
+        "canonical": "oklch(0.33 0.058 205)",
+        "tonalRamp": [
+          "oklch(0.2 0.058 205)",
+          "oklch(0.3 0.058 205)",
+          "oklch(0.4 0.058 205)",
+          "oklch(0.5 0.058 205)",
+          "oklch(0.6 0.058 205)",
+          "oklch(0.7 0.058 205)",
+          "oklch(0.82 0.058 205)",
+          "oklch(0.95 0.058 205)"
+        ]
+      },
+      "chrome-yellow": {
+        "role": "secondary",
+        "displayName": "Chrome Yellow",
+        "canonical": "oklch(0.86 0.165 92)",
+        "tonalRamp": [
+          "oklch(0.2 0.165 92)",
+          "oklch(0.3 0.165 92)",
+          "oklch(0.4 0.165 92)",
+          "oklch(0.5 0.165 92)",
+          "oklch(0.6 0.165 92)",
+          "oklch(0.7 0.165 92)",
+          "oklch(0.82 0.165 92)",
+          "oklch(0.95 0.165 92)"
+        ]
+      },
+      "tomato": {
+        "role": "tertiary",
+        "displayName": "Tomato",
+        "canonical": "oklch(0.6 0.2 33)",
+        "tonalRamp": [
+          "oklch(0.2 0.2 33)",
+          "oklch(0.3 0.2 33)",
+          "oklch(0.4 0.2 33)",
+          "oklch(0.5 0.2 33)",
+          "oklch(0.6 0.2 33)",
+          "oklch(0.7 0.2 33)",
+          "oklch(0.82 0.2 33)",
+          "oklch(0.95 0.2 33)"
+        ]
+      },
+      "paint-green": {
+        "role": "tertiary",
+        "displayName": "Board Paint Green",
+        "canonical": "oklch(0.5 0.1 160)",
+        "tonalRamp": [
+          "oklch(0.2 0.1 160)",
+          "oklch(0.3 0.1 160)",
+          "oklch(0.4 0.1 160)",
+          "oklch(0.5 0.1 160)",
+          "oklch(0.6 0.1 160)",
+          "oklch(0.7 0.1 160)",
+          "oklch(0.82 0.1 160)",
+          "oklch(0.95 0.1 160)"
+        ]
+      },
+      "paint-plum": {
+        "role": "tertiary",
+        "displayName": "Board Paint Plum",
+        "canonical": "oklch(0.47 0.11 345)",
+        "tonalRamp": [
+          "oklch(0.2 0.11 345)",
+          "oklch(0.3 0.11 345)",
+          "oklch(0.4 0.11 345)",
+          "oklch(0.5 0.11 345)",
+          "oklch(0.6 0.11 345)",
+          "oklch(0.7 0.11 345)",
+          "oklch(0.82 0.11 345)",
+          "oklch(0.95 0.11 345)"
+        ]
+      },
+      "paint-sky": {
+        "role": "tertiary",
+        "displayName": "Board Paint Sky",
+        "canonical": "oklch(0.66 0.09 228)",
+        "tonalRamp": [
+          "oklch(0.2 0.09 228)",
+          "oklch(0.3 0.09 228)",
+          "oklch(0.4 0.09 228)",
+          "oklch(0.5 0.09 228)",
+          "oklch(0.6 0.09 228)",
+          "oklch(0.7 0.09 228)",
+          "oklch(0.82 0.09 228)",
+          "oklch(0.95 0.09 228)"
+        ]
+      },
+      "board-ground": {
+        "role": "neutral",
+        "displayName": "Board Ground",
+        "canonical": "oklch(0.968 0.006 100)",
+        "tonalRamp": [
+          "oklch(0.2 0.006 100)",
+          "oklch(0.3 0.006 100)",
+          "oklch(0.4 0.006 100)",
+          "oklch(0.5 0.006 100)",
+          "oklch(0.6 0.006 100)",
+          "oklch(0.7 0.006 100)",
+          "oklch(0.82 0.006 100)",
+          "oklch(0.95 0.006 100)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(0.2 0.025 215)",
+        "tonalRamp": [
+          "oklch(0.2 0.025 215)",
+          "oklch(0.3 0.025 215)",
+          "oklch(0.4 0.025 215)",
+          "oklch(0.5 0.025 215)",
+          "oklch(0.6 0.025 215)",
+          "oklch(0.7 0.025 215)",
+          "oklch(0.82 0.025 215)",
+          "oklch(0.95 0.025 215)"
+        ]
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "oklch(0.47 0.02 210)",
+        "tonalRamp": [
+          "oklch(0.2 0.02 210)",
+          "oklch(0.3 0.02 210)",
+          "oklch(0.4 0.02 210)",
+          "oklch(0.5 0.02 210)",
+          "oklch(0.6 0.02 210)",
+          "oklch(0.7 0.02 210)",
+          "oklch(0.82 0.02 210)",
+          "oklch(0.95 0.02 210)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "canonical": "oklch(0.875 0.01 110)",
+        "tonalRamp": [
+          "oklch(0.2 0.01 110)",
+          "oklch(0.3 0.01 110)",
+          "oklch(0.4 0.01 110)",
+          "oklch(0.5 0.01 110)",
+          "oklch(0.6 0.01 110)",
+          "oklch(0.7 0.01 110)",
+          "oklch(0.82 0.01 110)",
+          "oklch(0.95 0.01 110)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Custody total and other headline figures; uppercase signage lettering."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles (every h1) and panel/tile figures."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section titles, tile names, wordmark, empty-state headings. Uppercase."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All running UI text, controls and nav."
+      },
+      "table": {
+        "displayName": "Table",
+        "purpose": "Ledger cells with tabular figures."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Panel labels, text actions, notes, status plates. Sentence case."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Voucher numbers and material codes."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-float",
+        "value": "0 1px 1px oklch(0.2 0.02 255 / 0.04), 0 8px 24px -6px oklch(0.2 0.02 255 / 0.14), 0 24px 48px -12px oklch(0.2 0.02 255 / 0.1)",
+        "purpose": "Floating overlays only: popover, dropdown, select, dialog, sheet, hover card, toast."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-settle",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Board settle, bar grow, link underline, lettering lift."
+      },
+      {
+        "name": "ease-route",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Route and section entry (6px rise, 240-260ms)."
+      },
+      {
+        "name": "board-settle",
+        "value": "720ms",
+        "purpose": "Custody tiles settle from equal width to their kg share once on load."
+      },
+      {
+        "name": "state-colour",
+        "value": "120-180ms ease",
+        "purpose": "Hover and active colour changes on rows, nav and keylines."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Default action in enamel teal; presses 1px on active.",
+      "html": "<button class=\"ds-btn-primary\">Post voucher</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 16px;border:0;border-radius:4px;background:var(--primary,oklch(0.43 0.075 205));color:var(--primary-foreground,oklch(0.985 0.005 100));font:500 14px/1 Archivo,ui-sans-serif,sans-serif;cursor:pointer;transition:background-color 200ms,transform 200ms}.ds-btn-primary:hover{background:color-mix(in oklab,var(--primary,oklch(0.43 0.075 205)) 90%,transparent)}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:2px solid var(--ring,oklch(0.43 0.075 205));outline-offset:2px}"
+    },
+    {
+      "name": "Signal Button",
+      "kind": "button",
+      "refersTo": "button-signal",
+      "description": "The one high-intent action on a view, in chrome yellow with yellow ink.",
+      "html": "<a class=\"ds-btn-signal\" href=\"#\">Reconcile <svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 12h15.4\"/><path d=\"m13.6 6.2 5.8 5.8-5.8 5.8\"/></svg></a>",
+      "css": ".ds-btn-signal{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:4px;background:var(--accent,oklch(0.86 0.165 92));color:var(--accent-foreground,oklch(0.24 0.045 80));font:600 12px/1 Archivo,ui-sans-serif,sans-serif;text-decoration:none;transition:filter 150ms,transform 150ms}.ds-btn-signal:hover{filter:brightness(0.95)}.ds-btn-signal:active{transform:translateY(1px)}.ds-btn-signal:focus-visible{outline:2px solid var(--ring,oklch(0.43 0.075 205));outline-offset:2px}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action on a strong rule.",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">Stock at jobbers</a>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;height:36px;padding:0 12px;border:1px solid var(--border-strong,oklch(0.74 0.016 110));border-radius:4px;background:transparent;color:var(--foreground,oklch(0.2 0.025 215));font:600 12px/1 Archivo,ui-sans-serif,sans-serif;text-decoration:none;transition:background-color 150ms}.ds-btn-outline:hover{background:var(--card,oklch(0.993 0.003 100))}.ds-btn-outline:focus-visible{outline:2px solid var(--ring,oklch(0.43 0.075 205));outline-offset:2px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "1px stroke, transparent fill, teal ring on focus.",
+      "html": "<input class=\"ds-input\" placeholder=\"Voucher number\" />",
+      "css": ".ds-input{height:36px;width:260px;padding:4px 12px;border:1px solid var(--input,oklch(0.83 0.012 110));border-radius:4px;background:transparent;color:var(--foreground,oklch(0.2 0.025 215));font:400 14px Archivo,ui-sans-serif,sans-serif;transition:box-shadow 150ms}.ds-input::placeholder{color:var(--muted-foreground,oklch(0.47 0.02 210))}.ds-input:focus-visible{outline:none;box-shadow:0 0 0 1px var(--ring,oklch(0.43 0.075 205))}"
+    },
+    {
+      "name": "Sidebar Navigation",
+      "kind": "nav",
+      "refersTo": "nav-row",
+      "description": "Teal shell with the workflow spine: stations joined by a rule, active station filled chrome yellow.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-row\" href=\"#\"><span class=\"ds-node\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 12h15.4\"/><path d=\"m13.6 6.2 5.8 5.8-5.8 5.8\"/></svg></span>Receive</a><a class=\"ds-nav-row is-active\" href=\"#\"><span class=\"ds-node\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 12h15.4\"/><path d=\"m13.6 6.2 5.8 5.8-5.8 5.8\"/></svg></span>Issue</a><a class=\"ds-nav-row\" href=\"#\"><span class=\"ds-node\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 12h15.4\"/><path d=\"m13.6 6.2 5.8 5.8-5.8 5.8\"/></svg></span>Receive output</a></nav>",
+      "css": ".ds-nav{position:relative;width:224px;padding:12px;background:var(--sidebar,oklch(0.33 0.058 205));display:flex;flex-direction:column;gap:1px}.ds-nav::before{content:'';position:absolute;top:30px;bottom:30px;left:31.5px;width:1px;background:var(--sidebar-border,oklch(0.43 0.055 205))}.ds-nav-row{position:relative;display:flex;align-items:center;gap:12px;height:32px;padding:0 8px;border-radius:4px;color:color-mix(in oklab,var(--sidebar-foreground,oklch(0.93 0.02 190)) 74%,transparent);font:400 13px Archivo,ui-sans-serif,sans-serif;text-decoration:none;transition:color 150ms,background-color 150ms}.ds-nav-row:hover{color:var(--sidebar-accent-foreground,oklch(0.985 0.005 100));background:color-mix(in oklab,var(--sidebar-accent,oklch(0.39 0.062 205)) 62%,transparent)}.ds-nav-row:focus-visible{outline:2px solid var(--sidebar-ring,oklch(0.86 0.165 92));outline-offset:-2px}.ds-nav-row.is-active{background:var(--sidebar-accent,oklch(0.39 0.062 205));color:var(--sidebar-accent-foreground,oklch(0.985 0.005 100));font-weight:600}.ds-node{position:relative;z-index:1;display:flex;width:24px;height:24px;align-items:center;justify-content:center;border-radius:3px;background:var(--sidebar,oklch(0.33 0.058 205));box-shadow:inset 0 0 0 1px var(--sidebar-border,oklch(0.43 0.055 205));color:var(--sidebar-subtle,oklch(0.77 0.04 195))}.ds-nav-row.is-active .ds-node{background:var(--sidebar-primary,oklch(0.86 0.165 92));box-shadow:none;color:var(--sidebar-primary-foreground,oklch(0.22 0.045 80))}"
+    },
+    {
+      "name": "Custody Board Tile",
+      "kind": "custom",
+      "refersTo": "board-tile-jobber",
+      "description": "Painted tile sized by kg share, framed by a keyline that paints solid on hover; tomato days plate when long-out.",
+      "html": "<ul class=\"ds-board\"><li class=\"ds-tile ds-wh\" style=\"flex-grow:58\"><span class=\"ds-sign\">Warehouse</span><span class=\"ds-fig\">12,480<small> kg</small></span></li><li class=\"ds-tile ds-jb\" style=\"flex-grow:42\"><span class=\"ds-sign\">Shree Moulders</span><span class=\"ds-fig\">9,015<small> kg</small></span><span class=\"ds-plate\"><b>41 days</b> no movement</span></li></ul>",
+      "css": ".ds-board{display:flex;gap:6px;min-height:224px;width:560px;margin:0;padding:0;list-style:none}.ds-tile{position:relative;display:flex;flex-direction:column;justify-content:space-between;flex-basis:0;padding:24px;border-radius:3px;overflow:hidden;cursor:pointer}.ds-tile::before{content:'';position:absolute;inset:8px;border:1px solid currentColor;border-radius:2px;opacity:.28;transition:opacity 180ms ease}.ds-tile:hover::before{opacity:.9}.ds-wh{background:var(--accent,oklch(0.86 0.165 92));color:var(--accent-foreground,oklch(0.24 0.045 80))}.ds-jb{background:var(--chart-1,oklch(0.43 0.075 205));color:var(--primary-foreground,oklch(0.985 0.005 100));padding-bottom:52px}.ds-sign,.ds-fig,.ds-plate b{font-family:'Big Shoulders Display',Archivo,sans-serif;font-weight:800;text-transform:uppercase;line-height:.92;letter-spacing:.005em}.ds-sign{font-size:26px}.ds-fig{font-size:44px;font-variant-numeric:tabular-nums;transition:transform 220ms cubic-bezier(0.22,1,0.36,1)}.ds-tile:hover .ds-fig{transform:translateY(-2px)}.ds-fig small{font-size:.42em;opacity:.75}.ds-plate{position:absolute;left:0;right:0;bottom:0;height:32px;display:flex;align-items:center;gap:8px;padding:0 24px;background:var(--destructive,oklch(0.6 0.2 33));color:var(--destructive-foreground,oklch(0.985 0.005 100));font:600 12px Archivo,sans-serif}.ds-plate b{font-size:16px}"
+    },
+    {
+      "name": "Section Head",
+      "kind": "custom",
+      "refersTo": "title",
+      "description": "Lettered section title on a 2px ink rule with a text action that underlines from the left.",
+      "html": "<div class=\"ds-head\"><h2>Below minimum</h2><a href=\"#\">Material master</a></div>",
+      "css": ".ds-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;width:480px;padding-bottom:8px;border-bottom:2px solid var(--foreground,oklch(0.2 0.025 215))}.ds-head h2{margin:0;font:800 24px/.92 'Big Shoulders Display',Archivo,sans-serif;text-transform:uppercase;letter-spacing:.005em;color:var(--foreground,oklch(0.2 0.025 215))}.ds-head a{position:relative;font:600 12px Archivo,sans-serif;color:var(--primary,oklch(0.43 0.075 205));text-decoration:none}.ds-head a::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform 220ms cubic-bezier(0.22,1,0.36,1)}.ds-head a:hover::after,.ds-head a:focus-visible::after{transform:scaleX(1)}"
+    },
+    {
+      "name": "Ledger Table",
+      "kind": "card",
+      "refersTo": "table-head",
+      "description": "Dense ruled table on card with tabular figures and a faint yellow row hover.",
+      "html": "<table class=\"ds-table\"><thead><tr><th>Jobber</th><th class=\"r\">Holding</th><th class=\"r\">Days quiet</th></tr></thead><tbody><tr><td>Shree Moulders</td><td class=\"r\">9,015.250 kg</td><td class=\"r loss\">41</td></tr><tr><td>Patel Plast</td><td class=\"r\">3,402.000 kg</td><td class=\"r\">6</td></tr></tbody></table>",
+      "css": ".ds-table{width:480px;border-collapse:collapse;font:400 13px Archivo,sans-serif;background:var(--card,oklch(0.993 0.003 100));border:1px solid var(--border,oklch(0.875 0.01 110));color:var(--foreground,oklch(0.2 0.025 215))}.ds-table th{background:var(--subtle,oklch(0.94 0.008 105));color:var(--muted-foreground,oklch(0.47 0.02 210));text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:7px 12px;border-bottom:1px solid var(--border-strong,oklch(0.74 0.016 110))}.ds-table td{padding:7px 12px;border-bottom:1px solid var(--border,oklch(0.875 0.01 110));transition:background-color 120ms}.ds-table tr:last-child td{border-bottom:0}.ds-table tbody tr:hover td{background:color-mix(in oklab,var(--accent,oklch(0.86 0.165 92)) 6%,transparent)}.ds-table .r{text-align:right;font-variant-numeric:tabular-nums}.ds-table .loss{color:var(--destructive,oklch(0.6 0.2 33));font-weight:600}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Signboard",
+    "overview": "JobberFlow is lettered and painted like the boards over a godown door and a trader's shop: flat enamel paint, a teal shell, an off-white board, black ink, chrome yellow and a tomato red that only ever means trouble. The world is working signage, not a dashboard theme. Paint is unmodulated, depth comes from borders and ink rules rather than shadows, and heavy condensed lettering is reserved for the things a sign would actually say: the page name, the section name, the number.\n\nDensity follows the work. Staff post vouchers all day, so tables are ledger-tight (13px rows, 7px cell padding, tabular figures) and controls sit at 32 to 36px. The signage moments are few and large: a page title, a section title with a 2px ink rule under it, a headline figure whose decimals and unit drop to a smaller size. Everything between is Archivo at 14px.\n\nThe signature is the custody board: one painted tile per location, its width set by its share of the kilograms in custody, framed by a painted keyline, with a red days plate on any jobber that has sat too long. The wall is the chart.",
+    "keyCharacteristics": [
+      "Flat enamel paint; no gradients, no card shadows.",
+      "Enamel-teal shell (sidebar and header band) around an off-white board ground.",
+      "Chrome yellow marks the warehouse, the live signal, selection and the high-intent action.",
+      "Tomato red is reserved for loss and long-out material.",
+      "Big Shoulders Display uppercase for titles and figures only; Archivo for all UI.",
+      "Small, deliberate corners (2 to 5px); 1px rules, 2px ink rules for boards.",
+      "Hand-authored 1.5-stroke icon set; no icon library."
+    ],
+    "rules": [
+      {
+        "name": "The Red Means Loss Rule",
+        "body": "Tomato appears only on loss, long-out material, errors and destructive actions. Nothing decorative is red.",
+        "section": "colors"
+      },
+      {
+        "name": "The Warehouse Is Yellow Rule",
+        "body": "The warehouse tile is always chrome yellow; jobbers never take it. Yellow on a screen means our own godown, live state, or the one action to take now.",
+        "section": "colors"
+      },
+      {
+        "name": "The Semantic Token Rule",
+        "body": "Components use semantic tokens (`bg-accent`, `text-destructive`, `var(--color-chart-1)`), never literal colours.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sign Says Little Rule",
+        "body": "Display lettering (`.sign`, `.readout`, `h1`) is for page titles, section titles, tile names and headline figures. Every control, label, nav item and table stays in Archivo. `h2` to `h4` default to Archivo 600 unless a section title opts into `.sign`.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Figure Rule",
+        "body": "Every quantity, share and day count uses tabular numerals (`num`). KG at 3 decimals, en-IN grouping.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Paint Rule",
+        "body": "No gradients, glows or card shadows on painted or resting surfaces. If it does not float above the page, it does not cast a shadow. (The skeleton sheen is a loading mechanism, not paint.)",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** letter page titles, section titles and headline figures in Big Shoulders Display 800 uppercase, and nothing else.",
+      "**Do** keep paint flat and separate surfaces with 1px rules or 2px ink rules.",
+      "**Do** use chrome yellow for the warehouse, live state and the single high-intent action on a view.",
+      "**Do** set every quantity in tabular figures, KG to 3 decimals, with decimals and unit smaller than the whole on headline figures.",
+      "**Do** draw icons from `src/components/icons` (24 grid, 1.5 stroke, round caps and joins, currentColor).",
+      "**Do** make every board tile and record a real link to its records.",
+      "**Do** keep motion to one authored entrance per surface and short colour transitions (120 to 220ms); honour reduced motion."
+    ],
+    "donts": [
+      "**Don't** use gradients, glows or shadows on resting surfaces; `--shadow-float` is for floating overlays only.",
+      "**Don't** use tomato red for anything but loss, long-out material, errors and destructive actions.",
+      "**Don't** put white text on chrome yellow.",
+      "**Don't** set controls, nav items, labels or tables in the display face.",
+      "**Don't** add an icon library or glyph characters as icons.",
+      "**Don't** mark active nav rows with an edge stripe; active is a fill with the icon lit.",
+      "**Don't** hardcode colours in components."
+    ]
+  }
+}

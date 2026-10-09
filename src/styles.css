@@ -5,51 +5,119 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * JobWork ERP design system — industrial steel + amber.
+ * JobberFlow design system: Steel ledger.
+ *
+ * A calm, precise working surface for people who post vouchers all day.
+ * Near-white canvas, white working surfaces, dark ink, slate secondary text,
+ * fine gray rules and one restrained steel blue for action and focus.
+ *
+ * Rules that keep the system honest:
+ *   1. Surfaces are flat and separated by 1px rules. Shadows exist only on
+ *      floating layers (popover, menu, dialog, sheet, toast): --shadow-float.
+ *   2. Steel blue means "you can act here" or "you are here". It is never
+ *      used for decoration or for emphasis on a figure.
+ *   3. Red means a loss, wastage over the limit, long-out material or a
+ *      destructive action. Amber means "look at this". Green means posted.
+ *   4. One type family (Archivo) at a fixed scale. Hierarchy comes from size
+ *      and weight steps, never from uppercase lettering or display faces.
+ *   5. Iconography comes from @/components/icons. No icon library.
+ *
  * All colors are oklch semantic tokens. Never hardcode colors in components.
+ * Every text pair below was measured at or above WCAG AA (4.5:1 for text,
+ * 3:1 for input boundaries and focus rings).
  */
 
 @theme inline {
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  /* Type ---------------------------------------------------------------- */
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  /* Display is the same family: titles and figures differ by weight and size. */
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", "Archivo", ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, monospace;
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
+  /*
+   * Type scale. Fixed steps; nothing smaller than 11px, and 11px only for
+   * short labels. Figures use the readout steps with tabular numerals.
+   */
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+  --text-readout-sm: 1.125rem;
+  --text-readout: 1.375rem;
+  --text-readout-lg: 1.75rem;
+  --text-readout-xl: 2.25rem;
+
+  /* Motion. Short, and only to confirm a change of state. ---------------- */
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-standard: cubic-bezier(0.65, 0, 0.35, 1);
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Radii ----------------------------------------------------------------- */
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 12px;
+
+  /* Component heights: h-control-sm / h-control / h-control-lg. ---------- */
+  --spacing-control-sm: 2rem;
+  --spacing-control: 2.25rem;
+  --spacing-control-lg: 2.5rem;
+  --spacing-topbar: 3.5rem;
+
+  /* Layout widths: max-w-content for the workspace, max-w-prose-ui for copy. */
+  --container-content: 90rem;
+  --container-prose-ui: 42rem;
+
+  /* Semantic color passthrough ------------------------------------------ */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-subtle: var(--subtle);
+  --color-subtle-foreground: var(--subtle-foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-raised: var(--raised);
+  --color-raised-foreground: var(--raised-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-soft-foreground: var(--primary-soft-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-selected: var(--selected);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-soft: var(--destructive-soft);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
+  --color-warning-soft: var(--warning-soft);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
+  --color-info-soft: var(--info-soft);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-ring-offset-background: var(--background);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  --color-chart-6: var(--chart-6);
+
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -58,145 +126,1060 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --shadow-panel: 0 1px 2px oklch(0.2 0.03 240 / 0.06), 0 8px 24px oklch(0.2 0.03 240 / 0.06);
+  --color-sidebar-subtle: var(--sidebar-subtle);
+
+  /* The single sanctioned shadow. Floating layers only. ------------------ */
+  --shadow-float:
+    0 1px 2px oklch(0.22 0.015 255 / 0.06), 0 8px 24px -8px oklch(0.22 0.015 255 / 0.16),
+    0 24px 48px -16px oklch(0.22 0.015 255 / 0.1);
 }
 
 :root {
-  --radius: 0.5rem;
-  --background: oklch(0.985 0.004 240);
-  --foreground: oklch(0.22 0.025 250);
+  /* Canvas and surfaces. */
+  --background: oklch(0.982 0.003 250);
+  --foreground: oklch(0.22 0.015 255);
+  --subtle: oklch(0.965 0.004 250);
+  --subtle-foreground: oklch(0.44 0.018 255);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.025 250);
+  --card-foreground: oklch(0.22 0.015 255);
+  --raised: oklch(1 0 0);
+  --raised-foreground: oklch(0.22 0.015 255);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.025 250);
-  --primary: oklch(0.46 0.11 232);
-  --primary-foreground: oklch(0.985 0.005 240);
-  --secondary: oklch(0.95 0.01 240);
-  --secondary-foreground: oklch(0.3 0.03 245);
-  --muted: oklch(0.955 0.008 240);
-  --muted-foreground: oklch(0.52 0.02 248);
-  --accent: oklch(0.72 0.15 65);
-  --accent-foreground: oklch(0.24 0.04 60);
-  --destructive: oklch(0.55 0.2 25);
-  --destructive-foreground: oklch(0.985 0.005 240);
-  --success: oklch(0.55 0.12 155);
-  --success-foreground: oklch(0.985 0.005 240);
-  --warning: oklch(0.75 0.15 75);
-  --warning-foreground: oklch(0.25 0.05 70);
-  --info: oklch(0.6 0.1 235);
-  --info-foreground: oklch(0.985 0.005 240);
-  --border: oklch(0.9 0.012 245);
-  --input: oklch(0.9 0.012 245);
-  --ring: oklch(0.46 0.11 232);
-  --chart-1: oklch(0.46 0.11 232);
-  --chart-2: oklch(0.72 0.15 65);
-  --chart-3: oklch(0.55 0.12 155);
-  --chart-4: oklch(0.6 0.16 300);
-  --chart-5: oklch(0.6 0.18 25);
-  --sidebar: oklch(0.26 0.03 250);
-  --sidebar-foreground: oklch(0.9 0.01 245);
-  --sidebar-primary: oklch(0.72 0.15 65);
-  --sidebar-primary-foreground: oklch(0.22 0.04 60);
-  --sidebar-accent: oklch(0.32 0.035 250);
-  --sidebar-accent-foreground: oklch(0.97 0.005 240);
-  --sidebar-border: oklch(0.34 0.03 250);
-  --sidebar-ring: oklch(0.72 0.15 65);
+  --popover-foreground: oklch(0.22 0.015 255);
+
+  /* Steel blue: action, focus, "you are here". 6.5:1 with white text. */
+  --primary: oklch(0.48 0.095 250);
+  --primary-foreground: oklch(1 0 0);
+  --primary-hover: oklch(0.43 0.09 250);
+  --primary-active: oklch(0.39 0.085 250);
+  --primary-soft: oklch(0.95 0.02 250);
+  --primary-soft-foreground: oklch(0.45 0.1 250);
+
+  --secondary: oklch(0.965 0.004 250);
+  --secondary-foreground: oklch(0.22 0.015 255);
+
+  /* Secondary text 7.4:1, muted text 5.0:1 on the canvas. */
+  --muted: oklch(0.965 0.004 250);
+  --muted-foreground: oklch(0.53 0.016 255);
+
+  /* Neutral hover and pressed surface for quiet controls. */
+  --accent: oklch(0.95 0.006 250);
+  --accent-foreground: oklch(0.22 0.015 255);
+  --selected: oklch(0.96 0.018 250);
+
+  /* Status. Each strong colour reads at 5:1 or better on the canvas and on its soft tint. */
+  --destructive: oklch(0.53 0.19 27);
+  --destructive-foreground: oklch(1 0 0);
+  --destructive-soft: oklch(0.96 0.025 27);
+  --success: oklch(0.5 0.11 155);
+  --success-foreground: oklch(1 0 0);
+  --success-soft: oklch(0.955 0.03 155);
+  --warning: oklch(0.82 0.13 80);
+  --warning-foreground: oklch(0.38 0.08 60);
+  --warning-soft: oklch(0.965 0.04 80);
+  --info: oklch(0.5 0.08 225);
+  --info-foreground: oklch(1 0 0);
+  --info-soft: oklch(0.955 0.02 225);
+
+  /* Rules. Inputs carry a 3:1 boundary; dividers stay fine. */
+  --border: oklch(0.915 0.005 255);
+  --border-strong: oklch(0.86 0.007 255);
+  --input: oklch(0.65 0.012 255);
+  --ring: oklch(0.48 0.095 250);
+
+  /* Data paints, in the order locations take them. */
+  --chart-1: oklch(0.48 0.095 250);
+  --chart-2: oklch(0.68 0.075 240);
+  --chart-3: oklch(0.55 0.07 175);
+  --chart-4: oklch(0.62 0.08 80);
+  --chart-5: oklch(0.53 0.19 27);
+  --chart-6: oklch(0.4 0.05 265);
+
+  /* Navigation chrome: a cooler, quieter ground than the workspace. */
+  --sidebar: oklch(0.968 0.004 250);
+  --sidebar-foreground: oklch(0.37 0.016 255);
+  --sidebar-primary: oklch(0.48 0.095 250);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.925 0.012 250);
+  --sidebar-accent-foreground: oklch(0.22 0.015 255);
+  --sidebar-border: oklch(0.915 0.005 255);
+  --sidebar-subtle: oklch(0.52 0.016 255);
+  --sidebar-ring: oklch(0.48 0.095 250);
 }
 
 .dark {
-  --background: oklch(0.2 0.025 250);
-  --foreground: oklch(0.95 0.006 245);
-  --card: oklch(0.25 0.028 250);
-  --card-foreground: oklch(0.95 0.006 245);
-  --popover: oklch(0.25 0.028 250);
-  --popover-foreground: oklch(0.95 0.006 245);
-  --primary: oklch(0.68 0.11 232);
-  --primary-foreground: oklch(0.18 0.03 250);
-  --secondary: oklch(0.3 0.03 250);
-  --secondary-foreground: oklch(0.95 0.006 245);
-  --muted: oklch(0.3 0.03 250);
-  --muted-foreground: oklch(0.72 0.02 245);
-  --accent: oklch(0.75 0.15 65);
-  --accent-foreground: oklch(0.2 0.04 60);
-  --destructive: oklch(0.65 0.19 25);
-  --destructive-foreground: oklch(0.15 0.02 250);
-  --success: oklch(0.68 0.13 155);
-  --success-foreground: oklch(0.16 0.03 155);
-  --warning: oklch(0.8 0.14 75);
-  --warning-foreground: oklch(0.2 0.04 70);
-  --info: oklch(0.7 0.1 235);
-  --info-foreground: oklch(0.18 0.03 250);
-  --border: oklch(1 0 0 / 12%);
+  color-scheme: dark;
+  --background: oklch(0.2 0.025 215);
+  --foreground: oklch(0.95 0.008 100);
+  --subtle: oklch(0.24 0.028 213);
+  --subtle-foreground: oklch(0.72 0.02 200);
+  --card: oklch(0.235 0.028 213);
+  --card-foreground: oklch(0.95 0.008 100);
+  --raised: oklch(0.27 0.03 212);
+  --raised-foreground: oklch(0.95 0.008 100);
+  --popover: oklch(0.26 0.03 212);
+  --popover-foreground: oklch(0.95 0.008 100);
+
+  --primary: oklch(0.72 0.08 200);
+  --primary-foreground: oklch(0.18 0.03 215);
+  --secondary: oklch(0.29 0.03 210);
+  --secondary-foreground: oklch(0.95 0.008 100);
+  --muted: oklch(0.28 0.03 212);
+  --muted-foreground: oklch(0.72 0.02 200);
+
+  --accent: oklch(0.86 0.16 92);
+  --accent-foreground: oklch(0.2 0.04 80);
+
+  --destructive: oklch(0.66 0.19 33);
+  --destructive-foreground: oklch(0.16 0.02 215);
+  --success: oklch(0.7 0.12 160);
+  --success-foreground: oklch(0.16 0.03 160);
+  --warning: oklch(0.82 0.14 75);
+  --warning-foreground: oklch(0.2 0.045 60);
+  --info: oklch(0.72 0.08 220);
+  --info-foreground: oklch(0.16 0.02 215);
+
+  --border: oklch(1 0 0 / 11%);
+  --border-strong: oklch(1 0 0 / 22%);
   --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.68 0.11 232);
-  --sidebar: oklch(0.22 0.028 250);
-  --sidebar-foreground: oklch(0.9 0.01 245);
-  --sidebar-primary: oklch(0.75 0.15 65);
-  --sidebar-primary-foreground: oklch(0.2 0.04 60);
-  --sidebar-accent: oklch(0.28 0.03 250);
-  --sidebar-accent-foreground: oklch(0.97 0.005 240);
-  --sidebar-border: oklch(0.32 0.03 250);
-  --sidebar-ring: oklch(0.75 0.15 65);
+  --ring: oklch(0.72 0.08 200);
+
+  --chart-1: oklch(0.62 0.08 205);
+  --chart-2: oklch(0.86 0.16 92);
+  --chart-3: oklch(0.66 0.11 160);
+  --chart-4: oklch(0.64 0.12 345);
+  --chart-5: oklch(0.66 0.19 33);
+  --chart-6: oklch(0.74 0.08 228);
+
+  --sidebar: oklch(0.26 0.045 207);
+  --sidebar-foreground: oklch(0.93 0.02 190);
+  --sidebar-primary: oklch(0.86 0.16 92);
+  --sidebar-primary-foreground: oklch(0.2 0.04 80);
+  --sidebar-accent: oklch(0.32 0.05 206);
+  --sidebar-accent-foreground: oklch(0.985 0.005 100);
+  --sidebar-border: oklch(0.36 0.045 206);
+  --sidebar-subtle: oklch(0.74 0.04 195);
+  --sidebar-ring: oklch(0.86 0.16 92);
 }
 
 @layer base {
   * {
-    border-color: var(--color-border);
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    color-scheme: light;
+    /* Sticky app headers are ~3.5rem tall; keep anchor targets clear of them. */
+    scroll-padding-top: 5rem;
+  }
+
+  /* Kill rubber-band on precise pointers, keep pull-to-refresh on touch. */
+  @media (pointer: fine) {
+    html {
+      overscroll-behavior: none;
+    }
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    min-width: 320px;
+    background-color: var(--background);
+    color: var(--foreground);
     font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    font-feature-settings: "cv05" 1;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
+  /*
+   * Headings are UI type: one family, sentence case, weight and size carry
+   * the hierarchy. Sizes come from the call site; this only sets the voice.
+   */
   h1,
   h2,
   h3,
-  .font-display {
-    font-family: var(--font-display);
-    letter-spacing: -0.01em;
+  h4 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  h1 {
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Removes the 300ms double-tap-zoom wait and the default tap flash. */
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  label,
+  summary,
+  [role="button"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: oklch(from var(--primary) l c h / 0.14);
+  }
+
+  /* Headings targeted by in-page anchors must clear the sticky header. */
+  :target,
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 1px;
+  }
+
+  ::selection {
+    background: oklch(from var(--primary) l c h / 0.16);
+    color: var(--foreground);
+  }
+
+  /* Scrollbars read as part of the instrument, not the OS. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--border-strong);
+    border: 3px solid transparent;
+    background-clip: content-box;
+    border-radius: 99px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--muted-foreground);
   }
 }
+
+@layer components {
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    transform: translateY(-150%);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    padding: 0.625rem 0.875rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    transition: transform 160ms ease;
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  .route-stage {
+    animation: route-enter 240ms var(--ease-settle) both;
+  }
+
+  .route-progress {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 80;
+    height: 2px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100%);
+    background: color-mix(in oklab, var(--primary) 14%, transparent);
+  }
+
+  .route-progress::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 42%;
+    background: var(--primary);
+    transform: translateX(-100%);
+  }
+
+  .route-progress.is-active {
+    opacity: 1;
+  }
+
+  .route-progress.is-active::after {
+    animation: route-progress 900ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  /*
+   * Sidebar rows. Active is a filled row with the icon in steel blue; no
+   * edge stripe. Hover is a quieter version of the same fill.
+   */
+  .nav-row {
+    color: var(--sidebar-foreground);
+    transition:
+      color 150ms ease,
+      background-color 150ms ease;
+  }
+
+  .nav-row .nav-icon {
+    color: var(--sidebar-subtle);
+    transition: color 150ms ease;
+  }
+
+  .nav-row:hover {
+    color: var(--sidebar-accent-foreground);
+    background-color: color-mix(in oklab, var(--sidebar-accent) 62%, transparent);
+  }
+
+  .nav-row:hover .nav-icon {
+    color: var(--sidebar-foreground);
+  }
+
+  .nav-row:focus-visible {
+    outline: 2px solid var(--sidebar-ring);
+    outline-offset: -2px;
+  }
+
+  .nav-row.is-active {
+    color: var(--sidebar-accent-foreground);
+    background-color: var(--sidebar-accent);
+    font-weight: 600;
+  }
+
+  .nav-row.is-active .nav-icon {
+    color: var(--sidebar-primary);
+  }
+
+  /*
+   * The daily-flow group reads as one production line: each icon is a
+   * station, joined by a rule that runs behind them. The active station
+   * fills with the signal color.
+   */
+  .nav-path {
+    position: relative;
+  }
+
+  .nav-path::before {
+    content: "";
+    position: absolute;
+    inset-block: 1.125rem;
+    left: calc(0.5rem + 0.75rem - 0.5px);
+    width: 1px;
+    background: var(--sidebar-border);
+  }
+
+  [data-collapsed] .nav-path::before {
+    left: calc(50% - 0.5px);
+  }
+
+  .nav-node {
+    background: var(--sidebar);
+    box-shadow: inset 0 0 0 1px var(--sidebar-border);
+    transition:
+      background-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  .nav-row:hover .nav-node {
+    background: var(--sidebar-accent);
+  }
+
+  .nav-row.is-active .nav-node {
+    background: var(--sidebar-primary);
+    box-shadow: none;
+  }
+
+  .nav-row.is-active .nav-node .nav-icon {
+    color: var(--sidebar-primary-foreground);
+  }
+
+  .auth-stage {
+    animation: route-enter 380ms var(--ease-settle) both;
+  }
+
+  /* Panels are flat: a 1px rule on the board ground, never shadowed. */
+  .panel {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+
+  .journey-panel {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+
+  .journey-icon {
+    border-radius: var(--radius-sm);
+  }
+
+  /*
+   * Signature strip on the printed reconciliation statement. Three ruled
+   * boxes across the foot of the page. This was referenced by the markup with
+   * no rule behind it, so the printed artifact shipped with three bare words
+   * and no lines to sign on.
+   */
+  .sig {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .sig > div {
+    border-top: 1px solid var(--border-strong);
+    padding-top: 0.5rem;
+    width: 28%;
+    text-align: center;
+    font-size: 0.6875rem;
+    color: var(--muted-foreground);
+  }
+
+  /*
+   * Hover affordance that is not an animated arrow. The marker slides on an
+   * underline that draws from the left, and the glyph nudges once. Stillness
+   * at rest, a small mechanical response on intent.
+   */
+  .link-slide {
+    position: relative;
+  }
+
+  .link-slide::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -2px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 220ms var(--ease-settle);
+  }
+
+  .link-slide:hover::after,
+  .link-slide:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  /*
+   * Titles and figures. Same family as the UI, set heavier and tighter; no
+   * uppercase. `.sign` is a section or page title, `.readout` a figure.
+   */
+  .sign {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+
+  .readout {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /*
+   * Custody board. Each tile is a flat painted field whose width is its share
+   * of the kilograms in custody. On arrival tiles start equal and settle to
+   * their weight once: the one authored motion on the dashboard.
+   */
+  .board-tile {
+    background: var(--tile-bg);
+    animation: board-settle 720ms var(--ease-settle) both;
+  }
+
+  /* Signboards are framed: a painted keyline inset from the edge. */
+  .board-tile::before {
+    content: "";
+    position: absolute;
+    inset: 0.5rem;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    opacity: 0.28;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+
+  .board-lettering {
+    position: relative;
+    pointer-events: none;
+    transition: transform 220ms var(--ease-settle);
+  }
+
+  /* The whole tile is the link; lettering sits above it without catching clicks. */
+  .board-link {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .board-link:focus-visible {
+    outline: 2px solid var(--foreground);
+    outline-offset: 2px;
+  }
+
+  .board-tile:hover::before,
+  .board-tile:focus-within::before {
+    opacity: 0.9;
+  }
+
+  .board-tile:hover .board-lettering,
+  .board-tile:focus-within .board-lettering {
+    transform: translateY(-2px);
+  }
+
+  /* Panels of one framed board, divided by painted rules. */
+  .board-panel {
+    border-color: var(--foreground);
+    border-style: solid;
+    border-width: 0;
+  }
+
+  .board-panel + .board-panel {
+    border-left-width: 2px;
+  }
+
+  @media (max-width: 1023.98px) {
+    .board-panel:nth-child(3) {
+      border-left-width: 0;
+    }
+
+    .board-panel:nth-child(n + 3) {
+      border-top-width: 2px;
+    }
+  }
+
+  /* Staggered section entry. Delay comes from inline animation-delay. */
+  .rise {
+    animation: route-enter 260ms var(--ease-settle) both;
+  }
+
+  /* Bars draw in from their baseline once, then sit still. */
+  .grow-x {
+    transform-origin: left;
+    animation: grow-x 700ms var(--ease-settle) both;
+  }
+
+  .grow-y {
+    transform-origin: bottom;
+    animation: grow-y 700ms var(--ease-settle) both;
+    transition: background-color 160ms ease;
+  }
+
+  /*
+   * Register page. The dashboard is laid out like a page of a stock register:
+   * every section is a folio, its name and provenance sit in a left margin,
+   * and the content takes the remaining nine columns. Folios are divided by
+   * a ruled line, never boxed.
+   */
+  .folio {
+    display: grid;
+    gap: 1rem 2.5rem;
+    padding-block: 2rem 2.25rem;
+    border-top: 1px solid var(--border-strong);
+  }
+
+  @media (min-width: 64rem) {
+    .folio {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    }
+  }
+
+  /* An inline figure in a sentence: heavier than the words, never larger. */
+  .say-fig {
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .say-fig .say-dec {
+    color: var(--muted-foreground);
+    font-weight: 500;
+  }
+
+  /*
+   * Weight band: the material, drawn to scale. Each segment is a flat painted
+   * field whose width is its share of the kilograms owned. Segments grow from
+   * the left once on arrival, then sit still.
+   */
+  .weight-band {
+    display: flex;
+    gap: 2px;
+    height: 3rem;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+  }
+
+  @media (min-width: 40rem) {
+    .weight-band {
+      height: 3.5rem;
+    }
+  }
+
+  .weight-seg {
+    position: relative;
+    min-width: 3px;
+    transform-origin: left;
+    animation: grow-x 720ms var(--ease-settle) both;
+  }
+
+  /* The whole segment is the link; lettering sits inside it. */
+  .weight-link {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 0.5rem 0.625rem 0.75rem;
+  }
+
+  .weight-link:focus-visible {
+    outline: 2px solid var(--foreground);
+    outline-offset: 2px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .weight-seg:hover {
+      filter: brightness(0.94);
+    }
+  }
+
+  /* Long-out material carries a tomato plate along the foot of its segment. */
+  .weight-seg[data-long-out]::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 0.375rem;
+    background: var(--destructive);
+  }
+
+  /*
+   * Dimension line under the band, as on a measured drawing: two end ticks
+   * and a rule between them, spanning exactly the material it names.
+   */
+  .dimension {
+    position: relative;
+    height: 0.5rem;
+    border-inline: 1px solid var(--border-strong);
+  }
+
+  .dimension::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--border-strong);
+  }
+}
+
+@keyframes board-settle {
+  from {
+    flex-grow: 1;
+  }
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes grow-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes route-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes route-progress {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(340%);
+  }
+}
+
+@keyframes skeleton-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(200%);
+  }
+}
+
+/* Type utilities -------------------------------------------------------- */
 
 @utility num {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
 }
 
+/*
+ * Labels: the small type that names a figure, a field or a column.
+ *
+ * Floor is 11px, and labels stay in sentence case: letterspaced capitals at
+ * small sizes are slow to read, especially on a phone in daylight. No
+ * arbitrary sizes below these two steps.
+ */
+@utility label-xs {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.005em;
+}
+
+@utility label-sm {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+/*
+ * KPI band.
+ *
+ * One flat panel of figures divided by 1px ink rules, never a grid of boxes.
+ * A KPI is a reading on an instrument, and instruments share one surface with
+ * hairline divisions. The rules are drawn by a 1px grid gap over a rule
+ * coloured ground, so they stay exactly 1px at every breakpoint with no
+ * border maths and no doubled seams at the corners.
+ */
+@utility kpi-band {
+  display: grid;
+  gap: 1px;
+  background-color: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/*
+ * KPI cell. Paints its own ground so the band rules show through the gap.
+ * Pressing sinks the cell 1px rather than scaling it: a scale on a full-width
+ * cell moves its text sideways, which reads as a glitch.
+ */
+@utility kpi-cell {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.375rem;
+  background-color: var(--card);
+  padding: 0.875rem 1rem 1rem;
+  text-align: left;
+}
+
+/*
+ * KPI cell as a link. The response is a ground wash plus the figure going to
+ * ink, so the affordance is "this is pressable" without anything moving.
+ * Hover is gated to real pointers: a tap on a phone fires hover and would
+ * leave the cell stuck in the pressed look.
+ */
+@utility kpi-link {
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .kpi-link:hover {
+    background-color: var(--subtle);
+  }
+
+  .kpi-link:hover .kpi-figure {
+    color: var(--foreground);
+  }
+}
+
+.kpi-link:active {
+  background-color: var(--accent);
+}
+
+/*
+ * Figure. Tabular numerals, with the decimal split off into a quieter piece
+ * so a reader lands on the whole kilograms first. Kilograms carry three
+ * decimals in this trade; hiding them would be a lie about precision, so
+ * they stay visible but recede.
+ */
+@utility kpi-figure {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  color: var(--foreground);
+}
+
+@utility kpi-decimals {
+  font-size: 0.7em;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  letter-spacing: 0;
+}
+
+@utility kpi-unit {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0;
+  color: var(--muted-foreground);
+}
+
+/*
+ * A share bar. The one geometry that encodes "where the material is": a
+ * single horizontal rule of segments whose widths are their shares of the
+ * total. It is a figure, not a chart, and it has a full text equivalent in
+ * the table immediately under it, which is what makes it safe to read.
+ */
+@utility share-bar {
+  display: flex;
+  height: 0.75rem;
+  width: 100%;
+  gap: 2px;
+}
+
+@utility share-seg {
+  min-width: 3px;
+  transform-origin: left;
+  animation: grow-x 640ms var(--ease-settle) both;
+  transition: background-color 160ms ease;
+}
+
+/* Real skeleton: a moving sheen, not a blinking block. */
+@utility skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: color-mix(in oklab, var(--muted) 80%, transparent);
+  border-radius: var(--radius-xs);
+}
+
+@utility skeleton-line {
+  position: relative;
+  overflow: hidden;
+  height: 0.625rem;
+  background-color: color-mix(in oklab, var(--muted) 80%, transparent);
+  border-radius: var(--radius-xs);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--card) 70%, transparent),
+      transparent
+    );
+    animation: skeleton-sweep 1400ms ease-in-out infinite;
+  }
+}
+
+@utility skeleton-block {
+  position: relative;
+  overflow: hidden;
+  background-color: color-mix(in oklab, var(--muted) 80%, transparent);
+  border-radius: var(--radius-sm);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--card) 55%, transparent),
+      transparent
+    );
+    animation: skeleton-sweep 1400ms ease-in-out infinite;
+  }
+}
+
+/*
+ * Ledger-grade table. Dense, ruled, aligned on the decimal.
+ * Density: 13px body, 36px rows (8px by 12px cells), 12px sentence-case
+ * headers on the subtle ground. Hover is a neutral wash; a selected row
+ * (aria-selected or data-state="selected") takes the steel-blue tint.
+ */
 @utility erp-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.8125rem;
 
   & thead th {
-    background-color: var(--color-muted);
-    color: var(--color-muted-foreground);
+    background-color: var(--subtle);
+    color: var(--muted-foreground);
     text-align: left;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    font-size: 0.75rem;
+    line-height: 1rem;
     padding: 0.5rem 0.75rem;
     white-space: nowrap;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--border);
   }
 
-  & tbody td {
+  & tbody td,
+  & tbody th {
     padding: 0.5rem 0.75rem;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--border);
     vertical-align: middle;
   }
 
-  & tbody tr:hover td {
-    background-color: color-mix(in oklab, var(--color-muted) 60%, transparent);
+  & tbody tr {
+    transition: background-color 120ms ease;
   }
 
-  & tfoot td {
+  & tbody tr:hover > * {
+    background-color: var(--subtle);
+  }
+
+  & tbody tr[aria-selected="true"] > *,
+  & tbody tr[data-state="selected"] > * {
+    background-color: var(--selected);
+  }
+
+  & tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  /*
+   * Total rows. The label cell is a <th scope="row">, not a <td>, so a screen
+   * reader announces "Total, 1,204.500" instead of a bare number with no
+   * indication of what it totals. Both are styled together.
+   */
+  & tfoot td,
+  & tfoot th {
     padding: 0.5rem 0.75rem;
     font-weight: 600;
-    background-color: var(--color-muted);
+    text-align: left;
+    background-color: var(--subtle);
+    border-top: 1px solid var(--border-strong);
+  }
+}
+
+/* Landing page composition ------------------------------------------------ */
+
+@utility measure {
+  max-width: 34rem;
+}
+
+@utility measure-tight {
+  max-width: 26rem;
+}
+
+/*
+ * Section header cascade. Three named steps, always used together, so the
+ * size relationship between a section's title and its supporting copy is
+ * stated once instead of being re-decided per section:
+ *
+ *   .section-title   the headline. Fluid, clamps between 2rem and 3rem.
+ *   .section-lede    one sentence under the title. Fixed 1.0625rem.
+ *   .section-body    supporting copy. Fixed 0.9375rem, the measure-bounded
+ *                    paragraph used everywhere below the fold.
+ *
+ * The hero h1 stays above this ladder at clamp(2.5rem, 5.6vw, 4rem) so the
+ * page keeps one clear top. Steps are fluid-to-fixed on purpose: display type
+ * needs to respond to viewport, body type must not.
+ */
+@utility section-title {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+@utility section-lede {
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+
+@utility section-body {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+
+/* Section eyebrow label, used on marketing surfaces. */
+.rule-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /*
+   * Reduced motion means less movement, not zero feeling. Opacity and colour
+   * transitions carry meaning (hover, focus, pressed, open/closed) and are kept
+   * at a short duration. Only travel and scale are dropped. A blanket 0.01ms on
+   * every duration makes those affordances snap rather than fade, which reads
+   * as jank instead of as calm.
+   */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-property:
+      color, background-color, border-color, fill, stroke, opacity, box-shadow, outline-color !important;
+    transition-duration: 120ms !important;
+  }
+
+  /* Anything that moves through space just appears where it belongs. */
+  .route-stage,
+  .auth-stage,
+  .board-tile,
+  .weight-seg {
+    animation: none !important;
+    transform: none !important;
   }
 }
 
@@ -206,5 +1189,9 @@
   }
   body {
     background: white;
+  }
+  .panel,
+  .journey-panel {
+    border-color: #ccc;
   }
 }

@@ -1,59 +1,141 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { Pencil, Plus, Search } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
+import { IconPencil, IconPlus } from "@/components/icons";
 import { PageHeader } from "@/components/erp/AppShell";
-import { EmptyRow, ExportBar, Field, NumInput, Panel, SearchSelect } from "@/components/erp/bits";
+import {
+  ExportBar,
+  Field,
+  FormSection,
+  NumInput,
+  Panel,
+  RegisterState,
+  SearchSelect,
+  queryStatus,
+  useGuardedClose,
+} from "@/components/erp/bits";
+import {
+  FilterSelect,
+  GridPager,
+  GridScroll,
+  GridToolbar,
+  NIL,
+  SortHeader,
+  useGrid,
+} from "@/components/erp/grid";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 import { canWrite, db, useInvalidate, useRole, useRows } from "@/hooks/use-erp";
 import { KG, MATERIAL_CATEGORIES, errMsg } from "@/lib/erp";
 
 export const Route = createFileRoute("/_authenticated/masters/materials")({
   head: () => ({
     meta: [
-      { title: "Raw Material Master — JobWork ERP" },
-      { name: "description", content: "Maintain plastic raw materials, categories, UOM and minimum stock levels." },
-      { property: "og:title", content: "Raw Material Master — JobWork ERP" },
-      { property: "og:description", content: "Raw material codes, categories and reorder levels." },
+      { title: "Raw materials | JobberFlow" },
+      {
+        name: "description",
+        content: "Raw materials with category, unit and the minimum level for low-stock warnings.",
+      },
     ],
   }),
   component: MaterialMaster,
 });
 
-const BLANK = { code: "", name: "", category: "GRANULES", uom: "KG", minimum_stock: 0, description: "", status: true };
+const BLANK = {
+  code: "",
+  name: "",
+  // Must be one of MATERIAL_CATEGORIES (lib/erp.ts): the picker renders that
+  // list, so a value outside it shows as an empty placeholder forever.
+  category: MATERIAL_CATEGORIES[0]!,
+  uom: "KG",
+  minimum_stock: 0,
+  description: "",
+  status: true,
+};
+
+const UOMS = ["KG", "GM", "PCS"];
+
+type Errors = { code?: string; name?: string; minimum_stock?: string };
 
 function MaterialMaster() {
   const { data: role } = useRole();
   const editable = canWrite(role);
   const invalidate = useInvalidate();
-  const [q, setQ] = useState("");
-  const [cat, setCat] = useState("ALL");
+  const [category, setCategory] = useState("");
+  const [level, setLevel] = useState("");
   const [open, setOpen] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState<any>(BLANK);
+  const [initialForm, setInitialForm] = useState<any>(BLANK);
+  const [errors, setErrors] = useState<Errors>({});
   const [busy, setBusy] = useState(false);
 
-  const { data: rows } = useRows("raw_materials", ["raw_materials"], (b) => b.order("code"));
-  const { data: stock } = useRows("warehouse_stock", ["warehouse_stock"]);
-  const balanceOf = (id: string) => Number((stock ?? []).find((s: any) => s.material_id === id)?.balance ?? 0);
+  const query = useRows("raw_materials", ["raw_materials"], (b) => b.order("code"));
+  const status = queryStatus(query);
+  const stock = useRows("warehouse_stock", ["warehouse_stock"]);
+  const balances = useMemo(
+    () =>
+      new Map(((stock.data ?? []) as any[]).map((s) => [s.material_id, Number(s.balance ?? 0)])),
+    [stock.data],
+  );
+  const balanceOf = (id: string) => balances.get(id) ?? 0;
+  const isLow = (r: any) =>
+    Number(r.minimum_stock) > 0 && balanceOf(r.id) < Number(r.minimum_stock);
 
-  const filtered = (rows ?? [])
-    .filter((r: any) => cat === "ALL" || r.category === cat)
-    .filter((r: any) => [r.code, r.name, r.category].join(" ").toLowerCase().includes(q.toLowerCase()));
+  const grid = useGrid((query.data ?? []) as any[], {
+    search: (r) => [r.code, r.name, r.category, r.description].join(" "),
+    filter: (r) =>
+      (!category || r.category === category) &&
+      (!level ||
+        (level === "low" && isLow(r)) ||
+        (level === "ok" && !isLow(r)) ||
+        (level === "inactive" && !r.status)),
+    filtersActive: !!(category || level),
+    sorters: {
+      material: (r) => r.code,
+      category: (r) => r.category,
+      minimum: (r) => Number(r.minimum_stock ?? 0),
+      balance: (r) => balanceOf(r.id),
+    },
+    initialSort: { key: "material", direction: "asc" },
+  });
 
-  const set = (k: string, v: unknown) => setForm((f: any) => ({ ...f, [k]: v }));
+  const dirty = JSON.stringify(form) !== JSON.stringify(initialForm);
+  const [discardDialog, onOpenChange] = useGuardedClose(dirty && !busy, setOpen);
+  const set = (k: string, v: unknown) => {
+    setForm((f: any) => ({ ...f, [k]: v }));
+    setErrors((e) => ({ ...e, [k]: undefined }));
+  };
+  const openForm = (row?: any) => {
+    const next = row ? { ...BLANK, ...row } : BLANK;
+    setEditId(row?.id ?? null);
+    setForm(next);
+    setInitialForm(next);
+    setErrors({});
+    setOpen(true);
+  };
 
   const save = async () => {
-    if (!form.code.trim() || !form.name.trim()) {
-      toast.error("Material code and name are required.");
-      return;
-    }
+    if (busy) return;
+    const next: Errors = {};
+    if (!String(form.code ?? "").trim()) next.code = "Enter a material code.";
+    if (!String(form.name ?? "").trim()) next.name = "Enter the material name.";
+    if (Number(form.minimum_stock) < 0) next.minimum_stock = "Minimum cannot be negative.";
+    setErrors(next);
+    if (Object.keys(next).length) return;
+
     setBusy(true);
     const payload: any = {
       code: String(form.code).trim().toUpperCase(),
@@ -69,10 +151,11 @@ function MaterialMaster() {
       : await db.from("raw_materials").insert(payload);
     setBusy(false);
     if (res.error) {
-      toast.error(errMsg(res.error));
+      toast.error(`Not saved. ${errMsg(res.error)}`);
       return;
     }
-    toast.success(editId ? "Material updated." : "Material created.");
+    toast.success(editId ? `${payload.code} updated.` : `${payload.code} created.`);
+    setInitialForm(form);
     setOpen(false);
     invalidate([["raw_materials"], ["warehouse_stock"]]);
   };
@@ -80,166 +163,265 @@ function MaterialMaster() {
   return (
     <div>
       <PageHeader
-        title="Raw Material Master"
-        breadcrumb={["Masters", "Raw Material Master"]}
-        subtitle="Granules, master batch, additives and packing material used in production."
+        title="Raw materials"
+        subtitle="Granules, master batch, additives and packing material. The minimum level drives low-stock warnings."
         actions={
-          <div className="flex flex-wrap items-center gap-2">
+          <>
             <ExportBar
-              filename="raw-material-master"
-              rows={filtered.map((r: any) => ({
+              filename="raw-materials"
+              rows={grid.matched.map((r: any) => ({
                 Code: r.code,
                 Name: r.name,
                 Category: r.category,
                 UOM: r.uom,
-                "Minimum Stock": r.minimum_stock,
-                "Current Balance": balanceOf(r.id),
+                "Minimum stock": r.minimum_stock,
+                "Godown balance": balanceOf(r.id),
                 Status: r.status ? "Active" : "Inactive",
               }))}
             />
             {editable && (
-              <Button
-                size="sm"
-                onClick={() => {
-                  setEditId(null);
-                  setForm(BLANK);
-                  setOpen(true);
-                }}
-              >
-                <Plus className="size-4" /> New Material
+              <Button size="sm" onClick={() => openForm()}>
+                <IconPlus /> New material
               </Button>
             )}
-          </div>
+          </>
         }
       />
 
       <Panel>
-        <div className="flex flex-wrap items-center gap-2 border-b p-3">
-          <Search className="size-4 text-muted-foreground" />
-          <Input
-            className="h-9 max-w-xs"
-            placeholder="Search code or name…"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
+        <GridToolbar
+          grid={grid}
+          searchLabel="Search materials"
+          placeholder="Code, name or category"
+          noun={["material", "materials"]}
+          onReset={() => {
+            setCategory("");
+            setLevel("");
+          }}
+        >
+          <FilterSelect
+            label="Category"
+            value={category}
+            onChange={(value) => {
+              setCategory(value);
+              grid.resetPage();
+            }}
+            options={[
+              { value: "", label: "All categories" },
+              ...MATERIAL_CATEGORIES.map((c) => ({ value: c, label: c })),
+            ]}
           />
-          <div className="w-56">
-            <SearchSelect
-              options={[{ value: "ALL", label: "All categories" }, ...MATERIAL_CATEGORIES.map((c) => ({ value: c, label: c }))]}
-              value={cat}
-              onChange={setCat}
-            />
-          </div>
-          <span className="ml-auto text-xs text-muted-foreground">{filtered.length} records</span>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="erp-table">
+          <FilterSelect
+            label="Stock"
+            value={level}
+            onChange={(value) => {
+              setLevel(value);
+              grid.resetPage();
+            }}
+            options={[
+              { value: "", label: "Any level" },
+              { value: "low", label: "Below minimum" },
+              { value: "ok", label: "At or above minimum" },
+              { value: "inactive", label: "Inactive" },
+            ]}
+          />
+        </GridToolbar>
+        <GridScroll sticky>
+          <table className="erp-table min-w-[52rem]">
+            <caption className="sr-only">
+              Raw materials with minimum level and current godown balance
+            </caption>
             <thead>
               <tr>
-                <th>Code</th>
-                <th>Material Name</th>
-                <th>Category</th>
-                <th>UOM</th>
-                <th className="text-right">Minimum</th>
-                <th className="text-right">Balance</th>
-                <th>Status</th>
-                <th className="text-right">Action</th>
+                <SortHeader grid={grid} sortKey="material">
+                  Material
+                </SortHeader>
+                <SortHeader grid={grid} sortKey="category">
+                  Category
+                </SortHeader>
+                <th scope="col">UOM</th>
+                <SortHeader grid={grid} sortKey="minimum" align="right">
+                  Minimum
+                </SortHeader>
+                <SortHeader grid={grid} sortKey="balance" align="right">
+                  Godown balance
+                </SortHeader>
+                <th scope="col">Status</th>
+                <th scope="col">
+                  <span className="sr-only">Actions</span>
+                </th>
               </tr>
             </thead>
             <tbody>
-              {filtered.length === 0 && <EmptyRow cols={8} />}
-              {filtered.map((r: any) => {
-                const bal = balanceOf(r.id);
-                return (
-                  <tr key={r.id}>
-                    <td className="num font-medium">{r.code}</td>
-                    <td>{r.name}</td>
-                    <td>{r.category}</td>
-                    <td>{r.uom}</td>
-                    <td className="num text-right">{KG(r.minimum_stock)}</td>
-                    <td
-                      className={`num text-right font-semibold ${bal < Number(r.minimum_stock) ? "text-destructive" : ""}`}
-                    >
-                      {KG(bal)}
-                    </td>
-                    <td>
-                      <Badge variant={r.status ? "default" : "secondary"}>{r.status ? "Active" : "Inactive"}</Badge>
-                    </td>
-                    <td className="text-right">
-                      {editable && (
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          onClick={() => {
-                            setEditId(r.id);
-                            setForm({ ...BLANK, ...r });
-                            setOpen(true);
-                          }}
-                        >
-                          <Pencil className="size-3.5" />
-                        </Button>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
+              {status !== "ready" ? (
+                <RegisterState status={status} cols={7} onRetry={() => void query.refetch()} />
+              ) : grid.matched.length === 0 ? (
+                <RegisterState
+                  status="ready"
+                  cols={7}
+                  emptyTitle={
+                    grid.isFiltered ? "No material matches these filters." : "No materials yet."
+                  }
+                  emptyBody={
+                    grid.isFiltered
+                      ? "Clear the search or choose a different category."
+                      : "Add the raw materials you buy and send out, with a minimum level for low-stock warnings."
+                  }
+                  action={
+                    !grid.isFiltered &&
+                    editable && (
+                      <Button size="sm" onClick={() => openForm()}>
+                        <IconPlus /> New material
+                      </Button>
+                    )
+                  }
+                />
+              ) : (
+                grid.pageRows.map((r: any) => {
+                  const balance = balanceOf(r.id);
+                  const low = isLow(r);
+                  return (
+                    <tr key={r.id}>
+                      <th scope="row" className="text-left font-normal">
+                        <span className="block font-medium">{r.name}</span>
+                        <span className="num block text-xs text-muted-foreground">{r.code}</span>
+                      </th>
+                      <td>{r.category ?? NIL}</td>
+                      <td className="text-muted-foreground">{r.uom}</td>
+                      <td className="num text-right text-muted-foreground">
+                        {Number(r.minimum_stock) > 0 ? KG(r.minimum_stock) : NIL}
+                      </td>
+                      <td className="text-right">
+                        <span className="num block font-semibold">
+                          {stock.isLoading ? "…" : KG(balance)}
+                        </span>
+                        {low && (
+                          <Badge variant="warning" className="mt-0.5">
+                            Below minimum
+                          </Badge>
+                        )}
+                      </td>
+                      <td>
+                        <Badge variant={r.status ? "success" : "secondary"}>
+                          {r.status ? "Active" : "Inactive"}
+                        </Badge>
+                      </td>
+                      <td className="whitespace-nowrap text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <Button size="sm" variant="ghost" asChild>
+                            <Link
+                              to="/inventory/rm-ledger"
+                              search={{ material: r.id }}
+                              aria-label={`Movements of ${r.name}`}
+                            >
+                              Movements
+                            </Link>
+                          </Button>
+                          {editable && (
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              onClick={() => openForm(r)}
+                              aria-label={`Edit ${r.name}`}
+                              title="Edit"
+                            >
+                              <IconPencil className="size-3.5" />
+                            </Button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
-        </div>
+        </GridScroll>
+        <GridPager grid={grid} />
       </Panel>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-lg">
+      <Dialog open={open} onOpenChange={(value) => void onOpenChange(value)}>
+        <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>{editId ? "Edit Raw Material" : "New Raw Material"}</DialogTitle>
+            <DialogTitle>{editId ? `Edit ${initialForm.name}` : "New raw material"}</DialogTitle>
+            <DialogDescription>
+              {editId
+                ? `Godown balance now ${KG(balanceOf(editId))} ${String(form.uom).toLowerCase()}. Balances come from vouchers and cannot be edited here.`
+                : "Balances start at zero and change only through vouchers."}
+            </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <Field label="Material Code *">
-              <Input value={form.code ?? ""} onChange={(e) => set("code", e.target.value)} placeholder="RM001" />
-            </Field>
-            <Field label="Material Name *">
-              <Input value={form.name ?? ""} onChange={(e) => set("name", e.target.value)} />
-            </Field>
-            <Field label="Category">
-              <SearchSelect
-                options={MATERIAL_CATEGORIES.map((c) => ({ value: c, label: c }))}
-                value={form.category}
-                onChange={(v) => set("category", v)}
-              />
-            </Field>
-            <Field label="UOM">
-              <SearchSelect
-                options={[
-                  { value: "KG", label: "KG" },
-                  { value: "GM", label: "GM" },
-                  { value: "PCS", label: "PCS" },
-                ]}
-                value={form.uom}
-                onChange={(v) => set("uom", v)}
-              />
-            </Field>
-            <Field label="Minimum Stock Level" hint="Used for low-stock alerts on the dashboard.">
-              <NumInput value={form.minimum_stock} onChange={(n) => set("minimum_stock", n)} />
-            </Field>
-            <div className="flex items-end gap-2 pb-1">
-              <Switch checked={!!form.status} onCheckedChange={(v) => set("status", v)} />
-              <span className="text-sm">Active</span>
-            </div>
-            <div className="sm:col-span-2">
-              <Field label="Description">
-                <Textarea rows={2} value={form.description ?? ""} onChange={(e) => set("description", e.target.value)} />
-              </Field>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-            <Button disabled={busy} onClick={() => void save()}>
-              {busy ? "Saving…" : "Save Material"}
-            </Button>
-          </DialogFooter>
+          <form
+            className="space-y-5"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void save();
+            }}
+          >
+            <FormSection title="Identity">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Field label="Material code" required error={errors.code} hint="Saved in capitals.">
+                  <Input
+                    value={form.code ?? ""}
+                    onChange={(e) => set("code", e.target.value)}
+                    placeholder="RM001"
+                    autoComplete="off"
+                  />
+                </Field>
+                <Field label="Material name" required error={errors.name}>
+                  <Input value={form.name ?? ""} onChange={(e) => set("name", e.target.value)} />
+                </Field>
+                <Field label="Category">
+                  <SearchSelect
+                    options={MATERIAL_CATEGORIES.map((c) => ({ value: c, label: c }))}
+                    value={form.category}
+                    onChange={(v) => set("category", v)}
+                  />
+                </Field>
+                <Field label="Unit of measure">
+                  <SearchSelect
+                    options={UOMS.map((u) => ({ value: u, label: u }))}
+                    value={form.uom}
+                    onChange={(v) => set("uom", v)}
+                  />
+                </Field>
+              </div>
+            </FormSection>
+            <FormSection title="Stock control">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Field
+                  label={`Minimum level (${String(form.uom).toLowerCase()})`}
+                  error={errors.minimum_stock}
+                  hint="Zero turns off the low-stock warning."
+                >
+                  <NumInput value={form.minimum_stock} onChange={(n) => set("minimum_stock", n)} />
+                </Field>
+                <div className="flex items-end pb-2">
+                  <label className="flex cursor-pointer items-center gap-2 text-sm">
+                    <Switch checked={!!form.status} onCheckedChange={(v) => set("status", v)} />
+                    Active, available on new vouchers
+                  </label>
+                </div>
+                <Field label="Description" optional className="sm:col-span-2">
+                  <Textarea
+                    rows={2}
+                    value={form.description ?? ""}
+                    onChange={(e) => set("description", e.target.value)}
+                  />
+                </Field>
+              </div>
+            </FormSection>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => void onOpenChange(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" loading={busy}>
+                {editId ? "Save changes" : "Create material"}
+              </Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
+      {discardDialog}
     </div>
   );
 }

@@ -4,9 +4,12 @@ import { ItemVoucher } from "@/components/erp/ItemVoucher";
 export const Route = createFileRoute("/_authenticated/transactions/material-return")({
   head: () => ({
     meta: [
-      { title: "Material Return from Jobber — JobWork ERP" },
-      { name: "description", content: "Return unused raw material from a jobber back into the warehouse." },
-      { property: "og:title", content: "Material Return from Jobber — JobWork ERP" },
+      { title: "Material return | JobberFlow" },
+      {
+        name: "description",
+        content: "Return unused raw material from a jobber back into the warehouse.",
+      },
+      { property: "og:title", content: "Material return | JobberFlow" },
       { property: "og:description", content: "Jobber to warehouse raw material return vouchers." },
     ],
   }),
@@ -14,9 +17,10 @@ export const Route = createFileRoute("/_authenticated/transactions/material-retu
     <ItemVoucher
       config={{
         kind: "MATERIAL_RETURN",
-        title: "Material Return from Jobber",
+        title: "Material return",
         breadcrumb: ["Transactions", "Material Return"],
-        subtitle: "Unused material comes back to the warehouse and reduces the jobber's stock balance.",
+        subtitle:
+          "Unused material comes back to the warehouse and reduces the jobber's stock balance.",
         prefix: "MRT",
         headerTable: "material_return_headers",
         itemTable: "material_return_items",

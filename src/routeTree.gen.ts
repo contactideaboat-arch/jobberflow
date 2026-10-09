@@ -12,10 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as TypeRouteImport } from './routes/type'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedReconciliationRouteImport } from './routes/_authenticated/reconciliation'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
+import { Route as LegalPrivacyRouteImport } from './routes/legal/privacy'
+import { Route as LegalTermsRouteImport } from './routes/legal/terms'
 import { Route as AuthenticatedInventoryFgLedgerRouteImport } from './routes/_authenticated/inventory/fg-ledger'
 import { Route as AuthenticatedInventoryFinishedGoodsRouteImport } from './routes/_authenticated/inventory/finished-goods'
 import { Route as AuthenticatedInventoryJobberStockRouteImport } from './routes/_authenticated/inventory/jobber-stock'
@@ -45,6 +48,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TypeRoute = TypeRouteImport.update({
+  id: '/type',
+  path: '/type',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -65,6 +73,16 @@ const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const LegalPrivacyRoute = LegalPrivacyRouteImport.update({
+  id: '/legal/privacy',
+  path: '/legal/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalTermsRoute = LegalTermsRouteImport.update({
+  id: '/legal/terms',
+  path: '/legal/terms',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedInventoryFgLedgerRoute =
   AuthenticatedInventoryFgLedgerRouteImport.update({
@@ -153,10 +171,13 @@ const AuthenticatedTransactionsTransferRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/type': typeof TypeRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/reconciliation': typeof AuthenticatedReconciliationRoute
   '/reports': typeof AuthenticatedReportsRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
   '/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
   '/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
@@ -175,10 +196,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/type': typeof TypeRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/reconciliation': typeof AuthenticatedReconciliationRoute
   '/reports': typeof AuthenticatedReportsRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
   '/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
   '/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
@@ -199,10 +223,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/type': typeof TypeRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/reconciliation': typeof AuthenticatedReconciliationRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/_authenticated/inventory/fg-ledger': typeof AuthenticatedInventoryFgLedgerRoute
   '/_authenticated/inventory/finished-goods': typeof AuthenticatedInventoryFinishedGoodsRoute
   '/_authenticated/inventory/jobber-stock': typeof AuthenticatedInventoryJobberStockRoute
@@ -223,10 +250,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/type'
     | '/admin'
     | '/dashboard'
     | '/reconciliation'
     | '/reports'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/inventory/fg-ledger'
     | '/inventory/finished-goods'
     | '/inventory/jobber-stock'
@@ -245,10 +275,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/type'
     | '/admin'
     | '/dashboard'
     | '/reconciliation'
     | '/reports'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/inventory/fg-ledger'
     | '/inventory/finished-goods'
     | '/inventory/jobber-stock'
@@ -268,10 +301,13 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/type'
     | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/_authenticated/reconciliation'
     | '/_authenticated/reports'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/_authenticated/inventory/fg-ledger'
     | '/_authenticated/inventory/finished-goods'
     | '/_authenticated/inventory/jobber-stock'
@@ -292,6 +328,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  TypeRoute: typeof TypeRoute
+  LegalPrivacyRoute: typeof LegalPrivacyRoute
+  LegalTermsRoute: typeof LegalTermsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -315,6 +354,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/type': {
+      id: '/type'
+      path: '/type'
+      fullPath: '/type'
+      preLoaderRoute: typeof TypeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -344,6 +390,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/reports'
       preLoaderRoute: typeof AuthenticatedReportsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/legal/privacy': {
+      id: '/legal/privacy'
+      path: '/legal/privacy'
+      fullPath: '/legal/privacy'
+      preLoaderRoute: typeof LegalPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/terms': {
+      id: '/legal/terms'
+      path: '/legal/terms'
+      fullPath: '/legal/terms'
+      preLoaderRoute: typeof LegalTermsRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/inventory/fg-ledger': {
       id: '/_authenticated/inventory/fg-ledger'
@@ -502,6 +562,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  TypeRoute: TypeRoute,
+  LegalPrivacyRoute: LegalPrivacyRoute,
+  LegalTermsRoute: LegalTermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
