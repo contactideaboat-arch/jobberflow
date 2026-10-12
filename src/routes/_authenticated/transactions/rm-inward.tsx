@@ -14,6 +14,8 @@ export const Route = createFileRoute("/_authenticated/transactions/rm-inward")({
         property: "og:description",
         content: "Warehouse raw material inward vouchers with posting and cancellation.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

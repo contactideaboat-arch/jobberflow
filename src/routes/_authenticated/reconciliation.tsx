@@ -31,6 +31,8 @@ export const Route = createFileRoute("/_authenticated/reconciliation")({
         property: "og:description",
         content: "Printable jobber-wise material accountability statement.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   validateSearch: (search: Record<string, unknown>): { jobber?: string } =>

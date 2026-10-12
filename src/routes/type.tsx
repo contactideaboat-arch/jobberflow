@@ -5,7 +5,14 @@ import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/type")({
   head: () => ({
-    meta: [{ title: "Type specimen. JobberFlow." }],
+    meta: [
+      { title: "Type specimen. JobberFlow." },
+      { name: "description", content: "Side-by-side typography specimen for the JobberFlow dashboard, rendered with the real components." },
+      { property: "og:title", content: "Type specimen. JobberFlow." },
+      { property: "og:description", content: "Side-by-side typography specimen for the JobberFlow dashboard, rendered with the real components." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
     description:
       "Side-by-side typography specimen for the JobberFlow dashboard, rendered with the real components.",
   }),

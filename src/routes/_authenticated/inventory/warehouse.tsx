@@ -12,6 +12,8 @@ export const Route = createFileRoute("/_authenticated/inventory/warehouse")({
       },
       { property: "og:title", content: "Raw Material Stock, JobberFlow" },
       { property: "og:description", content: "Warehouse and jobber stock positions in one view." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => <StockOverview initialView="all" />,

@@ -44,6 +44,8 @@ export const Route = createFileRoute("/_authenticated/admin")({
         property: "og:description",
         content: "Administration: roles, company settings and audit logs.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AdminPage,
