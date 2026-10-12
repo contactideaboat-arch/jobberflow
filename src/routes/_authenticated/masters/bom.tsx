@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { IconCopy, IconPlus, IconScrap, IconStar } from "@/components/icons";
+import { BomCard } from "@/components/erp/BomCard";
 import { PageHeader } from "@/components/erp/AppShell";
 import {
   EmptyState,
@@ -10,22 +11,13 @@ import {
   Field,
   FormSection,
   NumInput,
-  Panel,
   RegisterState,
   SearchSelect,
   queryStatus,
   useConfirm,
   useGuardedClose,
 } from "@/components/erp/bits";
-import {
-  FilterSelect,
-  GridPager,
-  GridScroll,
-  GridToolbar,
-  NIL,
-  SortHeader,
-  useGrid,
-} from "@/components/erp/grid";
+import { FilterSelect, GridPager, GridToolbar, NIL, useGrid } from "@/components/erp/grid";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -59,6 +51,14 @@ export const Route = createFileRoute("/_authenticated/masters/bom")({
         content:
           "Versioned bills of material: the standard quantity of each raw material per base quantity of a finished product.",
       },
+      { property: "og:title", content: "Bills of material | JobberFlow" },
+      {
+        property: "og:description",
+        content:
+          "Versioned bills of material: the standard quantity of each raw material per base quantity of a finished product.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: BomMaster,
@@ -88,6 +88,8 @@ function BomMaster() {
   const [open, setOpen] = useState(false);
   const [viewId, setViewId] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const actionLock = useRef(false);
+  const [actionId, setActionId] = useState<string | null>(null);
   const [errors, setErrors] = useState<FormErrors>({});
   /** A header already written by a failed save, so a retry adds lines instead of a second BOM. */
   const [pending, setPending] = useState<{ id: string; number: string } | null>(null);
@@ -196,24 +198,22 @@ function BomMaster() {
   };
 
   const validate = () => {
-    const next: FormErrors = { rows: {} };
+    const rows: Record<number, string> = {};
+    const next: FormErrors = { rows };
     if (!productId) next.product = "Choose the finished product.";
     if (!(Number(baseQty) > 0)) next.baseQty = "Base quantity must be more than zero.";
     if (!lines.length) next.lines = "Add at least one raw material line.";
     const seen = new Set<string>();
     lines.forEach((l, i) => {
-      if (!l.material_id) next.rows![i] = "Choose a material.";
-      else if (seen.has(l.material_id)) next.rows![i] = "This material is already in the BOM.";
-      else if (!(Number(l.standard_quantity) > 0))
-        next.rows![i] = "Quantity must be more than zero.";
+      if (!l.material_id) rows[i] = "Choose a material.";
+      else if (seen.has(l.material_id)) rows[i] = "This material is already in the BOM.";
+      else if (!(Number(l.standard_quantity) > 0)) rows[i] = "Quantity must be more than zero.";
       seen.add(l.material_id);
     });
     if (lines.length && lines.filter((l) => l.is_primary_material).length !== 1)
       next.lines = "Mark exactly one line as the primary material.";
     setErrors(next);
-    return (
-      !next.product && !next.baseQty && !next.lines && !Object.values(next.rows!).some(Boolean)
-    );
+    return !next.product && !next.baseQty && !next.lines && !Object.values(rows).some(Boolean);
   };
 
   const save = async () => {
@@ -308,42 +308,118 @@ function BomMaster() {
   };
 
   const toggleActive = async (b: any) => {
-    const current = versionsOf(b.product_id).find((x) => x.active && x.id !== b.id);
-    const ok = await ask({
-      title: b.active ? `Deactivate ${b.bom_number}?` : `Make ${b.bom_number} active?`,
-      body: b.active ? (
-        <p>
-          {b.finished_products?.name} will have no active BOM, so its production cannot be received
-          until another version is made active.
-        </p>
-      ) : (
-        <p>
-          Product inwards for {b.finished_products?.name} will use {b.version}.
-          {current ? ` ${current.bom_number} (${current.version}) will be deactivated.` : ""}
-        </p>
-      ),
-      confirm: b.active ? "Deactivate" : "Make active",
-      tone: b.active ? "destructive" : "default",
-    });
-    if (!ok) return;
-    if (!b.active) {
-      const { error: offErr } = await db
-        .from("bom_headers")
-        .update({ active: false })
-        .eq("product_id", b.product_id)
-        .eq("active", true);
-      if (offErr) {
-        toast.error(`Not changed. ${errMsg(offErr)}`);
+    if (!editable || actionLock.current) return;
+    actionLock.current = true;
+    setActionId(b.id);
+    try {
+      const current = versionsOf(b.product_id).find((x) => x.active && x.id !== b.id);
+      const ok = await ask({
+        title: b.active ? `Deactivate ${b.bom_number}?` : `Make ${b.bom_number} active?`,
+        body: b.active ? (
+          <p>
+            {b.finished_products?.name} will have no active BOM, so its production cannot be
+            received until another version is made active.
+          </p>
+        ) : (
+          <p>
+            Product inwards for {b.finished_products?.name} will use {b.version}.
+            {current ? ` ${current.bom_number} (${current.version}) will be deactivated.` : ""}
+          </p>
+        ),
+        confirm: b.active ? "Deactivate" : "Make active",
+        tone: b.active ? "destructive" : "default",
+      });
+      if (!ok) return;
+      if (!b.active) {
+        const { error: offErr } = await db
+          .from("bom_headers")
+          .update({ active: false })
+          .eq("product_id", b.product_id)
+          .eq("active", true);
+        if (offErr) {
+          toast.error(`Not changed. ${errMsg(offErr)}`);
+          return;
+        }
+      }
+      const { error } = await db.from("bom_headers").update({ active: !b.active }).eq("id", b.id);
+      invalidate([["bom_headers-full"], ["bom_headers"]]);
+      if (error) {
+        toast.error(`Not changed. ${errMsg(error)}`);
         return;
       }
-    }
-    const { error } = await db.from("bom_headers").update({ active: !b.active }).eq("id", b.id);
-    invalidate([["bom_headers-full"], ["bom_headers"]]);
-    if (error) {
+      toast.success(`${b.bom_number} is now ${b.active ? "inactive" : "active"}.`);
+    } catch (error) {
       toast.error(`Not changed. ${errMsg(error)}`);
-      return;
+    } finally {
+      actionLock.current = false;
+      setActionId(null);
     }
-    toast.success(`${b.bom_number} is now ${b.active ? "inactive" : "active"}.`);
+  };
+
+  const deleteBom = async (b: any) => {
+    if (!editable || actionLock.current) return;
+    actionLock.current = true;
+    setActionId(b.id);
+    try {
+      const { data: references, error: referenceError } = await db
+        .from("product_inward_headers")
+        .select("id")
+        .eq("bom_id", b.id)
+        .limit(1);
+      if (referenceError) throw referenceError;
+      if (references?.length) {
+        toast.error(
+          `${b.bom_number} is used by a product inward voucher and cannot be deleted. Deactivate it instead to preserve production history.`,
+        );
+        return;
+      }
+      const ok = await ask({
+        title: `Delete ${b.bom_number}?`,
+        body: (
+          <>
+            <p>
+              This permanently removes {b.bom_number} ({b.version}) and all its material lines. This
+              cannot be undone.
+            </p>
+            {b.active && (
+              <p>
+                This is the active BOM for {b.finished_products?.name}. Production cannot be
+                received until another version is made active.
+              </p>
+            )}
+          </>
+        ),
+        confirm: "Delete BOM",
+        cancel: "Keep BOM",
+        tone: "destructive",
+      });
+      if (!ok) return;
+      // RLS authorizes the caller; the foreign key rejects even concurrent voucher references.
+      const { data: deleted, error } = await db
+        .from("bom_headers")
+        .delete()
+        .eq("id", b.id)
+        .select("id")
+        .single();
+      if (error) {
+        if (error.code === "23503") {
+          toast.error(
+            `${b.bom_number} is used by a product inward voucher and cannot be deleted. Deactivate it instead.`,
+          );
+          return;
+        }
+        throw error;
+      }
+      if (!deleted) throw new Error("The BOM was not deleted. Check your access and try again.");
+      setViewId((id) => (id === b.id ? null : id));
+      invalidate([["bom_headers-full"], ["bom_headers"], ["finished_products"]]);
+      toast.success(`${b.bom_number} deleted.`);
+    } catch (error) {
+      toast.error(`Not deleted. ${errMsg(error)}`);
+    } finally {
+      actionLock.current = false;
+      setActionId(null);
+    }
   };
 
   const exportRows = grid.matched.flatMap((b: any) =>
@@ -383,7 +459,7 @@ function BomMaster() {
         }
       />
 
-      <Panel>
+      <section aria-label="Bills of material register">
         <GridToolbar
           grid={grid}
           searchLabel="Search bills of material"
@@ -417,51 +493,24 @@ function BomMaster() {
             ]}
           />
         </GridToolbar>
-        <GridScroll sticky>
-          <table className="erp-table min-w-[60rem]">
-            <caption className="sr-only">Bills of material by product and version</caption>
-            <thead>
-              <tr>
-                <SortHeader grid={grid} sortKey="product">
-                  Product
-                </SortHeader>
-                <SortHeader grid={grid} sortKey="bom">
-                  BOM
-                </SortHeader>
-                <th scope="col" className="text-right!">
-                  Base quantity
-                </th>
-                <th scope="col">Primary material</th>
-                <th scope="col" className="text-right!">
-                  Components
-                </th>
-                <th scope="col" className="text-right!">
-                  Standard total
-                </th>
-                <SortHeader grid={grid} sortKey="effective">
-                  Effective
-                </SortHeader>
-                <th scope="col">Status</th>
-                <th scope="col">
-                  <span className="sr-only">Actions</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {status !== "ready" ? (
-                <RegisterState status={status} cols={9} onRetry={() => void bomsQuery.refetch()} />
-              ) : grid.matched.length === 0 ? (
+        {status !== "ready" || grid.matched.length === 0 ? (
+          <div className="mt-4 overflow-hidden rounded-lg border bg-card">
+            <table className="w-full">
+              <tbody>
                 <RegisterState
-                  status="ready"
-                  cols={9}
+                  status={status}
+                  cols={1}
+                  onRetry={() => void bomsQuery.refetch()}
                   emptyTitle={
-                    productFilter && !activeFilter
-                      ? `${productName(productFilter) || "This product"} has no bill of material.`
-                      : grid.isFiltered
-                        ? "No bill of material matches these filters."
-                        : "No bills of material yet."
+                    grid.isFiltered
+                      ? "No bill of material matches these filters."
+                      : "No bills of material yet."
                   }
-                  emptyBody="A BOM is the recipe: how much of each material a base quantity of finished goods should use. Product inward applies it automatically."
+                  emptyBody={
+                    grid.isFiltered
+                      ? "Try another product, status or search."
+                      : "Create a BOM for a finished product."
+                  }
                   action={
                     editable && (
                       <Button
@@ -476,67 +525,27 @@ function BomMaster() {
                     )
                   }
                 />
-              ) : (
-                grid.pageRows.map((b: any) => {
-                  const items = b.bom_items ?? [];
-                  const primary = items.find((i: any) => i.is_primary_material);
-                  const tot = items.reduce(
-                    (s: number, i: any) => s + Number(i.standard_quantity),
-                    0,
-                  );
-                  return (
-                    <tr key={b.id} aria-selected={viewId === b.id || undefined}>
-                      <th scope="row" className="text-left font-normal">
-                        <span className="block font-medium">{b.finished_products?.name}</span>
-                        <span className="num block text-xs text-muted-foreground">
-                          {b.finished_products?.code}
-                        </span>
-                      </th>
-                      <td>
-                        <button
-                          type="button"
-                          onClick={() => setViewId(b.id)}
-                          className="num cursor-pointer text-left font-medium hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                        >
-                          {b.bom_number}
-                          <span className="block text-xs font-normal text-muted-foreground">
-                            {b.version}
-                          </span>
-                        </button>
-                      </td>
-                      <td className="num text-right">
-                        {NUM(b.base_quantity)} {b.finished_products?.uom?.toLowerCase()}
-                      </td>
-                      <td>{primary ? primary.raw_materials?.name : NIL}</td>
-                      <td className="num text-right">{NUM(items.length)}</td>
-                      <td className="num text-right">{KG(tot)} kg</td>
-                      <td className="num whitespace-nowrap">
-                        {dmy(b.effective_from)}
-                        {b.effective_to && (
-                          <span className="block text-xs text-muted-foreground">
-                            to {dmy(b.effective_to)}
-                          </span>
-                        )}
-                      </td>
-                      <td>
-                        <Badge variant={b.active ? "success" : "secondary"}>
-                          {b.active ? "Active" : "Inactive"}
-                        </Badge>
-                      </td>
-                      <td className="text-right">
-                        <Button size="sm" variant="ghost" onClick={() => setViewId(b.id)}>
-                          Open
-                        </Button>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
-        </GridScroll>
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-2 xl:grid-cols-3">
+            {grid.pageRows.map((b: any) => (
+              <BomCard
+                key={b.id}
+                bom={b}
+                editable={editable}
+                busy={actionId !== null}
+                onView={() => setViewId(b.id)}
+                onClone={() => cloneBom(b)}
+                onToggle={() => void toggleActive(b)}
+                onDelete={() => void deleteBom(b)}
+              />
+            ))}
+          </div>
+        )}
         <GridPager grid={grid} />
-      </Panel>
+      </section>
 
       {/* Detail: the product and its components ------------------------------ */}
       <Sheet open={!!viewing} onOpenChange={(value) => !value && setViewId(null)}>
@@ -563,11 +572,29 @@ function BomMaster() {
                 </SheetDescription>
                 {editable && (
                   <div className="flex flex-wrap gap-2 pt-2">
-                    <Button size="sm" variant="outline" onClick={() => cloneBom(viewing)}>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={actionId !== null}
+                      onClick={() => cloneBom(viewing)}
+                    >
                       <IconCopy /> New revision from this
                     </Button>
-                    <Button size="sm" variant="ghost" onClick={() => void toggleActive(viewing)}>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      disabled={actionId !== null}
+                      onClick={() => void toggleActive(viewing)}
+                    >
                       {viewing.active ? "Deactivate" : "Make active"}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      disabled={actionId !== null}
+                      onClick={() => void deleteBom(viewing)}
+                    >
+                      <IconScrap /> Delete BOM
                     </Button>
                   </div>
                 )}

@@ -42,6 +42,8 @@ export const Route = createFileRoute("/_authenticated/reports")({
         property: "og:description",
         content: "Management reporting for job work production and wastage.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: ReportsCentre,

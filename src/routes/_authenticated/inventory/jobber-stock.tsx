@@ -15,6 +15,8 @@ export const Route = createFileRoute("/_authenticated/inventory/jobber-stock")({
         property: "og:description",
         content: "Jobber material balances within the combined stock view.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => <StockOverview initialView="jobbers" />,
