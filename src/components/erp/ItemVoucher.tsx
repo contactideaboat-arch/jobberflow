@@ -65,6 +65,8 @@ export type ItemVoucherConfig = {
   itemTable: string;
   postRpc: string;
   needsJobber: boolean;
+  /** Source jobber for a jobber-to-jobber movement; optional. */ 
+  sourceJobber?: boolean;
   /** where the stock is deducted from, used to show live availability */
   stockScope: "WAREHOUSE" | "JOBBER" | "NONE";
   extraFields: ExtraField[];
@@ -74,6 +76,7 @@ export type ItemVoucherConfig = {
 type Line = { material_id: string; quantity: number; remarks: string };
 type Errors = {
   jobber?: string | undefined;
+  fromJobber?: string | undefined;
   lines?: string | undefined;
   rows?: Record<number, string>;
 };
@@ -104,6 +107,7 @@ export function ItemVoucher({ config }: { config: ItemVoucherConfig }) {
   const [busy, setBusy] = useState<"draft" | "post" | null>(null);
   const [date, setDate] = useState(today());
   const [jobberId, setJobberId] = useState("");
+  const [fromJobberId, setFromJobberId] = useState("");
   const [extras, setExtras] = useState<Record<string, string>>({});
   const [remarks, setRemarks] = useState("");
   const [lines, setLines] = useState<Line[]>([]);
@@ -160,12 +164,13 @@ export function ItemVoucher({ config }: { config: ItemVoucherConfig }) {
   const jobberName = (jobbers ?? []).find((j: any) => j.id === jobberId)?.name as
     string | undefined;
 
+  const balanceJobberId = config.sourceJobber ? fromJobberId : jobberId;
   const available = (materialId: string) => {
     if (config.stockScope === "WAREHOUSE")
       return Number((wh ?? []).find((r: any) => r.material_id === materialId)?.balance ?? 0);
     if (config.stockScope === "JOBBER")
       return Number(
-        (jb ?? []).find((r: any) => r.material_id === materialId && r.jobber_id === jobberId)
+        (jb ?? []).find((r: any) => r.material_id === materialId && r.jobber_id === balanceJobberId)
           ?.balance ?? 0,
       );
     return 0;
@@ -229,6 +234,8 @@ export function ItemVoucher({ config }: { config: ItemVoucherConfig }) {
   const validate = () => {
     const next: Errors = { rows: {} };
     if (config.needsJobber && !jobberId) next.jobber = "Choose the jobber.";
+    if (config.sourceJobber && !fromJobberId) next.fromJobber = "Choose the source jobber." ;
+    if (config.sourceJobber && fromJobberId && fromJobberId === jobberId) next.fromJobber = "Source and destination jobber must differ.";
     if (!lines.length) next.lines = "Add at least one material line.";
     const seen = new Set<string>();
     lines.forEach((l, i) => {
@@ -268,6 +275,7 @@ export function ItemVoucher({ config }: { config: ItemVoucherConfig }) {
         status: "DRAFT",
       };
       if (config.needsJobber) record.jobber_id = jobberId;
+      if (config.sourceJobber) record.from_jobber_id = fromJobberId || null;
       config.extraFields.forEach((f) => {
         record[f.key] = extras[f.key] || (f.type === "select" ? f.options?.[0] : null);
       });
@@ -607,9 +615,22 @@ export function ItemVoucher({ config }: { config: ItemVoucherConfig }) {
                     onChange={(e) => setDate(e.target.value)}
                   />
                 </Field>
+                {config.sourceJobber && (
+                  <Field label="Source jobber" required error={errors.fromJobber} className="sm:col-span-3">
+                    <SearchSelect
+                      options={jobberOpts}
+                      value={fromJobberId}
+                      disabled={!!pending}
+                      onChange={(value) => {
+                        setFromJobberId(value);
+                        setErrors((e) => ({ ...e, fromJobber: undefined }));
+                      }}
+                    />
+                  </Field>
+                )}
                 {config.needsJobber && (
                   <Field
-                    label="Jobber"
+                    label={config.sourceJobber ? "Destination jobber" : "Jobber"}
                     required
                     error={errors.jobber}
                     className="sm:col-span-3"

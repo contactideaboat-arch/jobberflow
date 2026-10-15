@@ -87,6 +87,66 @@ export const dmyLongDate = (d: string | Date | null | undefined) => {
 
 export type VoucherStatus = "DRAFT" | "POSTED" | "CANCELLED";
 
+/* -------- pricing -------- */
+
+/*
+ * Money is stored in paise and only becomes rupees on screen.
+ *
+ * The reason is arithmetic, not taste. A rupee figure carried through a numeric
+ * column and read back as a float can end up 42.4999999, which rounds to 42.50
+ * on the price but to 42.49 once a quantity multiplies it, and the voucher
+ * total then disagrees with the sum of its own lines. Paise as an integer has
+ * no representation error, so the amount on a line is always exactly
+ * rate x quantity. Everything below converts at the boundary.
+ */
+
+const paiseFormat = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 0 });
+
+/** Paise as a plain integer string, for entering the value. */
+export const toPaiseInput = (rupees: number | string) =>
+  String(Math.round(Number(rupees || 0) * 100));
+
+/**
+ * Paise to a rupee string for display, e.g. 4250 becomes "42.50".
+ *
+ * The split is done on the integer rather than by dividing, so 5 paise cannot
+ * round itself up into 6 by the time it is formatted.
+ */
+export function paiseToRupees(paise: number | string | null | undefined) {
+  const n = Math.round(Number(paise ?? 0));
+  const negative = n < 0;
+  const abs = Math.abs(n);
+  const whole = Math.floor(abs / 100);
+  const frac = String(abs % 100).padStart(2, "0");
+  return `${negative ? "-" : ""}${paiseFormat.format(whole)}.${frac}`;
+}
+
+/** Paise to a rupee string with the symbol, for a price or a total. */
+export const INR = (paise: number | string | null | undefined) => `₹${paiseToRupees(paise)}`;
+
+export type PriceTier = {
+  id?: string;
+  /** Quantity at which this rate starts. 0 is the base rate. */
+  minQuantity: number;
+  /** Rate in paise per unit. */
+  unitPricePaise: number;
+};
+
+/**
+ * The break that applies to a quantity: the highest one the quantity reaches.
+ *
+ * Breaks are a staircase, not a lookup table, so 150 against breaks of 100 and
+ * 500 must take the 100 break rather than the 0 break. Taking the last break at
+ * or below the quantity is what makes a bulk rate actually cheaper than the base
+ * rate.
+ */
+export function priceForQuantity(tiers: PriceTier[], quantity: number) {
+  const usable = tiers
+    .filter((t) => Number(t.minQuantity) <= quantity)
+    .sort((a, b) => Number(a.minQuantity) - Number(b.minQuantity));
+  return usable.length ? usable[usable.length - 1]! : undefined;
+}
+
 export const MATERIAL_CATEGORIES = [
   "Plastic Raw Material",
   "Master Batch",
