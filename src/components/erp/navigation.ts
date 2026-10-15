@@ -97,6 +97,7 @@ export const NAV: NavGroup[] = [
           stage: true,
         },
       },
+      /*
       {
         to: "/transactions/material-return",
         label: "Material return",
@@ -108,7 +109,7 @@ export const NAV: NavGroup[] = [
           stage: false,
         },
       },
-      {
+      */      {
         to: "/transactions/adjustment",
         label: "Stock adjustment",
         icon: IconBalance,
