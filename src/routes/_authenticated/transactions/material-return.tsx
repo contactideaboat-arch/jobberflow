@@ -11,6 +11,8 @@ export const Route = createFileRoute("/_authenticated/transactions/material-retu
       },
       { property: "og:title", content: "Material return | JobberFlow" },
       { property: "og:description", content: "Jobber to warehouse raw material return vouchers." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

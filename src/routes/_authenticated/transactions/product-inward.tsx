@@ -60,6 +60,10 @@ export const Route = createFileRoute("/_authenticated/transactions/product-inwar
         content:
           "Receive finished products from jobbers. Standard BOM consumption plus one overall wastage figure per voucher.",
       },
+      { property: "og:title", content: "Product inward | JobberFlow" },
+      { property: "og:description", content: "Receive finished products from jobbers. Standard BOM consumption plus one overall wastage figure per voucher." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: ProductInward,

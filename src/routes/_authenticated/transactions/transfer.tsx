@@ -15,6 +15,8 @@ export const Route = createFileRoute("/_authenticated/transactions/transfer")({
         property: "og:description",
         content: "Warehouse to jobber raw material transfer vouchers.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

@@ -28,6 +28,10 @@ export const Route = createFileRoute("/_authenticated/inventory/rm-ledger")({
         content:
           "Every raw material movement across the godown and jobbers, with a running balance per material.",
       },
+      { property: "og:title", content: "Raw material ledger | JobberFlow" },
+      { property: "og:description", content: "Every raw material movement across the godown and jobbers, with a running balance per material." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: RmLedger,

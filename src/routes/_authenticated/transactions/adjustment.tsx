@@ -52,6 +52,10 @@ export const Route = createFileRoute("/_authenticated/transactions/adjustment")(
         content:
           "Correct raw material or finished goods stock with a reasoned, audited increase or decrease.",
       },
+      { property: "og:title", content: "Stock adjustment | JobberFlow" },
+      { property: "og:description", content: "Correct raw material or finished goods stock with a reasoned, audited increase or decrease." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AdjustmentPage,

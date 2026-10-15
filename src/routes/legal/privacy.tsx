@@ -10,6 +10,10 @@ export const Route = createFileRoute("/legal/privacy")({
         content:
           "What data JobberFlow collects, why we hold it, and the controls you have over it.",
       },
+      { property: "og:title", content: "Privacy policy. JobberFlow." },
+      { property: "og:description", content: "What data JobberFlow collects, why we hold it, and the controls you have over it." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: PrivacyPage,
