@@ -298,6 +298,43 @@ export type Database = {
         }
         Relationships: []
       }
+      finished_product_price_tiers: {
+        Row: {
+          created_at: string
+          effective_from: string
+          effective_to: string | null
+          id: string
+          min_quantity: number
+          product_id: string
+          unit_price_paise: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          min_quantity: number
+          product_id: string
+          unit_price_paise: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          min_quantity?: number
+          product_id?: string
+          unit_price_paise?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "finished_product_price_tiers_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "finished_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       jobber_transfer_headers: {
         Row: {
           cancellation_reason: string | null
@@ -306,6 +343,7 @@ export type Database = {
           challan_number: string | null
           created_at: string
           created_by: string | null
+          from_jobber_id: string | null
           id: string
           jobber_id: string
           posted_at: string | null
@@ -324,6 +362,7 @@ export type Database = {
           challan_number?: string | null
           created_at?: string
           created_by?: string | null
+          from_jobber_id?: string | null
           id?: string
           jobber_id: string
           posted_at?: string | null
@@ -342,6 +381,7 @@ export type Database = {
           challan_number?: string | null
           created_at?: string
           created_by?: string | null
+          from_jobber_id?: string | null
           id?: string
           jobber_id?: string
           posted_at?: string | null
@@ -793,6 +833,7 @@ export type Database = {
           created_by: string | null
           id: string
           invoice_number: string | null
+          jobber_id: string | null
           posted_at: string | null
           posted_by: string | null
           reference: string | null
@@ -817,6 +858,7 @@ export type Database = {
           reference?: string | null
           remarks?: string | null
           status?: string
+          jobber_id?: string | null
           supplier?: string | null
           transaction_type?: string
           voucher_date?: string
@@ -836,6 +878,7 @@ export type Database = {
           reference?: string | null
           remarks?: string | null
           status?: string
+          jobber_id?: string | null
           supplier?: string | null
           transaction_type?: string
           voucher_date?: string

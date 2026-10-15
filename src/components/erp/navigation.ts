@@ -76,6 +76,18 @@ export const NAV: NavGroup[] = [
         },
       },
       {
+        to: "/transactions/direct-jobber-inward",
+        label: "Direct inward to jobber",
+        icon: IconBoxes,
+        flow: { title: "Receive at jobber", short: "Direct jobber", description: "Supplier to jobber, bypassing the warehouse", stage: true },
+      },
+      {
+        to: "/transactions/jobber-transfer",
+        label: "Jobber to jobber transfer",
+        icon: IconExchange,
+        flow: { title: "Jobber transfer", short: "Jobber transfer", description: "Move material between two jobbers", stage: false },
+      },
+      {
         to: "/transactions/transfer",
         label: "Transfer to jobber",
         icon: IconFactory,

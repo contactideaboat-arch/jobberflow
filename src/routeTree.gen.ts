@@ -29,6 +29,8 @@ import { Route as AuthenticatedMastersJobbersRouteImport } from './routes/_authe
 import { Route as AuthenticatedMastersMaterialsRouteImport } from './routes/_authenticated/masters/materials'
 import { Route as AuthenticatedMastersProductsRouteImport } from './routes/_authenticated/masters/products'
 import { Route as AuthenticatedTransactionsAdjustmentRouteImport } from './routes/_authenticated/transactions/adjustment'
+import { Route as AuthenticatedTransactionsDirectJobberInwardRouteImport } from './routes/_authenticated/transactions/direct-jobber-inward'
+import { Route as AuthenticatedTransactionsJobberTransferRouteImport } from './routes/_authenticated/transactions/jobber-transfer'
 import { Route as AuthenticatedTransactionsMaterialReturnRouteImport } from './routes/_authenticated/transactions/material-return'
 import { Route as AuthenticatedTransactionsProductInwardRouteImport } from './routes/_authenticated/transactions/product-inward'
 import { Route as AuthenticatedTransactionsRmInwardRouteImport } from './routes/_authenticated/transactions/rm-inward'
@@ -143,6 +145,18 @@ const AuthenticatedTransactionsAdjustmentRoute =
     path: '/transactions/adjustment',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedTransactionsDirectJobberInwardRoute =
+  AuthenticatedTransactionsDirectJobberInwardRouteImport.update({
+    id: '/transactions/direct-jobber-inward',
+    path: '/transactions/direct-jobber-inward',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTransactionsJobberTransferRoute =
+  AuthenticatedTransactionsJobberTransferRouteImport.update({
+    id: '/transactions/jobber-transfer',
+    path: '/transactions/jobber-transfer',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedTransactionsMaterialReturnRoute =
   AuthenticatedTransactionsMaterialReturnRouteImport.update({
     id: '/transactions/material-return',
@@ -188,6 +202,8 @@ export interface FileRoutesByFullPath {
   '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
   '/masters/products': typeof AuthenticatedMastersProductsRoute
   '/transactions/adjustment': typeof AuthenticatedTransactionsAdjustmentRoute
+  '/transactions/direct-jobber-inward': typeof AuthenticatedTransactionsDirectJobberInwardRoute
+  '/transactions/jobber-transfer': typeof AuthenticatedTransactionsJobberTransferRoute
   '/transactions/material-return': typeof AuthenticatedTransactionsMaterialReturnRoute
   '/transactions/product-inward': typeof AuthenticatedTransactionsProductInwardRoute
   '/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
@@ -213,6 +229,8 @@ export interface FileRoutesByTo {
   '/masters/materials': typeof AuthenticatedMastersMaterialsRoute
   '/masters/products': typeof AuthenticatedMastersProductsRoute
   '/transactions/adjustment': typeof AuthenticatedTransactionsAdjustmentRoute
+  '/transactions/direct-jobber-inward': typeof AuthenticatedTransactionsDirectJobberInwardRoute
+  '/transactions/jobber-transfer': typeof AuthenticatedTransactionsJobberTransferRoute
   '/transactions/material-return': typeof AuthenticatedTransactionsMaterialReturnRoute
   '/transactions/product-inward': typeof AuthenticatedTransactionsProductInwardRoute
   '/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
@@ -240,6 +258,8 @@ export interface FileRoutesById {
   '/_authenticated/masters/materials': typeof AuthenticatedMastersMaterialsRoute
   '/_authenticated/masters/products': typeof AuthenticatedMastersProductsRoute
   '/_authenticated/transactions/adjustment': typeof AuthenticatedTransactionsAdjustmentRoute
+  '/_authenticated/transactions/direct-jobber-inward': typeof AuthenticatedTransactionsDirectJobberInwardRoute
+  '/_authenticated/transactions/jobber-transfer': typeof AuthenticatedTransactionsJobberTransferRoute
   '/_authenticated/transactions/material-return': typeof AuthenticatedTransactionsMaterialReturnRoute
   '/_authenticated/transactions/product-inward': typeof AuthenticatedTransactionsProductInwardRoute
   '/_authenticated/transactions/rm-inward': typeof AuthenticatedTransactionsRmInwardRoute
@@ -267,6 +287,8 @@ export interface FileRouteTypes {
     | '/masters/materials'
     | '/masters/products'
     | '/transactions/adjustment'
+    | '/transactions/direct-jobber-inward'
+    | '/transactions/jobber-transfer'
     | '/transactions/material-return'
     | '/transactions/product-inward'
     | '/transactions/rm-inward'
@@ -292,6 +314,8 @@ export interface FileRouteTypes {
     | '/masters/materials'
     | '/masters/products'
     | '/transactions/adjustment'
+    | '/transactions/direct-jobber-inward'
+    | '/transactions/jobber-transfer'
     | '/transactions/material-return'
     | '/transactions/product-inward'
     | '/transactions/rm-inward'
@@ -318,6 +342,8 @@ export interface FileRouteTypes {
     | '/_authenticated/masters/materials'
     | '/_authenticated/masters/products'
     | '/_authenticated/transactions/adjustment'
+    | '/_authenticated/transactions/direct-jobber-inward'
+    | '/_authenticated/transactions/jobber-transfer'
     | '/_authenticated/transactions/material-return'
     | '/_authenticated/transactions/product-inward'
     | '/_authenticated/transactions/rm-inward'
@@ -475,6 +501,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTransactionsAdjustmentRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/transactions/direct-jobber-inward': {
+      id: '/_authenticated/transactions/direct-jobber-inward'
+      path: '/transactions/direct-jobber-inward'
+      fullPath: '/transactions/direct-jobber-inward'
+      preLoaderRoute: typeof AuthenticatedTransactionsDirectJobberInwardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/transactions/jobber-transfer': {
+      id: '/_authenticated/transactions/jobber-transfer'
+      path: '/transactions/jobber-transfer'
+      fullPath: '/transactions/jobber-transfer'
+      preLoaderRoute: typeof AuthenticatedTransactionsJobberTransferRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/transactions/material-return': {
       id: '/_authenticated/transactions/material-return'
       path: '/transactions/material-return'
@@ -521,6 +561,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedMastersMaterialsRoute: typeof AuthenticatedMastersMaterialsRoute
   AuthenticatedMastersProductsRoute: typeof AuthenticatedMastersProductsRoute
   AuthenticatedTransactionsAdjustmentRoute: typeof AuthenticatedTransactionsAdjustmentRoute
+  AuthenticatedTransactionsDirectJobberInwardRoute: typeof AuthenticatedTransactionsDirectJobberInwardRoute
+  AuthenticatedTransactionsJobberTransferRoute: typeof AuthenticatedTransactionsJobberTransferRoute
   AuthenticatedTransactionsMaterialReturnRoute: typeof AuthenticatedTransactionsMaterialReturnRoute
   AuthenticatedTransactionsProductInwardRoute: typeof AuthenticatedTransactionsProductInwardRoute
   AuthenticatedTransactionsRmInwardRoute: typeof AuthenticatedTransactionsRmInwardRoute
@@ -545,6 +587,10 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMastersProductsRoute: AuthenticatedMastersProductsRoute,
   AuthenticatedTransactionsAdjustmentRoute:
     AuthenticatedTransactionsAdjustmentRoute,
+  AuthenticatedTransactionsDirectJobberInwardRoute:
+    AuthenticatedTransactionsDirectJobberInwardRoute,
+  AuthenticatedTransactionsJobberTransferRoute:
+    AuthenticatedTransactionsJobberTransferRoute,
   AuthenticatedTransactionsMaterialReturnRoute:
     AuthenticatedTransactionsMaterialReturnRoute,
   AuthenticatedTransactionsProductInwardRoute:

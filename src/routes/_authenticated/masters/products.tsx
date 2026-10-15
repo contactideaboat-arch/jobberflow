@@ -37,7 +37,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { canWrite, db, useInvalidate, useRole, useRows } from "@/hooks/use-erp";
-import { PCS, errMsg } from "@/lib/erp";
+import { PCS, INR, errMsg, priceForQuantity, toPaiseInput } from "@/lib/erp";
 
 export const Route = createFileRoute("/_authenticated/masters/products")({
   head: () => ({
@@ -60,7 +60,13 @@ const CATEGORIES = ["BUCKET", "MUG", "TUB", "CHAIR", "STOOL", "STORAGE", "CRATE"
 const UOMS = ["PCS", "SET", "KG"];
 const BLANK = { code: "", name: "", category: "BUCKET", uom: "PCS", description: "", status: true };
 
-type Errors = { code?: string; name?: string };
+type Errors = { code?: string; name?: string; tiers?: string };
+
+/** One row of the price ladder being typed. Rates are held as rupees while typing. */
+type TierDraft = { key: string; minQuantity: string; price: string };
+
+let tierSeq = 0;
+const blankTier = (): TierDraft => ({ key: `t${++tierSeq}`, minQuantity: "", price: "" });
 
 function ProductMaster() {
   const { data: role } = useRole();
@@ -72,6 +78,8 @@ function ProductMaster() {
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState<any>(BLANK);
   const [initialForm, setInitialForm] = useState<any>(BLANK);
+  const [tiers, setTiers] = useState<TierDraft[]>([]);
+  const [initialTiers, setInitialTiers] = useState<TierDraft[]>([]);
   const [errors, setErrors] = useState<Errors>({});
   const [busy, setBusy] = useState(false);
 
@@ -79,6 +87,35 @@ function ProductMaster() {
   const status = queryStatus(query);
   const { data: stock } = useRows("finished_goods_stock", ["finished_goods_stock"]);
   const { data: boms } = useRows("bom_headers", ["bom_headers"], (b) => b.eq("active", true));
+  const { data: priceTiers } = useRows("finished_product_price_tiers", [
+    "finished_product_price_tiers",
+  ]);
+
+  /** A product's price ladder, keyed by product id. */
+  const tiersOf = useMemo(() => {
+    const map = new Map<string, any[]>();
+    for (const t of (priceTiers ?? []) as any[]) {
+      const list = map.get(t.product_id) ?? [];
+      list.push(t);
+      map.set(t.product_id, list);
+    }
+    for (const list of map.values()) {
+      list.sort((a, b) => Number(a.min_quantity ?? 0) - Number(b.min_quantity ?? 0));
+    }
+    return map;
+  }, [priceTiers]);
+
+  /** The rate that applies at a quantity, in paise, from a product's ladder. */
+  const rateAt = (productId: string, quantity: number) => {
+    const tier = priceForQuantity(
+      (tiersOf.get(productId) ?? []).map((t) => ({
+        minQuantity: Number(t.min_quantity ?? 0),
+        unitPricePaise: Number(t.unit_price_paise ?? 0),
+      })),
+      quantity,
+    );
+    return tier?.unitPricePaise ?? null;
+  };
 
   const balances = useMemo(
     () => new Map(((stock ?? []) as any[]).map((s) => [s.product_id, Number(s.balance ?? 0)])),
@@ -104,7 +141,9 @@ function ProductMaster() {
     initialSort: { key: "product", direction: "asc" },
   });
 
-  const dirty = JSON.stringify(form) !== JSON.stringify(initialForm);
+  const dirty =
+    JSON.stringify(form) !== JSON.stringify(initialForm) ||
+    JSON.stringify(tiers) !== JSON.stringify(initialTiers);
   const [discardDialog, onOpenChange] = useGuardedClose(dirty && !busy, setOpen);
   const set = (k: string, v: unknown) => {
     setForm((f: any) => ({ ...f, [k]: v }));
@@ -112,9 +151,21 @@ function ProductMaster() {
   };
   const openForm = (row?: any) => {
     const next = row ? { ...BLANK, ...row } : BLANK;
+    // Editing loads the saved ladder so the form shows what is actually stored;
+    // creating starts with one empty base-rate row, because a price of zero is
+    // not a useful starting point and an empty ladder is easy to leave behind.
+    const loaded = row
+      ? (tiersOf.get(row.id) ?? []).map((t) => ({
+          key: `t${++tierSeq}`,
+          minQuantity: String(t.min_quantity ?? 0),
+          price: String(Number(t.unit_price_paise ?? 0) / 100),
+        }))
+      : [blankTier()];
     setEditId(row?.id ?? null);
     setForm(next);
     setInitialForm(next);
+    setTiers(loaded);
+    setInitialTiers(loaded);
     setErrors({});
     setOpen(true);
   };
@@ -124,8 +175,38 @@ function ProductMaster() {
     const next: Errors = {};
     if (!String(form.code ?? "").trim()) next.code = "Enter a product code.";
     if (!String(form.name ?? "").trim()) next.name = "Enter the product name.";
+
+    /*
+     * The ladder is validated before anything is written, so a duplicate break
+     * is caught while the operator is still looking at the form rather than
+     * after the product row has already been created.
+     */
+    const filled = tiers.filter((t) => t.minQuantity.trim() !== "" || t.price.trim() !== "");
+    const seenQty = new Set<string>();
+    for (const t of filled) {
+      if (t.minQuantity.trim() === "" || t.price.trim() === "") {
+        next.tiers = "Every price row needs both a quantity and a price, or remove the row.";
+        break;
+      }
+      const qty = Number(t.minQuantity);
+      if (!(qty >= 0)) {
+        next.tiers = "A quantity break cannot be negative.";
+        break;
+      }
+      if (!Number.isFinite(Number(t.price)) || Number(t.price) <= 0) {
+        next.tiers = "Every price row needs a price above zero, or remove the row.";
+        break;
+      }
+      if (seenQty.has(String(qty))) {
+        next.tiers = "Two breaks start at the same quantity. Each one needs its own quantity.";
+        break;
+      }
+      seenQty.add(String(qty));
+    }
+
     setErrors(next);
-    if (Object.keys(next).length) return;
+    if (next.code || next.name || next.tiers) return;
+
     setBusy(true);
     const payload: any = {
       code: String(form.code).trim().toUpperCase(),
@@ -136,17 +217,57 @@ function ProductMaster() {
       status: !!form.status,
     };
     const res = editId
-      ? await db.from("finished_products").update(payload).eq("id", editId)
-      : await db.from("finished_products").insert(payload);
-    setBusy(false);
+      ? await db.from("finished_products").update(payload).eq("id", editId).select("id").single()
+      : await db.from("finished_products").insert(payload).select("id").single();
     if (res.error) {
+      setBusy(false);
       toast.error(`Not saved. ${errMsg(res.error)}`);
       return;
     }
+    const productId = res.data?.id ?? editId;
+
+    /*
+     * The ladder is replaced wholesale rather than diffed row by row. An edit
+     * that removes a break must actually remove it, and a diff would have to
+     * reason about which rows survived a reorder to get there. The rows are
+     * small and belong to one product, so delete-then-insert is the clearer
+     * transaction: if the insert fails the product still exists, just unpriced.
+     */
+    if (productId) {
+      const del = await db.from("finished_product_price_tiers").delete().eq("product_id", productId);
+      if (del.error) {
+        setBusy(false);
+        toast.error(
+          `${payload.code} was saved but its prices were not: ${errMsg(del.error)}. Open the product again to set them.`,
+        );
+        invalidate([["finished_products"]]);
+        return;
+      }
+      if (filled.length) {
+        const ins = await db.from("finished_product_price_tiers").insert(
+          filled.map((t) => ({
+            product_id: productId,
+            min_quantity: Number(t.minQuantity),
+            unit_price_paise: Number(toPaiseInput(t.price)),
+          })),
+        );
+        if (ins.error) {
+          setBusy(false);
+          toast.error(
+            `${payload.code} was saved but its prices were not: ${errMsg(ins.error)}. Open the product again to set them.`,
+          );
+          invalidate([["finished_products"]]);
+          return;
+        }
+      }
+    }
+
+    setBusy(false);
     toast.success(editId ? `${payload.code} updated.` : `${payload.code} created.`);
     setInitialForm(form);
+    setInitialTiers(tiers);
     setOpen(false);
-    invalidate([["finished_products"]]);
+    invalidate([["finished_products"], ["finished_product_price_tiers"]]);
   };
 
   return (
@@ -232,6 +353,7 @@ function ProductMaster() {
                 </SortHeader>
                 <th scope="col">UOM</th>
                 <th scope="col">Bill of material</th>
+<th scope="col" className="text-right">Base rate</th>
                 <SortHeader grid={grid} sortKey="balance" align="right">
                   In stock
                 </SortHeader>
@@ -243,11 +365,11 @@ function ProductMaster() {
             </thead>
             <tbody>
               {status !== "ready" ? (
-                <RegisterState status={status} cols={7} onRetry={() => void query.refetch()} />
+                <RegisterState status={status} cols={8} onRetry={() => void query.refetch()} />
               ) : grid.matched.length === 0 ? (
                 <RegisterState
                   status="ready"
-                  cols={7}
+                  cols={8}
                   emptyTitle={
                     grid.isFiltered
                       ? "No product matches these filters."
@@ -308,6 +430,16 @@ function ProductMaster() {
                         )}
                       </td>
                       <td className="num text-right font-semibold">{PCS(balanceOf(r.id))}</td>
+<td className="num text-right text-muted-foreground">
+  {(() => {
+    const breaks = r && tiersOf.get(r.id);
+    if (!breaks?.length) return NIL;
+    const base = breaks.reduce((a: any, c: any) =>
+      Number(c.min_quantity) < Number(a.min_quantity) ? c : a,
+    );
+    return INR(base.unit_price_paise);
+  })()}
+</td>
                       <td>
                         <Badge variant={r.status ? "success" : "secondary"}>
                           {r.status ? "Active" : "Inactive"}
@@ -405,6 +537,101 @@ function ProductMaster() {
                   <Switch checked={!!form.status} onCheckedChange={(v) => set("status", v)} />
                   Active, available on new vouchers
                 </label>
+              </div>
+            </FormSection>
+            <FormSection
+              title="Pricing"
+              description="Rates in rupees per unit, held as paise so the total never drifts by a paisa. 0 is the base rate; a higher break applies from that quantity upward, so bulk gets the better price."
+            >
+              <div className="space-y-2">
+                {tiers.map((tier, i) => (
+                  <div
+                    key={tier.key}
+                    className="grid grid-cols-[1fr_1fr_auto] items-end gap-2 rounded-md border p-2"
+                  >
+                    <Field label="From quantity" className="sm:col-span-1">
+                      <Input
+                        type="number"
+                        step="any"
+                        min="0"
+                        value={tier.minQuantity}
+                        onChange={(e) =>
+                          setTiers((prev) =>
+                            prev.map((t, x) =>
+                              x === i ? { ...t, minQuantity: e.target.value } : t,
+                            ),
+                          )
+                        }
+                        placeholder="0"
+                      />
+                    </Field>
+                    <Field label="Rate (Rs / unit)">
+                      <Input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        value={tier.price}
+                        onChange={(e) =>
+                          setTiers((prev) =>
+                            prev.map((t, x) =>
+                              x === i ? { ...t, price: e.target.value } : t,
+                            ),
+                          )
+                        }
+                        placeholder="0.00"
+                      />
+                    </Field>
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => setTiers((prev) => prev.filter((_, x) => x !== i))}
+                      disabled={busy}
+                      aria-label={`Remove price break ${i + 1}`}
+                    >
+                      <IconPlus className="size-3.5 rotate-45" />
+                    </Button>
+                  </div>
+                ))}
+                {errors.tiers && (
+                  <p className="text-xs font-medium text-destructive" role="alert">
+                    {errors.tiers}
+                  </p>
+                )}
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setTiers((prev) => [...prev, blankTier()])}
+                  disabled={busy}
+                >
+                  <IconPlus /> Add price break
+                </Button>
+                {editId && tiers.length > 0 && (
+                  <div className="space-y-1 rounded-md bg-muted/30 p-2 text-xs text-muted-foreground">
+                    {tiers
+                      .slice()
+                      .sort((a, b) => Number(a.minQuantity || 0) - Number(b.minQuantity || 0))
+                      .map((t) => {
+                        const breakQty = Number(t.minQuantity || 0);
+                        const above =
+                          [...tiers]
+                            .filter((x) => Number(x.minQuantity) > breakQty)
+                            .sort((a, b) => Number(a.minQuantity) - Number(b.minQuantity))[0];
+                        const label = above
+                          ? `${PCS(breakQty)} to ${PCS(Number(above.minQuantity) - Number.EPSILON)}`
+                          : `From ${PCS(breakQty)}`;
+                        return (
+                          <div key={t.key} className="flex items-center justify-between">
+                            <span>{label}</span>
+                            <span className="num font-medium">
+                              {INR(toPaiseInput(t.price))}
+                            </span>
+                          </div>
+                        );
+                      })}
+                  </div>
+                )}
               </div>
             </FormSection>
             <DialogFooter>
